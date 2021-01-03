@@ -1,12 +1,15 @@
+import {Provider} from 'react-redux'
+
+import store from './store'
 import GlobalStyles from './styles/global-styles'
 import { TodoPage } from './pages/todo';
 
 function App() {
   return (
-  <>
-    <TodoPage />
-    <GlobalStyles />
-  </>
+   <Provider store={store}>
+      <TodoPage />
+      <GlobalStyles />
+   </Provider>
   )
 }
 
