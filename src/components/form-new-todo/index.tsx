@@ -9,6 +9,7 @@ import {
   Container,
   InputText,
   InputTextArea,
+  ButtonArea,
   ButtonSend, 
   ErrorsContainer,
   Error,
@@ -23,20 +24,40 @@ const FormNewTodo = ({todoAreaID}: FormNewTodoProps) => {
   const dispatch = useDispatch()
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [errors, setErrors] = useState<string[]>([])
+  const [errors, setErrors] = useState([] as string[])
 
-  const handleSendTodoItem = useCallback( (todoItem: TodoData) => {
-    if( !title.trim()) setErrors([...errors, 'Título não pode ser vazio!'])
-    if( title.trim().length < 3) setErrors([...errors, 'Título está muito pequeno!'])
-    if( title.trim().length > 30) setErrors([...errors, 'Título está muito grande!'])
-    if( !description.trim()) setErrors([...errors, 'Descrição não pode ser vazia!'])
-    if( description.trim().length > 255) setErrors([...errors, 'Descrição está muito grande!'])
-    if(errors.length > 0) return
-
+  const handleSendTodoItem = useCallback( (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+    event.preventDefault()
+    const todoItem = {
+      id: uuid(),
+      description,
+      title,
+      todoAreaID
+    } as TodoData
+    const errorsForm = [] as string[]
+    if( !title.trim()) {
+      errorsForm.push('Título não pode ser vazio!')
+    }
+    if( title.trim().length < 3) {
+      errorsForm.push('Título está muito pequeno!')
+    }
+    if( title.trim().length > 30) {
+      errorsForm.push('Título está muito grande!')
+    }
+    if( !description.trim()) {
+      errorsForm.push('Descrição não pode ser vazia!')
+    }
+    if( description.trim().length > 255) {
+      errorsForm.push('Descrição está muito grande!')
+    }
+    if(errorsForm.length > 0) {
+      setErrors(errorsForm)
+      return
+    }
     dispatch(actions.insertOneTodoItem({todoItem}))
     setDescription('')
     setTitle('')
-  }, [description, errors, title])
+  }, [description, title, dispatch, todoAreaID])
 
 
   return (
@@ -56,12 +77,9 @@ const FormNewTodo = ({todoAreaID}: FormNewTodoProps) => {
           errors.length > 0 && errors.map( (error, index) => <Error key={index}>{error}</Error>)
         }
       </ErrorsContainer>
-      <ButtonSend onClick={e => { e.preventDefault(); handleSendTodoItem({
-        id: uuid(),
-        description,
-        title,
-        todoAreaID
-      })}}>Enviar</ButtonSend>
+      <ButtonArea>
+        <ButtonSend onClick={e => handleSendTodoItem(e)}>Enviar</ButtonSend>
+      </ButtonArea>
     </Container>
   )
 }
