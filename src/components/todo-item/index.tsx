@@ -7,9 +7,11 @@ import {
 } from './styles'
 
 import * as actions from '../../store/modules/todo-item-move/actions' 
+import { TodoAreaID } from '../todo-list'
 
 export type TodoData = {
   id: string
+  todoAreaID: TodoAreaID
   title: string
   description: string
 }
@@ -24,8 +26,8 @@ export default function TodoItem({todoData}: TodoItemProps) {
   return (
     <Container
       draggable
-      onDragStart={e =>  dispatch(actions.todoOnDragStart(todoData))}
-      onDragEnd={e => dispatch(actions.todoOnDragEnd())}
+      onDragStart={e =>  dispatch(actions.setNewTodoItem(todoData))}
+      onDragEnd={e => dispatch(actions.setNullTodoItem())}
     >
       <Title>{todoData.title}</Title>
       <Description>{todoData.description}</Description>

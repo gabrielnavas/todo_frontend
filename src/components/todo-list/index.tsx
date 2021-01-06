@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { ReducersType } from '../../store/configs/root-reducer'
 import * as actions from '../../store/modules/todo-lists/actions'
@@ -13,12 +14,25 @@ type TodoListProps = {
 
 export default function TodoList({todoItems, todoAreaID}: TodoListProps) {
   const dispatch = useDispatch()
-  const todoItemMove = useSelector<ReducersType>(state => state.todoItemMove) as TodoData
+  const todoItemMove = useSelector<ReducersType, TodoData>(state => state.todoItemMove)
+
+  const handleOnDrop = useCallback(() => {
+    dispatch(
+      actions.removeOneItemByTodoAreaID({ 
+        todoAreaID: todoItemMove.todoAreaID, todoItemID: todoItemMove.id 
+      })
+    )
+    dispatch(
+      actions.updateOneTodoItemByTodoAreaId({ 
+        todoItemMove, todoAreaIDToInsert: todoAreaID 
+      })
+    )
+  },[dispatch, todoAreaID, todoItemMove])
 
   return (
     <Container
       onDragOver={e => e.preventDefault()}
-      onDrop={e => dispatch(actions.onDrop({ todoItemMove, todoAreaID }))}
+      onDrop={e => handleOnDrop()}
     >
       { 
         todoItems.map(todoData => 

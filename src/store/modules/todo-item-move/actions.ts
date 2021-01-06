@@ -1,15 +1,15 @@
 import { TodoData } from '../../../components/todo-item';
 import * as types from '../../configs/actions-reducer-types';
 
-export function todoOnDragStart(payload: TodoData) {
+export function setNewTodoItem(payload: TodoData) {
   return {
-    type: types.TODO_ITEM_MOVE__ONDRAG_START,
+    type: types.TODO_ITEM_MOVE__SET_NEW_TODO_ITEM,
     payload
   }
 }
 
-export function todoOnDragEnd() {
+export function setNullTodoItem() {
   return {
-    type: types.TODO_ITEM_MOVE__ONDRAG_END,
+    type: types.TODO_ITEM_MOVE__SET_NULL_TODO_ITEM,
   }
 }

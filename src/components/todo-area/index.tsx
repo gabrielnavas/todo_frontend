@@ -1,14 +1,20 @@
+import { TodoAreaID } from '../todo-list'
 import { Container, Title } from './styles'
 
 type TodoAreaProps = {
   children: any
-  title: string
+  id: TodoAreaID
 }
 
-export default function TodoArea({children, title}: TodoAreaProps) {
+const capitalizeFirstLetter = (title: string) =>
+  title.charAt(0).toUpperCase() + title.slice(1)
+
+
+export default function TodoArea({children, id}: TodoAreaProps) {
+  
   return (
     <Container>
-      <Title>{title}</Title>
+      <Title>{capitalizeFirstLetter(id)}</Title>
       {children}
     </Container>
   )
