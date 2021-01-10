@@ -29,9 +29,12 @@ export default createGlobalStyle`
     --gray-light: #7A7A7A;
     --outline: #2F3336;
     --green: #00C06B;
+    --green-dark: #006136;
     --red: #E8265E;
     --blue: #33A1F2;
+    --blue-opacity:#33A1F255
     --blue-dark: #0e63a1;
+    --blue-dark-alt:#083a5e;
     --blue-dark-hover: #011017;
     --blue-light-hover: #1375bd;
   }
