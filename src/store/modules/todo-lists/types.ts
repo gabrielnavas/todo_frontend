@@ -14,3 +14,8 @@ export type PayloadRemoveItemByTodoAreaID = {
 export type PayloadInsertOneTodo = {
   todoItem: TodoData
 }
+
+export type PayloadUpdateOneTodoItemByID = {
+  todoItem: TodoData
+  oldTodoItemID: TodoAreaID
+}

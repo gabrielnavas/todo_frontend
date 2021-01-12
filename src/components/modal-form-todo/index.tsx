@@ -1,8 +1,8 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { v4 as uuid } from 'uuid'
+import { capitalizeFirstLetter } from '../../helpers/capitalize-first-letter'
 
-import * as actions from '../../store/modules/todo-lists/actions'
 import { Modal } from '../modal'
 import { TodoData } from '../todo-item'
 import { TodoAreaID } from '../todo-list'
@@ -15,18 +15,26 @@ import {
   ErrorsContainer,
   Error,
   ModalContainer,
-  ModalBody,
+  ModalMain,
   ModalTitle,
   ModalHeader
 } from './styles'
 
-export type OnClickButtonFinish =  (id: string | null, title: string, description: string) => void
+export type OnClickButtonParams = { 
+  id: string | null,
+  title: string
+  description: string
+  todoAreaID: TodoAreaID 
+  oldTodoItemID: TodoAreaID | null
+}
+export type OnClickButtonFinish =  (onClickButtonparams: OnClickButtonParams) => void
 export type OnClickOutSide = () => void
 
 type ModalFormTodoProps = {
   todoAreaID: TodoAreaID
   isOpen: boolean
   textButtonFinish: string
+  todoItemUpdate?: TodoData
   onClickButtonFinish: OnClickButtonFinish
   onClickOutSide: OnClickOutSide
 }
@@ -35,25 +43,25 @@ const ModalFormTodo = ({
   todoAreaID, 
   textButtonFinish, 
   isOpen,
+  todoItemUpdate,
   onClickOutSide,
   onClickButtonFinish
 }: ModalFormTodoProps) => {
 
-  const dispatch = useDispatch()
-  const [id, setID] = useState(null)
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [errors, setErrors] = useState([] as string[])
 
+  useEffect(() => {
+    if(todoItemUpdate) {
+      setDescription(todoItemUpdate.description)
+      setTitle(todoItemUpdate.title)
+    }
+  }, [todoItemUpdate])
+
 
   const handleSendTodoItem = useCallback( (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     event.preventDefault()
-    const todoItem = {
-      id: id ? id : uuid(),
-      description,
-      title,
-      todoAreaID
-    } as TodoData
     const errorsForm = [] as string[]
     if( !title.trim()) {
       errorsForm.push('Título não pode ser vazio!')
@@ -74,11 +82,13 @@ const ModalFormTodo = ({
       setErrors(errorsForm)
       return
     }
-    dispatch(actions.insertOneTodoItem({todoItem}))
+    if(todoItemUpdate) {
+      onClickButtonFinish({id: todoItemUpdate.id, title, description, todoAreaID, oldTodoItemID: todoAreaID})
+    }
+    else onClickButtonFinish({id: null, title, description, todoAreaID, oldTodoItemID: null})
     setDescription('')
     setTitle('')
-    onClickButtonFinish(id, title, description)
-  }, [id, description, title, onClickButtonFinish, dispatch, todoAreaID])
+  }, [todoItemUpdate, description, title, onClickButtonFinish, todoAreaID])
 
 
   return (
@@ -89,7 +99,7 @@ const ModalFormTodo = ({
         <ModalHeader>
           <ModalTitle>
             <span>
-              {todoAreaID.split('')[0].toLocaleUpperCase() + todoAreaID.slice(1)}
+              { capitalizeFirstLetter(todoAreaID) }
             </span>
           </ModalTitle>
           <ButtonGroup>
@@ -98,7 +108,7 @@ const ModalFormTodo = ({
               }</ButtonSend>
           </ButtonGroup>
         </ModalHeader>
-        <ModalBody>
+        <ModalMain>
           <Form>
             <InputText 
               value={title}
@@ -116,7 +126,7 @@ const ModalFormTodo = ({
               }
             </ErrorsContainer>
           </Form>
-        </ModalBody>
+        </ModalMain>
       </ModalContainer> 
     </Modal>
   )

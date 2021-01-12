@@ -111,7 +111,7 @@ export const ModalTitle = styled.div`
   }
 `
 
-export const ModalBody = styled.body`
+export const ModalMain = styled.main`
   display: flex;
   flex-direction: column;
   width: 100%;

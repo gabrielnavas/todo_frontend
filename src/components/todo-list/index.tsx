@@ -1,15 +1,16 @@
-import { useCallback, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
+import { v4 as uuid }from 'uuid'
+
 import { ReducersType } from '../../store/configs/root-reducer'
 import * as actions from '../../store/modules/todo-lists/actions'
-import { ModalFormTodo } from '../modal-form-todo'
+import { ModalFormTodo, OnClickButtonParams } from '../modal-form-todo'
 import TodoItem, { TodoData }  from '../todo-item'
 import {
   Container, 
   Button,
 
 } from './styles'
-import {v4 as uuid} from 'uuid'
 import { capitalizeFirstLetter } from '../../helpers/capitalize-first-letter'
 
 export type TodoAreaID = 'todo' | 'doing' | 'done'
@@ -23,67 +24,97 @@ export default function TodoList({todoItems, todoAreaID}: TodoListProps) {
   const dispatch = useDispatch()
   const todoItemMove = useSelector<ReducersType, TodoData>(state => state.todoItemMove)
 
-  const [isOpenInsertModal, setIsOpenInsertModal] = useState(false)
+  const [isOpenModalInsert, setIsOpenModalInsert] = useState(false)
+  const [isOpenModalUpdate, setIsOpenModalUpdate] = useState(false)
 
   const handleOnDrop = useCallback(() => {
-    dispatch(
-      actions.removeOneItemByTodoAreaID({ 
-        todoAreaID: todoItemMove.todoAreaID, todoItemID: todoItemMove.id 
-      })
-    )
-    dispatch(
-      actions.updateOneTodoItemByTodoAreaId({ 
-        todoItemMove, todoAreaIDToInsert: todoAreaID 
-      })
-    )
+    dispatch(actions.removeOneItemByTodoAreaID({ 
+      todoAreaID: todoItemMove.todoAreaID, todoItemID: todoItemMove.id 
+    }))
+    dispatch(actions.updateOneTodoItemByTodoAreaID({ 
+      todoItemMove, todoAreaIDToInsert: todoAreaID 
+    }))
   },[dispatch, todoAreaID, todoItemMove])
 
   const handleButtonInsert = () => {
-    setIsOpenInsertModal(!isOpenInsertModal)
+    setIsOpenModalInsert(true)
   }
 
-  const onClickOutSideModal = (): void => {
-    setIsOpenInsertModal(!isOpenInsertModal)
+  const handleOnClickTodoItemComponent = () => {
+    setIsOpenModalUpdate(true)
   }
 
-  const handleOnClickButtonFinish = useCallback((id: string | null, title: string, description: string) => {
-    if(id) {
-      actions.insertOneTodoItem({ 
+  const onClickOutSideModalInsert = (): void => {
+    setIsOpenModalInsert(false)
+  }
+
+  const onClickOutSideModalUpdate = (): void => {
+    setIsOpenModalUpdate(false)
+  }
+
+  const handleOnClickButtonFinish = useCallback((params: OnClickButtonParams) => {
+    if(isOpenModalInsert) {
+      dispatch(actions.insertOneTodoItem({ 
         todoItem: {
-          id,
-          todoAreaID,
-          title,
-          description
+          id: uuid(),
+          todoAreaID: params.todoAreaID,
+          title: params.title,
+          description: params.description
         }
-      })
-    } 
-    
-  }, [])
-
+      }))
+    } else {
+      dispatch(actions.updateOneTodoItemByID({ 
+        todoItem: {
+          id: params.id,
+          todoAreaID: params.todoAreaID,
+          title: params.title,
+          description: params.description
+        },
+        oldTodoItemID: params.oldTodoItemID
+      }))
+      setIsOpenModalUpdate(false)
+    }
+  }, [dispatch, isOpenModalInsert])
 
   return (
     <Container
       onDragOver={e => e.preventDefault()}
       onDrop={e => handleOnDrop()}
     >
+      <Button onClick={e => handleButtonInsert()}>
+        Insert {capitalizeFirstLetter(todoAreaID)}
+      </Button>
       { 
-        todoItems.map(todoData => 
-          <TodoItem
-            key={todoData.id}
-            todoData={todoData}
-          />
+        todoItems.map( (todoData, index) => {
+          return (
+            <React.Fragment key={uuid()}>
+              <ModalFormTodo 
+                key={uuid()}
+                isOpen={isOpenModalUpdate} 
+                onClickOutSide={onClickOutSideModalUpdate}
+                onClickButtonFinish={handleOnClickButtonFinish}
+                textButtonFinish='Update'
+                todoAreaID={todoAreaID}
+                todoItemUpdate={todoData}
+              />
+              <TodoItem
+                key={uuid()}
+                onClick={handleOnClickTodoItemComponent}
+                todoData={todoData}
+              />
+            </React.Fragment>
+          )
+        }
+         
         ) 
       }
-      <Button onClick={e => handleButtonInsert()}>Insert {capitalizeFirstLetter(todoAreaID)}</Button>
-      {/* <ButtonEdit onClick={e => handleButtonEdit()} /> */}
       {/* <ButtonDelete onClick={e => handleButtonDelete()} /> */}
-      
       <ModalFormTodo 
-        isOpen={isOpenInsertModal} 
-        onClickOutSide={onClickOutSideModal}
+        isOpen={isOpenModalInsert} 
+        onClickOutSide={onClickOutSideModalInsert}
+        onClickButtonFinish={handleOnClickButtonFinish}
         todoAreaID={todoAreaID}
         textButtonFinish='Insert'
-        onClickButtonFinish={handleOnClickButtonFinish}
       />
     </Container>
   )
