@@ -4,7 +4,7 @@ import { v4 as uuid }from 'uuid'
 
 import { ReducersType } from '../../store/configs/root-reducer'
 import * as actions from '../../store/modules/todo-lists/actions'
-import { ModalFormTodo, OnClickButtonParams } from '../modal-form-todo'
+import { ModalFormTodo, OnClickButtonParams, OnClickDeleteTodoItemParams } from '../modal-form-todo'
 import TodoItem, { TodoData }  from '../todo-item'
 import {
   Container, 
@@ -28,13 +28,18 @@ export default function TodoList({todoItems, todoAreaID}: TodoListProps) {
   const [isOpenModalUpdate, setIsOpenModalUpdate] = useState(false)
 
   const handleOnDrop = useCallback(() => {
-    dispatch(actions.removeOneItemByTodoAreaID({ 
+    dispatch(actions.removeOneItemByTodoAreaIDAndTodoItemID({ 
       todoAreaID: todoItemMove.todoAreaID, todoItemID: todoItemMove.id 
     }))
     dispatch(actions.updateOneTodoItemByTodoAreaID({ 
       todoItemMove, todoAreaIDToInsert: todoAreaID 
     }))
   },[dispatch, todoAreaID, todoItemMove])
+
+  const handleOnClickModalCloseButton = () => {
+    setIsOpenModalInsert(false)
+    setIsOpenModalUpdate(false)
+  }
 
   const handleButtonInsert = () => {
     setIsOpenModalInsert(true)
@@ -76,6 +81,10 @@ export default function TodoList({todoItems, todoAreaID}: TodoListProps) {
     }
   }, [dispatch, isOpenModalInsert])
 
+  const handleOnClickModalDeleteTodoItem = useCallback( (params: OnClickDeleteTodoItemParams) => {
+    dispatch(actions.removeOneItemByTodoAreaIDAndTodoItemID({ ...params }))
+  }, [dispatch])
+
   return (
     <Container
       onDragOver={e => e.preventDefault()}
@@ -93,6 +102,8 @@ export default function TodoList({todoItems, todoAreaID}: TodoListProps) {
                 isOpen={isOpenModalUpdate} 
                 onClickOutSide={onClickOutSideModalUpdate}
                 onClickButtonFinish={handleOnClickButtonFinish}
+                onClickModalCloseButton={handleOnClickModalCloseButton}
+                onClickDeleteTodoItem={handleOnClickModalDeleteTodoItem}
                 textButtonFinish='Update'
                 todoAreaID={todoAreaID}
                 todoItemUpdate={todoData}
@@ -108,11 +119,11 @@ export default function TodoList({todoItems, todoAreaID}: TodoListProps) {
          
         ) 
       }
-      {/* <ButtonDelete onClick={e => handleButtonDelete()} /> */}
       <ModalFormTodo 
         isOpen={isOpenModalInsert} 
         onClickOutSide={onClickOutSideModalInsert}
         onClickButtonFinish={handleOnClickButtonFinish}
+        onClickModalCloseButton={handleOnClickModalCloseButton}
         todoAreaID={todoAreaID}
         textButtonFinish='Insert'
       />

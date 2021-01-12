@@ -31,6 +31,7 @@ export default createGlobalStyle`
     --green: #00C06B;
     --green-dark: #006136;
     --red: #E8265E;
+    --red-dark-hover: #8f0f2f;
     --blue: #33A1F2;
     --blue-opacity:#33A1F255
     --blue-dark: #0e63a1;

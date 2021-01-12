@@ -12,7 +12,7 @@ export const InputText = styled.input`
   margin: 3px 0;
 
   &:hover {
-    padding:1.5px;
+    padding: 1.5px;
     border: 1.5px solid var(--blue-light-hover);
   }
   &:focus {
@@ -42,16 +42,24 @@ export const InputTextArea = styled.textarea`
   }
 `
 
-export const ButtonSend = styled.button`
+export type TextButtonFinish =  'Insert' | 'Update' | 'Delete'
+type ButtonHeaderProps = {
+  children: TextButtonFinish
+}
+
+export const ButtonHeader = styled.button.attrs(({children}: ButtonHeaderProps) => ({
+  backgroundColor: children === 'Insert' || children === 'Update' ? '--blue' : '--red',
+  backgroundColorHover: children === 'Insert' || children === 'Update' ? '--blue-dark-hover' : '--red-dark-hover'
+}))`
   height: 50px;
   width: 100px;
-  background: var(--blue);
+  background: var(${({backgroundColor}) => backgroundColor});
   cursor: pointer;
   outline: none;
   font-size: 16px;
   font-weight: bold;
   &:hover {
-    background: var(--blue-dark-hover);
+    background: var(${({backgroundColorHover}) => backgroundColorHover});
   }
   &:active {
     background: var(--green);

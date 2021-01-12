@@ -15,7 +15,7 @@ export const Container = styled.div`
   }
 `
 
-export const Title = styled.div`
+export const Title = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,7 +24,8 @@ export const Title = styled.div`
   font-size: 30px;
 `
 
-export const Description = styled.div`
+export const Description = styled.span`
   padding: 10px;
   width: 100%;
+  word-wrap: break-word;
 `

@@ -2,14 +2,19 @@ import { TodoData } from '../../../../components/todo-item';
 import * as types from '../../../configs/actions-reducer-types';
 import { 
   PayloadInsertOneTodo, 
-  PayloadOnDropType, 
+  PayloadUpdateOneTodoItemByTodoAreaID, 
   PayloadRemoveItemByTodoAreaID, 
   PayloadUpdateOneTodoItemByID
 } from '../types'
 
-import { addNewTodoItem } from './helpers/TODOS_LISTS__INSERT_ONE_TODO_ITEM';
-import { removeByTodoAreaID } from './helpers/TODOS_LISTS__REMOVE_ONE_TODO_ITEM_BY_TODO_AREA_ID';
-import { updateChangeTodoItemAreaID, updateNotChangeTodoItemAreaID } from './helpers/TODOS_LISTS__UPDATE_TODO_ITEM_BY_ID';
+import { addNewTodoItem } from './helpers/TODOS_LISTS__INSERT_ONE_TODO_ITEM'
+import { 
+  removeByTodoAreaIDAndTodoItemID 
+} from './helpers/TODOS_LISTS__REMOVE_ONE_TODO_ITEM_BY_TODO_AREA_ID_AND_TODO_ITEM_ID'
+import { 
+  updateChangeTodoItemAreaID, 
+  updateNotChangeTodoItemAreaID 
+} from './helpers/TODOS_LISTS__UPDATE_TODO_ITEM_BY_ID'
 
 import { 
   updateTodoAreaID 
@@ -36,17 +41,17 @@ const reducer = (state: StateType = inititalState, action: ActionType) => {
   
   switch (action.type) {
     case types.TODOS_LISTS__UPDATE_TODO_ITEM_BY_TODO_AREA_ID: {
-      const payload = action.payload as PayloadOnDropType
+      const payload = action.payload as PayloadUpdateOneTodoItemByTodoAreaID
       const {todoAreaIDToInsert, todoItemMove} =  payload
       const newState = {...state}  
       const newTodoItem = updateTodoAreaID({todoItemMove, todoAreaIDToInsert})
       return {...addNewTodoItem(todoAreaIDToInsert, newState, newTodoItem)}
     }
 
-    case types.TODOS_LISTS__REMOVE_ONE_TODO_ITEM_BY_TODO_AREA_ID: {
+    case types.TODOS_LISTS__REMOVE_ONE_TODO_ITEM_BY_TODO_AREA_ID_AND_TODO_ITEM_ID: {
       const {todoAreaID, todoItemID} = action.payload as PayloadRemoveItemByTodoAreaID
       const newState = { ...state }
-      return {...removeByTodoAreaID(newState, todoAreaID, todoItemID)}
+      return {...removeByTodoAreaIDAndTodoItemID(newState, todoAreaID, todoItemID)}
     }
 
     case types.TODOS_LISTS__INSERT_ONE_TODO_ITEM: {

@@ -1,23 +1,24 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { v4 as uuid } from 'uuid'
 import { capitalizeFirstLetter } from '../../helpers/capitalize-first-letter'
+import { insertNewTodoItemUseCase } from '../../usecases/insert-new-todo-item-use-case'
 
 import { Modal } from '../modal'
 import { TodoData } from '../todo-item'
 import { TodoAreaID } from '../todo-list'
+import { ModalCloseButton, OnClickModalCloseButton } from '../modal-close-button'
 import {
   Form,
   InputText,
   InputTextArea,
   ButtonGroup,
-  ButtonSend, 
+  ButtonHeader, 
   ErrorsContainer,
   Error,
   ModalContainer,
   ModalMain,
   ModalTitle,
-  ModalHeader
+  ModalHeader,
+  TextButtonFinish,
 } from './styles'
 
 export type OnClickButtonParams = { 
@@ -27,16 +28,23 @@ export type OnClickButtonParams = {
   todoAreaID: TodoAreaID 
   oldTodoItemID: TodoAreaID | null
 }
-export type OnClickButtonFinish =  (onClickButtonparams: OnClickButtonParams) => void
+export type OnClickDeleteTodoItemParams = {
+  todoItemID: string,
+  todoAreaID: TodoAreaID 
+}
+export type OnClickDeleteTodoItem = (params: OnClickDeleteTodoItemParams) => void
+export type OnClickButtonFinish = (params: OnClickButtonParams) => void
 export type OnClickOutSide = () => void
 
 type ModalFormTodoProps = {
   todoAreaID: TodoAreaID
   isOpen: boolean
-  textButtonFinish: string
+  textButtonFinish: TextButtonFinish
   todoItemUpdate?: TodoData
   onClickButtonFinish: OnClickButtonFinish
+  onClickDeleteTodoItem?: OnClickDeleteTodoItem
   onClickOutSide: OnClickOutSide
+  onClickModalCloseButton: OnClickModalCloseButton
 }
 
 const ModalFormTodo = ({
@@ -45,7 +53,9 @@ const ModalFormTodo = ({
   isOpen,
   todoItemUpdate,
   onClickOutSide,
-  onClickButtonFinish
+  onClickButtonFinish,
+  onClickDeleteTodoItem,
+  onClickModalCloseButton
 }: ModalFormTodoProps) => {
 
   const [title, setTitle] = useState('')
@@ -59,29 +69,9 @@ const ModalFormTodo = ({
     }
   }, [todoItemUpdate])
 
-
-  const handleSendTodoItem = useCallback( (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-    event.preventDefault()
-    const errorsForm = [] as string[]
-    if( !title.trim()) {
-      errorsForm.push('Título não pode ser vazio!')
-    }
-    if( title.trim().length < 3) {
-      errorsForm.push('Título está muito pequeno!')
-    }
-    if( title.trim().length > 30) {
-      errorsForm.push('Título está muito grande!')
-    }
-    if( !description.trim()) {
-      errorsForm.push('Descrição não pode ser vazia!')
-    }
-    if( description.trim().length > 255) {
-      errorsForm.push('Descrição está muito grande!')
-    }
-    if(errorsForm.length > 0) {
-      setErrors(errorsForm)
-      return
-    }
+  const handleInsertOrUpdateTodoItem = useCallback( (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+    const errorsForm = insertNewTodoItemUseCase({title, description})
+    if(errorsForm.length > 0) return setErrors(errorsForm) as void
     if(todoItemUpdate) {
       onClickButtonFinish({id: todoItemUpdate.id, title, description, todoAreaID, oldTodoItemID: todoAreaID})
     }
@@ -90,6 +80,9 @@ const ModalFormTodo = ({
     setTitle('')
   }, [todoItemUpdate, description, title, onClickButtonFinish, todoAreaID])
 
+  const handleDeleteTodoItem = useCallback( (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+    onClickDeleteTodoItem({todoAreaID, todoItemID: todoItemUpdate.id})
+  }, [onClickDeleteTodoItem, todoItemUpdate, todoAreaID])
 
   return (
     <Modal 
@@ -103,9 +96,18 @@ const ModalFormTodo = ({
             </span>
           </ModalTitle>
           <ButtonGroup>
-              <ButtonSend onClick={e => handleSendTodoItem(e)}>{
-                textButtonFinish
-              }</ButtonSend>
+              <ButtonHeader 
+                onClick={handleInsertOrUpdateTodoItem}>
+              { textButtonFinish }
+              </ButtonHeader>
+              {
+                todoItemUpdate &&
+                  <ButtonHeader 
+                    onClick={handleDeleteTodoItem}>
+                    Delete
+                  </ButtonHeader>
+              }
+              <ModalCloseButton onClick={onClickModalCloseButton}/>
           </ButtonGroup>
         </ModalHeader>
         <ModalMain>
@@ -121,9 +123,9 @@ const ModalFormTodo = ({
               onChange={e => setDescription(e.target.value)}
             />
             <ErrorsContainer>
-              {
-                errors.length > 0 && errors.map( (error, index) => <Error key={index}>{error}</Error>)
-              }
+            {
+              errors.length > 0 && errors.map( (error, index) => <Error key={index}>{error}</Error>)
+            }
             </ErrorsContainer>
           </Form>
         </ModalMain>

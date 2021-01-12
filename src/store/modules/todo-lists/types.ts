@@ -1,7 +1,7 @@
 import { TodoData } from "../../../components/todo-item";
 import { TodoAreaID } from "../../../components/todo-list";
 
-export type PayloadOnDropType = {
+export type PayloadUpdateOneTodoItemByTodoAreaID = {
   todoAreaIDToInsert: TodoAreaID
   todoItemMove: TodoData
 }
@@ -18,4 +18,9 @@ export type PayloadInsertOneTodo = {
 export type PayloadUpdateOneTodoItemByID = {
   todoItem: TodoData
   oldTodoItemID: TodoAreaID
+}
+
+export type PayloadRemoveOneItemByTodoAreaIDAndTodoItemID = {
+  todoItemID: string
+  todoAreaID: TodoAreaID
 }
