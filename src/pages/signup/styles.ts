@@ -95,8 +95,8 @@ export const Button = styled.button.attrs(({children}: ButtonProps) => ({
   outline: none;
   font-size: 16px;
   font-weight: bold;
-  border-radius: 15px;
-  padding: 0 17px;
+  border-radius: 12px;
+  padding: 0 15px;
 
   &:hover {
     background: var(${({backgroundColorHover}) => backgroundColorHover});

@@ -57,7 +57,7 @@ export const SignUpPage = () => {
               onChange={e => setPassword(e.target.value)}
               placeholder='Your password'
               value={password}
-            />handleOnCLickButtonLoginPage
+            />
             <InputText 
               type='text'
               onChange={e => setPasswordConfirmation(e.target.value)}
