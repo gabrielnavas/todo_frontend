@@ -4,7 +4,8 @@ import { insertNewTodoItemUseCase } from '../../../../usecases/insert-new-todo-i
 
 import { Modal } from '../../../../components/utils/modal'
 import { InputText } from '../../../../components/inputs/input-text'
-import { Form } from '../../../../components/inputs/form'
+import { Form } from '../form'
+import { ButtonGroup } from '../button-group'
 import { 
   ModalCloseButton, 
   OnClickModalCloseButton
@@ -15,7 +16,6 @@ import { TodoAreaID } from '../todo-list'
 
 import {
   InputTextArea,
-  ButtonGroup,
   ButtonHeader, 
   ErrorsContainer,
   Error,
@@ -25,7 +25,6 @@ import {
   ModalHeader,
   TextButtonFinish,
 } from './styles'
-
 
 
 export type OnClickButtonParams = { 
@@ -42,6 +41,7 @@ export type OnClickDeleteTodoItemParams = {
 export type OnClickDeleteTodoItem = (params: OnClickDeleteTodoItemParams) => void
 export type OnClickButtonFinish = (params: OnClickButtonParams) => void
 export type OnClickOutSide = () => void
+
 
 type ModalFormTodoProps = {
   todoAreaID: TodoAreaID
