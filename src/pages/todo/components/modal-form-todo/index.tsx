@@ -4,15 +4,16 @@ import { insertNewTodoItemUseCase } from '../../../../usecases/insert-new-todo-i
 
 import { Modal } from '../../../../components/utils/modal'
 import { InputText } from '../../../../components/inputs/input-text'
-import { TodoData } from '../todo-item'
-import { TodoAreaID } from '../todo-list'
+import { Form } from '../../../../components/inputs/form'
 import { 
   ModalCloseButton, 
   OnClickModalCloseButton
 } from '../../../../components/inputs/modal-close-button'
-import { Form } from '../../../../components/inputs/form'
+
+import { TodoData } from '../todo-item'
+import { TodoAreaID } from '../todo-list'
+
 import {
-  // InputText,
   InputTextArea,
   ButtonGroup,
   ButtonHeader, 
