@@ -1,25 +1,25 @@
 import styled from "styled-components";
-import { scrollDefault } from "../../styles/scroll-styles";
+import { scrollDefault } from "../../../../styles/scroll-styles";
 
 
-export const InputText = styled.input`
-  width: 80%;
-  height: 35px;
-  background: var(--gray);
-  outline: none;
-  font-size: 17px;
-  padding: 3px;
-  margin: 3px 0;
+// export const InputText = styled.input`
+//   width: 80%;
+//   height: 35px;
+//   background: var(--gray);
+//   outline: none;
+//   font-size: 17px;
+//   padding: 3px;
+//   margin: 3px 0;
 
-  &:hover {
-    padding: 1.5px;
-    border: 1.5px solid var(--blue-light-hover);
-  }
-  &:focus {
-    padding: 0.6px;
-    border: 2.4px solid var(--blue-light-hover);
-  }
-`
+//   &:hover {
+//     padding: 1.5px;
+//     border: 1.5px solid var(--blue-light-hover);
+//   }
+//   &:focus {
+//     padding: 0.6px;
+//     border: 2.4px solid var(--blue-light-hover);
+//   }
+// `
 
 export const InputTextArea = styled.textarea`
   width: 80%;
@@ -123,13 +123,5 @@ export const ModalMain = styled.main`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
-`
-
-export const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   height: 100%;
 `

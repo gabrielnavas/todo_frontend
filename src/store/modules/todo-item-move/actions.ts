@@ -1,4 +1,4 @@
-import { TodoData } from '../../../components/todo-item';
+import { TodoData } from '../../../pages/todo/components/todo-item';
 import * as types from '../../configs/actions-reducer-types';
 
 export function setNewTodoItem(payload: TodoData) {

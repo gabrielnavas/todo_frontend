@@ -8,7 +8,7 @@ type HeaderPageProps = {
   children: string
 }
 
-export default function HeaderPage({children}: HeaderPageProps) {
+export const HeaderPage = ({children}: HeaderPageProps) => {
   return (
     <Container>
       <Title>

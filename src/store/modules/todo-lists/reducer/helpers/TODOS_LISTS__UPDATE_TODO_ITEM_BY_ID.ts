@@ -1,6 +1,6 @@
 import { StateType } from ".."
-import { TodoData } from "../../../../../components/todo-item"
-import { TodoAreaID } from "../../../../../components/todo-list"
+import { TodoData } from "../../../../../pages/todo/components/todo-item"
+import { TodoAreaID } from "../../../../../pages/todo/components/todo-list"
 import { addNewTodoItem } from "./TODOS_LISTS__INSERT_ONE_TODO_ITEM"
 
 export const updateNotChangeTodoItemAreaID = (todoAreaID: TodoAreaID, newState: StateType, newTodoItem: TodoData): StateType => {

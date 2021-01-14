@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { scrollDefault } from "../../styles/scroll-styles";
+import { scrollDefault } from "../../../../styles/scroll-styles";
 
 export const Container = styled.div`
   height: 100%;

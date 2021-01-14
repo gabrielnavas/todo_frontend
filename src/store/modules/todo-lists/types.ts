@@ -1,5 +1,5 @@
-import { TodoData } from "../../../components/todo-item";
-import { TodoAreaID } from "../../../components/todo-list";
+import { TodoData } from "../../../pages/todo/components/todo-item";
+import { TodoAreaID } from "../../../pages/todo/components/todo-list";
 
 export type PayloadUpdateOneTodoItemByTodoAreaID = {
   todoAreaIDToInsert: TodoAreaID

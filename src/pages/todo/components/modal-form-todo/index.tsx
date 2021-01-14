@@ -1,14 +1,18 @@
 import { useCallback, useEffect, useState } from 'react'
-import { capitalizeFirstLetter } from '../../helpers/capitalize-first-letter'
-import { insertNewTodoItemUseCase } from '../../usecases/insert-new-todo-item-use-case'
+import { capitalizeFirstLetter } from '../../../../helpers/capitalize-first-letter'
+import { insertNewTodoItemUseCase } from '../../../../usecases/insert-new-todo-item-use-case'
 
-import { Modal } from '../modal'
+import { Modal } from '../../../../components/utils/modal'
+import { InputText } from '../../../../components/inputs/input-text'
 import { TodoData } from '../todo-item'
 import { TodoAreaID } from '../todo-list'
-import { ModalCloseButton, OnClickModalCloseButton } from '../modal-close-button'
+import { 
+  ModalCloseButton, 
+  OnClickModalCloseButton
+} from '../../../../components/inputs/modal-close-button'
+import { Form } from '../../../../components/inputs/form'
 import {
-  Form,
-  InputText,
+  // InputText,
   InputTextArea,
   ButtonGroup,
   ButtonHeader, 
@@ -20,6 +24,8 @@ import {
   ModalHeader,
   TextButtonFinish,
 } from './styles'
+
+
 
 export type OnClickButtonParams = { 
   id: string | null,

@@ -1,6 +1,6 @@
 import { StateType } from ".."
-import { TodoData } from "../../../../../components/todo-item"
-import { TodoAreaID } from "../../../../../components/todo-list"
+import { TodoData } from "../../../../../pages/todo/components/todo-item"
+import { TodoAreaID } from "../../../../../pages/todo/components/todo-list"
 
 export const addNewTodoItem = (todoAreaID: TodoAreaID, newState: StateType, newTodoItem: TodoData) => {
   if(todoAreaID === 'done') newState.done.push(newTodoItem)

@@ -2,8 +2,8 @@ import React, { useCallback, useState } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { v4 as uuid }from 'uuid'
 
-import { ReducersType } from '../../store/configs/root-reducer'
-import * as actions from '../../store/modules/todo-lists/actions'
+import { ReducersType } from '../../../../store/configs/root-reducer'
+import * as actions from '../../../../store/modules/todo-lists/actions'
 import { ModalFormTodo, OnClickButtonParams, OnClickDeleteTodoItemParams } from '../modal-form-todo'
 import TodoItem, { TodoData }  from '../todo-item'
 import {
@@ -11,7 +11,7 @@ import {
   Button,
 
 } from './styles'
-import { capitalizeFirstLetter } from '../../helpers/capitalize-first-letter'
+import { capitalizeFirstLetter } from '../../../../helpers/capitalize-first-letter'
 
 export type TodoAreaID = 'todo' | 'doing' | 'done'
 

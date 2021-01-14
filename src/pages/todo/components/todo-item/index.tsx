@@ -6,7 +6,7 @@ import {
   Description
 } from './styles'
 
-import * as actions from '../../store/modules/todo-item-move/actions' 
+import * as actions from '../../../../store/modules/todo-item-move/actions' 
 import { TodoAreaID } from '../todo-list'
 
 export type TodoData = {

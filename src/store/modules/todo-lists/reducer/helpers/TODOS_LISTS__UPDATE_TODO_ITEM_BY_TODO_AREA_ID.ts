@@ -1,4 +1,4 @@
-import { TodoData } from "../../../../../components/todo-item"
+import { TodoData } from "../../../../../pages/todo/components/todo-item"
 import { PayloadUpdateOneTodoItemByTodoAreaID } from "../../types"
 
 export const updateTodoAreaID = ({todoItemMove, todoAreaIDToInsert}: PayloadUpdateOneTodoItemByTodoAreaID) => {
