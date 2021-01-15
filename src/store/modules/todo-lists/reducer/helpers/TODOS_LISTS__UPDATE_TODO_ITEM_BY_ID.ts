@@ -1,9 +1,9 @@
-import { StateType } from ".."
+import { StateTypeTodoLists } from ".."
 import { TodoData } from "../../../../../pages/todo/components/todo-item"
 import { TodoAreaID } from "../../../../../pages/todo/components/todo-list"
 import { addNewTodoItem } from "./TODOS_LISTS__INSERT_ONE_TODO_ITEM"
 
-export const updateNotChangeTodoItemAreaID = (todoAreaID: TodoAreaID, newState: StateType, newTodoItem: TodoData): StateType => {
+export const updateNotChangeTodoItemAreaID = (todoAreaID: TodoAreaID, newState: StateTypeTodoLists, newTodoItem: TodoData): StateTypeTodoLists => {
   const updateTodoItemWithClone = (oldTodo: TodoData) => 
     oldTodo.id === newTodoItem.id ? {...newTodoItem} : oldTodo
   
@@ -13,12 +13,12 @@ export const updateNotChangeTodoItemAreaID = (todoAreaID: TodoAreaID, newState: 
   return newState
 }
 
-export const updateChangeTodoItemAreaID = (oldTodoAreaID: TodoAreaID, newState: StateType, todoItem: TodoData): StateType => {
+export const updateChangeTodoItemAreaID = (oldTodoAreaID: TodoAreaID, newState: StateTypeTodoLists, todoItem: TodoData): StateTypeTodoLists => {
   const searchAndRemoveByID = (todoItemID: string, todoList: TodoData[]): void => {
     const index = todoList.findIndex(todo => todo.id === todoItemID)
     todoList.splice(index, 1)
   }
-  const removeByTodoAreaID = (todoAreaID: TodoAreaID, newState: StateType, todoItemID: string): StateType => {
+  const removeByTodoAreaID = (todoAreaID: TodoAreaID, newState: StateTypeTodoLists, todoItemID: string): StateTypeTodoLists => {
     if(todoAreaID === 'done') searchAndRemoveByID(todoItemID, newState.done)
     else if(todoAreaID === 'doing') searchAndRemoveByID(todoItemID, newState.doing)
     else if(todoAreaID === 'todo') searchAndRemoveByID(todoItemID, newState.todo)

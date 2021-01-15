@@ -3,7 +3,6 @@ import {
   PayloadInsertOneTodo, 
   PayloadUpdateOneTodoItemByTodoAreaID, 
   PayloadRemoveItemByTodoAreaID, 
-  PayloadRemoveOneItemByTodoAreaIDAndTodoItemID, 
   PayloadUpdateOneTodoItemByID 
 } from './types';
 

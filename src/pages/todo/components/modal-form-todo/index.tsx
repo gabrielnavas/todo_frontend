@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { capitalizeFirstLetter } from '../../../../helpers/capitalize-first-letter'
-import { insertNewTodoItemUseCase } from '../../../../usecases/insert-new-todo-item-use-case'
+import { insertNewTodoItemValidatiton } from '../../../../validations/insert-new-todo-item-validation'
 
 import { Modal } from '../../../../components/utils/modal'
 import { InputText } from '../../../../components/inputs/input-text'
@@ -77,7 +77,7 @@ const ModalFormTodo = ({
   }, [todoItemUpdate])
 
   const handleInsertOrUpdateTodoItem = useCallback( (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-    const errorsForm = insertNewTodoItemUseCase({title, description})
+    const errorsForm = insertNewTodoItemValidatiton({title, description})
     if(errorsForm.length > 0) return setErrors(errorsForm) as void
     if(todoItemUpdate) {
       onClickButtonFinish({id: todoItemUpdate.id, title, description, todoAreaID, oldTodoItemID: todoAreaID})

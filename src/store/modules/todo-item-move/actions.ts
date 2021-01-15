@@ -1,7 +1,15 @@
-import { TodoData } from '../../../pages/todo/components/todo-item';
 import * as types from '../../configs/actions-reducer-types';
 
-export function setNewTodoItem(payload: TodoData) {
+type TodoAreaIDPayLoad = string
+
+type SetNewTodoItemPayLoad = {
+  id?: string
+  todoAreaID: TodoAreaIDPayLoad
+  title: string
+  description: string
+}
+
+export function setNewTodoItem(payload: SetNewTodoItemPayLoad) {
   return {
     type: types.TODO_ITEM_MOVE__SET_NEW_TODO_ITEM,
     payload

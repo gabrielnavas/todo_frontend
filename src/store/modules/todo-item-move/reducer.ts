@@ -6,14 +6,14 @@ type ActionType = {
   payload?: any
 }
 
-export type StateType = TodoData
+export type StateTypeTodoItemMove = TodoData
 
-const inititalState: StateType = null
+const inititalState: StateTypeTodoItemMove = null
 
-const reducer = (state: StateType = inititalState, action: ActionType) => {
+const reducer = (state: StateTypeTodoItemMove = inititalState, action: ActionType) => {
   switch (action.type) {
     case types.TODO_ITEM_MOVE__SET_NEW_TODO_ITEM: {
-      const newtodoItemMove = action.payload as StateType
+      const newtodoItemMove = action.payload as StateTypeTodoItemMove
       return newtodoItemMove
     }
 

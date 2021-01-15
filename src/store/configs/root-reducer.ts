@@ -1,13 +1,16 @@
 import { combineReducers } from 'redux';
 
-import todoItemMoveReducer, {StateType as TodoItemMoveType} from '../modules/todo-item-move/reducer'
-import todoListsReducer, {StateType as TodosListsReducerType} from '../modules/todo-lists/reducer'
+import todoItemMoveReducer, {StateTypeTodoItemMove} from '../modules/todo-item-move/reducer'
+import todoListsReducer, {StateTypeTodoLists} from '../modules/todo-lists/reducer'
+import authReducer, {StateTypeAuth} from '../modules/auth/reducer'
 
 export type ReducersType = {
-  todoItemMove: TodoItemMoveType
-  todoLists: TodosListsReducerType
+  todoItemMove: StateTypeTodoItemMove
+  todoLists: StateTypeTodoLists
+  auth: StateTypeAuth
 }
 export default combineReducers<ReducersType>({
   todoItemMove: todoItemMoveReducer,
   todoLists: todoListsReducer,
+  auth: authReducer
 });

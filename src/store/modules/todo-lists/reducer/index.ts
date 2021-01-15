@@ -25,19 +25,19 @@ type ActionType = {
   payload?: any
 }
 
-export type StateType = {
+export type StateTypeTodoLists = {
   todo: TodoData[]
   doing: TodoData[]
   done: TodoData[]
 }
 
-const inititalState: StateType = {
+const inititalState: StateTypeTodoLists = {
   todo: [],
   doing: [],
   done: []
 }
 
-const reducer = (state: StateType = inititalState, action: ActionType) => {
+const reducer = (state: StateTypeTodoLists = inititalState, action: ActionType) => {
   
   switch (action.type) {
     case types.TODOS_LISTS__UPDATE_TODO_ITEM_BY_TODO_AREA_ID: {

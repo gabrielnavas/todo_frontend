@@ -7,13 +7,13 @@ import TodoList from './components/todo-list'
 import {HeaderPage} from '../../components/surfaces/header-page'
 
 import { ReducersType } from '../../store/configs/root-reducer'
-import {StateType as StateTypeTodoList} from '../../store/modules/todo-lists/reducer'
+import {StateTypeTodoLists} from '../../store/modules/todo-lists/reducer'
 
 const TodoPage = () => {
 
   const {
     done, todo, doing
-  } = useSelector<ReducersType>(state => state.todoLists) as StateTypeTodoList
+  } = useSelector<ReducersType>(state => state.todoLists) as StateTypeTodoLists
 
   return (
     <>
