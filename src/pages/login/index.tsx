@@ -16,7 +16,6 @@ import { loginService } from '../../services/login-service'
 import { useDispatch, useSelector } from 'react-redux'
 import * as actions from '../../store/modules/auth/actions'
 import { ReducersType } from '../../store/configs/root-reducer'
-import { localStorageService, TOKEN } from '../../services/local-storage-service'
 import { StateTypeAuth } from '../../store/modules/auth/reducer'
 
 export const LoginPage = () => {
@@ -37,7 +36,6 @@ export const LoginPage = () => {
       const result = await loginService({email, password})
       if(result.errors.length > 0) return setErrors(result.errors)
       dispatch(actions.loginSuccess(result.body))
-      await localStorageService.set(TOKEN, result.body.token)
       routerHistory.push(TODO_PAGE_ROUTE)
     }
     catch(error) {
