@@ -5,7 +5,7 @@ import {
 } from './styles'
 
 type HeaderPageProps = {
-  children: string
+  children: string | React.ReactNode | React.ReactNode[]
 }
 
 export const HeaderPage = ({children}: HeaderPageProps) => {
