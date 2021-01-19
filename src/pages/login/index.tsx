@@ -9,6 +9,7 @@ import { LeftSideAuthentication } from '../../components/surfaces/left-side-auth
 import { RightSideAuthentication } from '../../components/surfaces/right-side-authentication'
 import { FormAuthentication } from '../../components/inputs/form-authentication'
 import { ErrorsAuthentication } from '../../components/feedback/errors-authentication'
+import { IsLoading as IsLoadingComponent } from '../../components/feedback/is-loading'
 
 import { routerHistory } from '../../adapters/router/routerHistory'
 
@@ -27,14 +28,14 @@ export const LoginPage = () => {
   const [password, setPassword] = useState('')
 
   useEffect(() => {
-    dispatch(actions.logoffRequest())
+    dispatch(actions.logOffRequest())
   }, [dispatch])
 
   const handleOnClickButtonLogin = useCallback(
     async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
     e.preventDefault()
     const errors = loginValidation({email, password})
-    if(errors) dispatch(actions.loginFailure( { errors })) 
+    if(errors) return dispatch(actions.loginFailure( { errors })) as any 
     dispatch(actions.loginRequest({email, password}))
    }, [email, password, dispatch])
 
@@ -68,9 +69,7 @@ export const LoginPage = () => {
             </ButtonAuthentication>
           </ButtonGroupAuthentication>
           <ErrorsAuthentication errors={errors} />
-          {
-              isLoading && <h1>Loading</h1>
-          }
+          <IsLoadingComponent isLoading={isLoading}/>
         </FormAuthentication>
       </RightSideAuthentication>
     </Container>

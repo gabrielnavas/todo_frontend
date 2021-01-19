@@ -15,7 +15,7 @@ const ButtonHeaderLogout = ({children}: ButtonHeaderLogoutProps) => {
 
   return (
     <Container
-      onClick={e => dispatch(actions.logoffRequest())}
+      onClick={e => dispatch(actions.logOffRequest())}
     >Logout</Container>
   )
 }

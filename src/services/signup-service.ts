@@ -9,14 +9,12 @@ type SignUpServiceParams = {
 }
 
 type BodyResponse = {
-  id: string
-  name: string
   email: string
-  password: string
-  passwordConfirmation: string
+  token: string, 
+  name: string
 }
 
-type SignUpServiceResponse = {
+export type SignUpServiceResponse = {
   errors: string[]
   body?: BodyResponse
 }

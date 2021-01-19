@@ -25,8 +25,6 @@ const reducer = (state: StateTypeAuth = inititalState, action: AnyAction) => {
     case types.LOGIN_REQUEST: {
       const newState = {...state}
       newState.isLoading = true
-      console.log('passei no LOGIN_REQUEST: newState => ', newState)
-      console.log('passei no LOGIN_REQUEST: action => ', action)
       return newState
     }
 
@@ -43,6 +41,32 @@ const reducer = (state: StateTypeAuth = inititalState, action: AnyAction) => {
     }
 
     case types.LOGIN_FAILURE: {
+      const newState = {...state}
+      const payload = action.payload as PayloadLoginFailure
+      newState.errors = payload.errors
+      newState.isLoading = false
+      return newState
+    }
+
+    case types.SIGNUP_REQUEST: {
+      const newState = {...state}
+      newState.isLoading = true
+      return newState
+    }
+
+    case types.SIGNUP_SUCCESS: {
+      const {email, name, token} = action.payload as PayloadLoginSuccess
+      const newState = {...state}
+      newState.email = email
+      newState.token = token
+      newState.name = name
+      newState.isLoading = false
+      newState.isAuthenticated = true
+      newState.errors = []
+      return newState;
+    }
+
+    case types.SIGNUP_FAILURE: {
       const newState = {...state}
       const payload = action.payload as PayloadLoginFailure
       newState.errors = payload.errors

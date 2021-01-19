@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { ErrorsAuthentication } from '../../components/feedback/errors-authentication'
 import { ButtonAuthentication } from '../../components/inputs/button-authentication'
 import { ButtonGroupAuthentication } from '../../components/inputs/button-group-authentication'
@@ -8,14 +8,17 @@ import { InputText } from '../../components/inputs/input-text'
 import { LeftSideAuthentication } from '../../components/surfaces/left-side-authentication'
 import { RightSideAuthentication } from '../../components/surfaces/right-side-authentication'
 import { LOGIN_PAGE_ROUTE } from '../../routes/CONSTANTS'
-import { signupService } from '../../services/signup-service'
-// import { signUpValidation } from '../../validations/authentication-page/signup-validation'
+import { IsLoading as IsLoadingComponent } from '../../components/feedback/is-loading'
 import {routerHistory} from '../../adapters/router/routerHistory'
+import * as actions from '../../store/modules/auth/actions' 
 
 import {
   Container, 
 } from './styles'
 import { signUpValidation } from '../../validations/signup-validation'
+import { useDispatch, useSelector } from 'react-redux'
+import { ReducersType } from '../../store/configs/root-reducer'
+import { StateTypeAuth } from '../../store/modules/auth/reducer'
 
 export const SignUpPage = () => {
 
@@ -23,27 +26,25 @@ export const SignUpPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConfirmation, setPasswordConfirmation] = useState('')
-  const [errors, setErrors] = useState<string[]>([])
 
-  const handleOnClickButtonLoginPage = useCallback((event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-    event.preventDefault()
+  const dispatch = useDispatch()
+  const {isLoading, errors}  = useSelector<ReducersType>(state => state.auth) as StateTypeAuth
+
+  useEffect(() => {
+    dispatch(actions.logOffRequest())
+  }, [dispatch])
+
+  const handleOnClickButtonLoginPage = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+    e.preventDefault()
     routerHistory.push(LOGIN_PAGE_ROUTE)
   }, [])
   
-  const handleOnClickButtonCreateAccount = useCallback((event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-    event.preventDefault()
+  const handleOnClickButtonCreateAccount = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+    e.preventDefault()
     const errors = signUpValidation({name, email, password, passwordConfirmation})
-    if(errors.length > 0) return setErrors(errors)
-    signupService({name, email, password, passwordConfirmation})
-      .then(result => {
-        if(result.errors.length > 0 ) return setErrors([...result.errors])
-        routerHistory.push(LOGIN_PAGE_ROUTE)
-      })
-      .catch(error => {
-        console.log(error)
-        setErrors(['Não foi possível realizar o servico, tente novamente mais tarde.'])
-      })
-  }, [email, name, password, passwordConfirmation])
+    if(errors.length > 0) return dispatch(actions.signUpFailure({ errors })) as any
+    dispatch(actions.signUpRequest({name, email, password, passwordConfirmation}))
+  }, [email, name, password, passwordConfirmation, dispatch])
 
   return (
     <Container>
@@ -82,6 +83,7 @@ export const SignUpPage = () => {
               Create
             </ButtonAuthentication>
           </ButtonGroupAuthentication>
+          <IsLoadingComponent isLoading={isLoading} />
           <ErrorsAuthentication errors={errors} />
         </FormAuthentication>
       </RightSideAuthentication>
