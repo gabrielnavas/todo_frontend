@@ -35,7 +35,7 @@ export const LoginPage = () => {
     async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
     e.preventDefault()
     const errors = loginValidation({email, password})
-    if(errors) return dispatch(actions.loginFailure( { errors })) as any 
+    if(errors.length > 0) return dispatch(actions.loginFailure( { errors })) as any
     dispatch(actions.loginRequest({email, password}))
    }, [email, password, dispatch])
 

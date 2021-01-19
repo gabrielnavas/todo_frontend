@@ -13,14 +13,19 @@ export const RouterConfig = () => {
     return (
         <Router history={routerHistory.getInstance()}>
             <Switch>
-                <Route exact path={SIGNUP_PAGE_ROUTE} component={SignUpPage} />
-                <Route exact path={LOGIN_PAGE_ROUTE} component={LoginPage} />
+                <Route 
+                    exact 
+                    path={SIGNUP_PAGE_ROUTE} 
+                    component={SignUpPage} />
+                <Route 
+                    exact 
+                    path={LOGIN_PAGE_ROUTE} 
+                    component={LoginPage} />
                 <PrivateRoute 
                     exact 
                     redirectPath={LOGIN_PAGE_ROUTE} 
                     path={TODO_PAGE_ROUTE} 
-                    component={TodoPage} 
-                />
+                    component={TodoPage} />
                 <Route path="*" component={NotFoundPage} />
             </Switch>
         </Router>

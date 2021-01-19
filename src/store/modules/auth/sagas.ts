@@ -23,7 +23,8 @@ function* loginRequest( action: AnyAction) {
   try {
     const resp = (yield call(loginService, { email, password })) as Response
     if(resp.errors?.length > 0)  {
-      return yield put(actions.loginFailure({ errors: resp.errors }))
+      yield put(actions.loginFailure({ errors: resp.errors }))
+      return
     }
     
     yield put(actions.loginSuccess({ email, token: resp.body?.token, name: resp.body?.name}))
@@ -50,7 +51,7 @@ function* signUpRequest( action: AnyAction) {
     }))
     routerHistory.push(TODO_PAGE_ROUTE)
   } catch(error) {
-    // yield put(actions.signUpFailure({ errors: ['Serviço indisponível, tente se cadastrar mais tarde.'] }))
+    yield put(actions.signUpFailure({ errors: ['Serviço indisponível, tente se cadastrar mais tarde.'] }))
   }
 }
 

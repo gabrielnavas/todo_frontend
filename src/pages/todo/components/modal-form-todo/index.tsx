@@ -79,10 +79,17 @@ const ModalFormTodo = ({
   const handleInsertOrUpdateTodoItem = useCallback( (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     const errorsForm = insertNewTodoItemValidatiton({title, description})
     if(errorsForm.length > 0) return setErrors(errorsForm) as void
-    if(todoItemUpdate) {
-      onClickButtonFinish({id: todoItemUpdate.id, title, description, todoAreaID, oldTodoItemID: todoAreaID})
-    }
-    else onClickButtonFinish({id: null, title, description, todoAreaID, oldTodoItemID: null})
+    onClickButtonFinish({
+      id: todoItemUpdate ? todoItemUpdate.id : null, 
+      title, 
+      description, 
+      todoAreaID, 
+      oldTodoItemID: todoItemUpdate ? todoAreaID: null
+    })
+    // if(todoItemUpdate) {
+    //   onClickButtonFinish({id: todoItemUpdate.id, title, description, todoAreaID, oldTodoItemID: todoAreaID})
+    // }
+    // else onClickButtonFinish({id: null, title, description, todoAreaID, oldTodoItemID: null})
     setDescription('')
     setTitle('')
   }, [todoItemUpdate, description, title, onClickButtonFinish, todoAreaID])

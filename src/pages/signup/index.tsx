@@ -43,7 +43,7 @@ export const SignUpPage = () => {
     e.preventDefault()
     const errors = signUpValidation({name, email, password, passwordConfirmation})
     if(errors.length > 0) return dispatch(actions.signUpFailure({ errors })) as any
-    dispatch(actions.signUpRequest({name, email, password, passwordConfirmation}))
+    dispatch(actions.signUpRequest({ name, email, password, passwordConfirmation }))
   }, [email, name, password, passwordConfirmation, dispatch])
 
   return (

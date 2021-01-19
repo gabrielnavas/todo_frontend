@@ -88,8 +88,7 @@ export default function TodoList({todoItems, todoAreaID}: TodoListProps) {
   return (
     <Container
       onDragOver={e => e.preventDefault()}
-      onDrop={e => handleOnDrop()}
-    >
+      onDrop={e => handleOnDrop()}>
       <Button onClick={e => handleButtonInsert()}>
         Insert {capitalizeFirstLetter(todoAreaID)}
       </Button>
@@ -115,9 +114,7 @@ export default function TodoList({todoItems, todoAreaID}: TodoListProps) {
               />
             </React.Fragment>
           )
-        }
-         
-        ) 
+        }) 
       }
       <ModalFormTodo 
         isOpen={isOpenModalInsert} 
