@@ -9,7 +9,7 @@ export type ReducersType = {
   todoLists: StateTypeTodoLists
   auth: StateTypeAuth
 }
-export default combineReducers<ReducersType>({
+export const rootReducer = combineReducers<ReducersType>({
   todoItemMove: todoItemMoveReducer,
   todoLists: todoListsReducer,
   auth: authReducer

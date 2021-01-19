@@ -11,9 +11,9 @@ type ErrorsAuthenticationProps = {
 export const ErrorsAuthentication = ({errors}: ErrorsAuthenticationProps) => {
   return (
     <Container>
-    {
-      errors.map(
-        error => <Error><strong>* </strong>{error}</Error>
+    { 
+      errors.length > 0 && errors.map(
+        error => <Error key={error}><strong>* </strong>{error}</Error>
       ) 
     }
     </Container>

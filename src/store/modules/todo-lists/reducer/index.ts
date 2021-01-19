@@ -1,3 +1,4 @@
+import { AnyAction } from 'redux';
 import { TodoData } from '../../../../pages/todo/components/todo-item';
 import * as types from '../../../configs/actions-reducer-types';
 import { 
@@ -20,11 +21,6 @@ import {
   updateTodoAreaID 
 } from './helpers/TODOS_LISTS__UPDATE_TODO_ITEM_BY_TODO_AREA_ID'
 
-type ActionType = {
-  type: string, 
-  payload?: any
-}
-
 export type StateTypeTodoLists = {
   todo: TodoData[]
   doing: TodoData[]
@@ -37,7 +33,7 @@ const inititalState: StateTypeTodoLists = {
   done: []
 }
 
-const reducer = (state: StateTypeTodoLists = inititalState, action: ActionType) => {
+const reducer = (state: StateTypeTodoLists = inititalState, action: AnyAction) => {
   
   switch (action.type) {
     case types.TODOS_LISTS__UPDATE_TODO_ITEM_BY_TODO_AREA_ID: {

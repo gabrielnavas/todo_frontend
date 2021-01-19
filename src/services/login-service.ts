@@ -1,7 +1,7 @@
 import { LOGIN_URL } from "./CONSTANTS"
-import { fetchPostJson } from "../helpers/fetch-post-json"
+import { fetchPostJson } from "./helpers/fetch-post-json"
 
-type LoginServiceParams = {
+type Params = {
   email: string
   password: string
 }
@@ -9,33 +9,21 @@ type LoginServiceParams = {
 type BodyResponse = {
   token: string
   name: string
-  email: string
 }
 
-type LoginServiceResponse = {
-  errors: string[]
+export type Response = {
+  errors?: string[]
   body?: BodyResponse
 }
 
-export const loginService = async (params: LoginServiceParams): Promise<LoginServiceResponse> => {
-  // const resp = await fetchPostJson(LOGIN_URL, params)
+export const loginService = async (params: Params): Promise<Response> => {
+  const resp = await fetchPostJson(LOGIN_URL, params)
   // if(resp.status === 500) {
-  //   return { errors: ['Serviço indisponível, tente novamente mais tarde.'] }
+  //   return { errors: ['Serviço indisponível, tente novamente mais tarde. 500'] }
   // }
-  // if(resp.status === 400) {
-  //   return { errors: ['Email ou senha incorretos.'] }
-  // }
-  // const user = (await resp.json()).body
-  // return { body: user, errors: [] }
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve({ body: {
-          email: 'gab@email',
-          name: 'gabriel',
-          token: 'JSIDSAPID8()ASYF89sayf890A@#@$@U$(*Us'
-        }, 
-        errors: [] 
-      })
-    }, 2000)
-  })
+  if(resp.status === 400) {
+    return { errors: ['Email ou senha incorretos.'] }
+  }
+  const user = (await resp.json()).body
+  return { body: user, errors: [] }
 }

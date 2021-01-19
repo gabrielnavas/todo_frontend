@@ -9,12 +9,13 @@ import { LeftSideAuthentication } from '../../components/surfaces/left-side-auth
 import { RightSideAuthentication } from '../../components/surfaces/right-side-authentication'
 import { LOGIN_PAGE_ROUTE } from '../../routes/CONSTANTS'
 import { signupService } from '../../services/signup-service'
-import { signUpValidation } from '../../validations/authentication-page/signup-validation'
+// import { signUpValidation } from '../../validations/authentication-page/signup-validation'
 import {routerHistory} from '../../adapters/router/routerHistory'
 
 import {
   Container, 
 } from './styles'
+import { signUpValidation } from '../../validations/signup-validation'
 
 export const SignUpPage = () => {
 
@@ -39,6 +40,7 @@ export const SignUpPage = () => {
         routerHistory.push(LOGIN_PAGE_ROUTE)
       })
       .catch(error => {
+        console.log(error)
         setErrors(['Não foi possível realizar o servico, tente novamente mais tarde.'])
       })
   }, [email, name, password, passwordConfirmation])

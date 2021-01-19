@@ -1,16 +1,12 @@
+import { AnyAction } from 'redux';
 import { TodoData } from '../../../pages/todo/components/todo-item';
 import * as types from '../../configs/actions-reducer-types';
-
-type ActionType = {
-  type: string, 
-  payload?: any
-}
 
 export type StateTypeTodoItemMove = TodoData
 
 const inititalState: StateTypeTodoItemMove = null
 
-const reducer = (state: StateTypeTodoItemMove = inititalState, action: ActionType) => {
+const reducer = (state: StateTypeTodoItemMove = inititalState, action: AnyAction) => {
   switch (action.type) {
     case types.TODO_ITEM_MOVE__SET_NEW_TODO_ITEM: {
       const newtodoItemMove = action.payload as StateTypeTodoItemMove

@@ -1,10 +1,6 @@
+import { AnyAction } from 'redux'
 import * as types from '../../configs/actions-reducer-types'
-import { PayloadLoginSuccess } from './types'
-
-type ActionType = {
-  type: string, 
-  payload?: any
-}
+import { PayloadLoginFailure, PayloadLoginSuccess } from './types'
 
 export type StateTypeAuth = {
   token: string
@@ -12,6 +8,7 @@ export type StateTypeAuth = {
   email: string
   isLoading: boolean
   isAuthenticated: boolean
+  errors: string[]
 }
 
 const inititalState: StateTypeAuth =  {
@@ -19,14 +16,17 @@ const inititalState: StateTypeAuth =  {
   name: null,
   email: null,
   isLoading: false,
-  isAuthenticated: false
+  isAuthenticated: false,
+  errors: []
 }
 
-const reducer = (state: StateTypeAuth = inititalState, action: ActionType) => {
+const reducer = (state: StateTypeAuth = inititalState, action: AnyAction) => {
   switch (action.type) {
     case types.LOGIN_REQUEST: {
       const newState = {...state}
       newState.isLoading = true
+      console.log('passei no LOGIN_REQUEST: newState => ', newState)
+      console.log('passei no LOGIN_REQUEST: action => ', action)
       return newState
     }
 
@@ -38,12 +38,20 @@ const reducer = (state: StateTypeAuth = inititalState, action: ActionType) => {
       newState.name = name
       newState.isLoading = false
       newState.isAuthenticated = true
+      newState.errors = []
       return newState;
     }
 
     case types.LOGIN_FAILURE: {
-      const newState = {...inititalState}
+      const newState = {...state}
+      const payload = action.payload as PayloadLoginFailure
+      newState.errors = payload.errors
+      newState.isLoading = false
       return newState
+    }
+
+    case types.LOGOFF_REQUEST: {
+      return {...inititalState}
     }
 
     default: {
