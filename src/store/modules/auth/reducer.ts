@@ -5,7 +5,7 @@ import {
   PayloadLoginSuccess 
 } from './payload-types'
 
-export type StateTypeAuth = {
+export type StateType = {
   token: string
   name: string
   email: string
@@ -14,7 +14,7 @@ export type StateTypeAuth = {
   errors: string[]
 }
 
-const inititalState: StateTypeAuth =  {
+export const inititalState: StateType =  {
   token: null,
   name: null,
   email: null,
@@ -23,7 +23,7 @@ const inititalState: StateTypeAuth =  {
   errors: []
 }
 
-const reducer = (state: StateTypeAuth = inititalState, action: AnyAction) => {
+const reducer = (state: StateType = inititalState, action: AnyAction) => {
   switch (action.type) {
     case types.LOGIN_REQUEST: {
       const newState = {...state}
