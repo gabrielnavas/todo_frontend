@@ -1,5 +1,5 @@
-import * as types from '../../configs/actions-reducer-types';
-import * as payloadTypes from './types'
+import * as types from './action-types';
+import * as payloadTypes from './payload-types'
 
 export const loginRequest = (payload: payloadTypes.PayloadLoginRequest) => {
   return {

@@ -7,8 +7,8 @@ import {
 import { AnyAction } from 'redux'
 
 import * as actions from './actions'
-import * as payloadTypes from './types'
-import * as types from '../../configs/actions-reducer-types'
+import * as payloadTypes from './payload-types'
+import * as types from './action-types'
 
 import { routerHistory } from '../../../adapters/router/routerHistory'
 

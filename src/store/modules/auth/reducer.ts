@@ -1,6 +1,9 @@
 import { AnyAction } from 'redux'
-import * as types from '../../configs/actions-reducer-types'
-import { PayloadLoginFailure, PayloadLoginSuccess } from './types'
+import * as types from './action-types'
+import { 
+  PayloadLoginFailure, 
+  PayloadLoginSuccess 
+} from './payload-types'
 
 export type StateTypeAuth = {
   token: string
