@@ -11,7 +11,7 @@ type SignUpServiceParams = {
 type BodyResponse = {
   email: string
   token: string, 
-  name: string
+  userName: string
 }
 
 export type SignUpServiceResponse = {
@@ -25,6 +25,6 @@ export const signupService = async (params: SignUpServiceParams): Promise<SignUp
   if(resp.status === 400) {
     return { errors: ['Email já cadastrado, tente outro...'] }
   }
-  const rawJson = await resp.json()
-  return { body: rawJson.body, errors: [] }
+  const body = await resp.json()
+  return { body, errors: [] }
 }

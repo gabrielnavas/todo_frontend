@@ -18,7 +18,7 @@ import {
 import { signUpValidation } from '../../validations/signup-validation'
 import { useDispatch, useSelector } from 'react-redux'
 import { ReducersType } from '../../store/configs/root-reducer'
-import { StateTypeAuth } from '../../store/modules/auth/reducer'
+import { StateType as StateTypeAuth } from '../../store/modules/auth/reducer'
 
 export const SignUpPage = () => {
 

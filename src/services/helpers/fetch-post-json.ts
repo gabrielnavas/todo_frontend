@@ -1,4 +1,4 @@
-export const fetchPostJson = async (url: string, data: any): Promise<Response> => {
+export const fetchPostJson = async (url: string, data: any) => {
   const config = {
     method: 'POST',
     headers: {

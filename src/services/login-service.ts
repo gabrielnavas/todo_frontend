@@ -11,12 +11,12 @@ type BodyResponse = {
   name: string
 }
 
-export type Response = {
-  errors?: string[]
+export type ResponseLoginService = {
+  errors: string[]
   body?: BodyResponse
 }
 
-export const loginService = async (params: Params): Promise<Response> => {
+export const loginService = async (params: Params): Promise<ResponseLoginService> => {
   const resp = await fetchPostJson(LOGIN_URL, params)
   // if(resp.status === 500) {
   //   return { errors: ['Serviço indisponível, tente novamente mais tarde. 500'] }
@@ -24,6 +24,6 @@ export const loginService = async (params: Params): Promise<Response> => {
   if(resp.status === 400) {
     return { errors: ['Email ou senha incorretos.'] }
   }
-  const user = (await resp.json()).body
-  return { body: user, errors: [] }
+  const body = await resp.json()
+  return { body, errors: [] }
 }

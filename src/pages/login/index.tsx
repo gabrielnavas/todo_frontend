@@ -15,7 +15,7 @@ import { routerHistory } from '../../adapters/router/routerHistory'
 
 import * as actions from '../../store/modules/auth/actions'
 import { ReducersType } from '../../store/configs/root-reducer'
-import { StateTypeAuth } from '../../store/modules/auth/reducer'
+import { StateType as StateTypeAuth } from '../../store/modules/auth/reducer'
 import { SIGNUP_PAGE_ROUTE } from '../../routes/CONSTANTS'
 import { loginValidation } from '../../validations/login-validation'
 
