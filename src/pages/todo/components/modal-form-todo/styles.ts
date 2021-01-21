@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { scrollDefault } from "../../../../styles/scroll-styles";
+import styled from 'styled-components'
+import { scrollDefault } from '../../../../styles/scroll-styles'
 
 export const InputTextArea = styled.textarea`
   width: 80%;
@@ -22,24 +22,24 @@ export const InputTextArea = styled.textarea`
   }
 `
 
-export type TextButtonFinish =  'Insert' | 'Update' | 'Delete'
+export type TextButtonFinish = 'Insert' | 'Update' | 'Delete'
 type ButtonHeaderProps = {
   children: TextButtonFinish
 }
 
-export const ButtonHeader = styled.button.attrs(({children}: ButtonHeaderProps) => ({
+export const ButtonHeader = styled.button.attrs(({ children }: ButtonHeaderProps) => ({
   backgroundColor: children === 'Insert' || children === 'Update' ? '--blue' : '--red',
   backgroundColorHover: children === 'Insert' || children === 'Update' ? '--blue-dark-hover' : '--red-dark-hover'
 }))`
   height: 50px;
   width: 100px;
-  background: var(${({backgroundColor}) => backgroundColor});
+  background: var(${({ backgroundColor }) => backgroundColor});
   cursor: pointer;
   outline: none;
   font-size: 16px;
   font-weight: bold;
   &:hover {
-    background: var(${({backgroundColorHover}) => backgroundColorHover});
+    background: var(${({ backgroundColorHover }) => backgroundColorHover});
   }
   &:active {
     background: var(--green);

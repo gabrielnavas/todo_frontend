@@ -1,5 +1,5 @@
-import { SIGNUP_URL } from "./CONSTANTS"
-import { fetchPostJson } from "./helpers/fetch-post-json"
+import { SIGNUP_URL } from './CONSTANTS'
+import { fetchPostJson } from './helpers/fetch-post-json'
 
 type SignUpServiceParams = {
   name: string
@@ -10,7 +10,7 @@ type SignUpServiceParams = {
 
 type BodyResponse = {
   email: string
-  token: string, 
+  token: string,
   userName: string
 }
 
@@ -21,8 +21,8 @@ export type SignUpServiceResponse = {
 
 export const signupService = async (params: SignUpServiceParams): Promise<SignUpServiceResponse> => {
   const resp = await fetchPostJson(SIGNUP_URL, params)
-  
-  if(resp.status === 400) {
+
+  if (resp.status === 400) {
     return { errors: ['Email já cadastrado, tente outro...'] }
   }
   const body = await resp.json()

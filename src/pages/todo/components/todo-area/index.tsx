@@ -4,8 +4,7 @@ type TodoAreaProps = {
   children: any
 }
 
-export default function TodoArea({children}: TodoAreaProps) {
-  
+export default function TodoArea ({ children }: TodoAreaProps) {
   return (
     <Container>
       {children}

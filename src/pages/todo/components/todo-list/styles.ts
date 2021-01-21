@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { scrollDefault } from "../../../../styles/scroll-styles";
+import styled from 'styled-components'
+import { scrollDefault } from '../../../../styles/scroll-styles'
 
 export const Container = styled.div`
   height: 100%;
@@ -24,5 +24,3 @@ export const Button = styled.button`
     background: var(--blue-opacity);
   }
 `
-
-

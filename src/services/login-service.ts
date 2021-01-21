@@ -1,5 +1,5 @@
-import { LOGIN_URL } from "./CONSTANTS"
-import { fetchPostJson } from "./helpers/fetch-post-json"
+import { LOGIN_URL } from './CONSTANTS'
+import { fetchPostJson } from './helpers/fetch-post-json'
 
 type Params = {
   email: string
@@ -21,7 +21,7 @@ export const loginService = async (params: Params): Promise<ResponseLoginService
   // if(resp.status === 500) {
   //   return { errors: ['Serviço indisponível, tente novamente mais tarde. 500'] }
   // }
-  if(resp.status === 400) {
+  if (resp.status === 400) {
     return { errors: ['Email ou senha incorretos.'] }
   }
   const body = await resp.json()

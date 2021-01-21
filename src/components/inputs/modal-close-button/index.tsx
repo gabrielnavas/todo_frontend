@@ -6,7 +6,7 @@ export type ModalCloseButtonProps = {
   onClick: OnClickModalCloseButton
 }
 
-export const ModalCloseButton = ({onClick}: ModalCloseButtonProps) => {
+export const ModalCloseButton = ({ onClick }: ModalCloseButtonProps) => {
   return (
     <Container
       onClick={e => onClick()}

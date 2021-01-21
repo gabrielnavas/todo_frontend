@@ -1,17 +1,16 @@
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import { Container, TodosAreas } from './styles'
 
 import TodoArea from './components/todo-area'
 import TodoList from './components/todo-list'
-import {HeaderPage} from '../../components/surfaces/header-page'
+import { HeaderPage } from '../../components/surfaces/header-page'
 import { ButtonHeaderLogout } from '../../components/inputs/button-header-logout'
 
 import { ReducersType } from '../../store/configs/root-reducer'
-import {StateTypeTodoLists} from '../../store/modules/todo-lists/reducer'
+import { StateTypeTodoLists } from '../../store/modules/todo-lists/reducer'
 
 const TodoPage = () => {
-
   const {
     done, todo, doing
   } = useSelector<ReducersType>(state => state.todoLists) as StateTypeTodoLists
@@ -39,4 +38,4 @@ const TodoPage = () => {
   )
 }
 
-export {TodoPage}
+export { TodoPage }

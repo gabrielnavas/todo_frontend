@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components'
 
 export default createGlobalStyle`
   * {
@@ -40,4 +40,4 @@ export default createGlobalStyle`
     --blue-dark-hover: #011017;
     --blue-light-hover: #1375bd;
   }
-`;
+`

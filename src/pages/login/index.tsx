@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, MouseEvent } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Container } from './styles'
@@ -20,9 +20,8 @@ import { SIGNUP_PAGE_ROUTE } from '../../routes/CONSTANTS'
 import { loginValidation } from '../../validations/login-validation'
 
 export const LoginPage = () => {
-
   const dispatch = useDispatch()
-  const {isLoading, errors}  = useSelector<ReducersType>(state => state.auth) as StateTypeAuth
+  const { isLoading, errors } = useSelector<ReducersType>(state => state.auth) as StateTypeAuth
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -32,39 +31,39 @@ export const LoginPage = () => {
   }, [dispatch])
 
   const handleOnClickButtonLogin = useCallback(
-    async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
-    e.preventDefault()
-    const errors = loginValidation({email, password})
-    if(errors.length > 0) return dispatch(actions.loginFailure( { errors })) as any
-    dispatch(actions.loginRequest({email, password}))
-   }, [email, password, dispatch])
+    (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>): void => {
+      e.preventDefault()
+      const errors = loginValidation({ email, password })
+      if (errors.length > 0) return dispatch(actions.loginFailure({ errors })) as any
+      dispatch(actions.loginRequest({ email, password }))
+    }, [email, password, dispatch])
 
   return (
     <Container>
       <LeftSideAuthentication />
       <RightSideAuthentication titleHeader='Login in your Todo App'>
         <FormAuthentication>
-          <InputText 
+          <InputText
             placeholder='your email...'
             type='email'
             value={email}
             onChange={e => setEmail(e.target.value)}
           />
-          <InputText 
+          <InputText
             placeholder='your password...'
             type='password'
             value={password}
             onChange={e => setPassword(e.target.value)}
           />
           <ButtonGroupAuthentication>
-            <ButtonAuthentication 
+            <ButtonAuthentication
               disabled={isLoading}
               onClick={e => routerHistory.push(SIGNUP_PAGE_ROUTE)}>
               SignUp Page
             </ButtonAuthentication>
-            <ButtonAuthentication 
+            <ButtonAuthentication
               disabled={isLoading}
-              onClick={handleOnClickButtonLogin}>
+              onClick={e => handleOnClickButtonLogin(e)}>
               Login
             </ButtonAuthentication>
           </ButtonGroupAuthentication>

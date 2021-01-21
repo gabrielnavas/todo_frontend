@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, MouseEvent } from 'react'
 import { ErrorsAuthentication } from '../../components/feedback/errors-authentication'
 import { ButtonAuthentication } from '../../components/inputs/button-authentication'
 import { ButtonGroupAuthentication } from '../../components/inputs/button-group-authentication'
@@ -9,11 +9,11 @@ import { LeftSideAuthentication } from '../../components/surfaces/left-side-auth
 import { RightSideAuthentication } from '../../components/surfaces/right-side-authentication'
 import { LOGIN_PAGE_ROUTE } from '../../routes/CONSTANTS'
 import { IsLoading as IsLoadingComponent } from '../../components/feedback/is-loading'
-import {routerHistory} from '../../adapters/router/routerHistory'
-import * as actions from '../../store/modules/auth/actions' 
+import { routerHistory } from '../../adapters/router/routerHistory'
+import * as actions from '../../store/modules/auth/actions'
 
 import {
-  Container, 
+  Container
 } from './styles'
 import { signUpValidation } from '../../validations/signup-validation'
 import { useDispatch, useSelector } from 'react-redux'
@@ -21,65 +21,66 @@ import { ReducersType } from '../../store/configs/root-reducer'
 import { StateType as StateTypeAuth } from '../../store/modules/auth/reducer'
 
 export const SignUpPage = () => {
-
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConfirmation, setPasswordConfirmation] = useState('')
 
   const dispatch = useDispatch()
-  const {isLoading, errors}  = useSelector<ReducersType>(state => state.auth) as StateTypeAuth
+  const { isLoading, errors } = useSelector<ReducersType>(state => state.auth) as StateTypeAuth
 
   useEffect(() => {
     dispatch(actions.logOffRequest())
   }, [dispatch])
 
-  const handleOnClickButtonLoginPage = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-    e.preventDefault()
-    routerHistory.push(LOGIN_PAGE_ROUTE)
-  }, [])
-  
-  const handleOnClickButtonCreateAccount = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-    e.preventDefault()
-    const errors = signUpValidation({name, email, password, passwordConfirmation})
-    if(errors.length > 0) return dispatch(actions.signUpFailure({ errors })) as any
-    dispatch(actions.signUpRequest({ name, email, password, passwordConfirmation }))
-  }, [email, name, password, passwordConfirmation, dispatch])
+  const handleOnClickButtonLoginPage = useCallback(
+    (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>): void => {
+      e.preventDefault()
+      routerHistory.push(LOGIN_PAGE_ROUTE)
+    }, [])
+
+  const handleOnClickButtonCreateAccount = useCallback(
+    (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>): void => {
+      e.preventDefault()
+      const errors = signUpValidation({ name, email, password, passwordConfirmation })
+      if (errors.length > 0) return dispatch(actions.signUpFailure({ errors })) as any
+      dispatch(actions.signUpRequest({ name, email, password, passwordConfirmation }))
+    }, [email, name, password, passwordConfirmation, dispatch])
 
   return (
     <Container>
       <LeftSideAuthentication />
       <RightSideAuthentication titleHeader='Create your account'>
         <FormAuthentication>
-          <InputText 
+          <InputText
             type='text'
             onChange={e => setName(e.target.value)}
             placeholder='Your name'
             value={name}
           />
-          <InputText 
+          <InputText
             type='email'
             onChange={e => setEmail(e.target.value)}
             placeholder='Your email'
             value={email}
           />
-          <InputText 
+          <InputText
             type='password'
             onChange={e => setPassword(e.target.value)}
             placeholder='Your password'
             value={password}
           />
-          <InputText 
+          <InputText
             type='password'
             onChange={e => setPasswordConfirmation(e.target.value)}
             placeholder='Your password confirmation'
             value={passwordConfirmation}
           />
           <ButtonGroupAuthentication>
-            <ButtonAuthentication onClick={handleOnClickButtonLoginPage}>
+            <ButtonAuthentication onClick={e => handleOnClickButtonLoginPage(e)}>
               Login page
             </ButtonAuthentication>
-            <ButtonAuthentication onClick={handleOnClickButtonCreateAccount}>
+            <ButtonAuthentication onClick={e => handleOnClickButtonCreateAccount(e)}>
               Create
             </ButtonAuthentication>
           </ButtonGroupAuthentication>

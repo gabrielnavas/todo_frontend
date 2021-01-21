@@ -1,14 +1,14 @@
-import React, { useCallback, useState } from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-import { v4 as uuid }from 'uuid'
+import { useCallback, useState, Fragment } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { v4 as uuid } from 'uuid'
 
 import { ReducersType } from '../../../../store/configs/root-reducer'
 import * as actions from '../../../../store/modules/todo-lists/actions'
 import { ModalFormTodo, OnClickButtonParams, OnClickDeleteTodoItemParams } from '../modal-form-todo'
-import TodoItem, { TodoData }  from '../todo-item'
+import TodoItem, { TodoData } from '../todo-item'
 import {
-  Container, 
-  Button,
+  Container,
+  Button
 
 } from './styles'
 import { capitalizeFirstLetter } from '../../../../helpers/capitalize-first-letter'
@@ -20,7 +20,7 @@ type TodoListProps = {
   todoAreaID: TodoAreaID
 }
 
-export default function TodoList({todoItems, todoAreaID}: TodoListProps) {
+export default function TodoList ({ todoItems, todoAreaID }: TodoListProps) {
   const dispatch = useDispatch()
   const todoItemMove = useSelector<ReducersType, TodoData>(state => state.todoItemMove)
 
@@ -28,13 +28,13 @@ export default function TodoList({todoItems, todoAreaID}: TodoListProps) {
   const [isOpenModalUpdate, setIsOpenModalUpdate] = useState(false)
 
   const handleOnDrop = useCallback(() => {
-    dispatch(actions.removeOneItemByTodoAreaIDAndTodoItemID({ 
-      todoAreaID: todoItemMove.todoAreaID, todoItemID: todoItemMove.id 
+    dispatch(actions.removeOneItemByTodoAreaIDAndTodoItemID({
+      todoAreaID: todoItemMove.todoAreaID, todoItemID: todoItemMove.id
     }))
-    dispatch(actions.updateOneTodoItemByTodoAreaID({ 
-      todoItemMove, todoAreaIDToInsert: todoAreaID 
+    dispatch(actions.updateOneTodoItemByTodoAreaID({
+      todoItemMove, todoAreaIDToInsert: todoAreaID
     }))
-  },[dispatch, todoAreaID, todoItemMove])
+  }, [dispatch, todoAreaID, todoItemMove])
 
   const handleOnClickModalCloseButton = () => {
     setIsOpenModalInsert(false)
@@ -58,8 +58,8 @@ export default function TodoList({todoItems, todoAreaID}: TodoListProps) {
   }
 
   const handleOnClickButtonFinish = useCallback((params: OnClickButtonParams) => {
-    if(isOpenModalInsert) {
-      dispatch(actions.insertOneTodoItem({ 
+    if (isOpenModalInsert) {
+      dispatch(actions.insertOneTodoItem({
         todoItem: {
           id: uuid(),
           todoAreaID: params.todoAreaID,
@@ -68,7 +68,7 @@ export default function TodoList({todoItems, todoAreaID}: TodoListProps) {
         }
       }))
     } else {
-      dispatch(actions.updateOneTodoItemByID({ 
+      dispatch(actions.updateOneTodoItemByID({
         todoItem: {
           id: params.id,
           todoAreaID: params.todoAreaID,
@@ -81,7 +81,7 @@ export default function TodoList({todoItems, todoAreaID}: TodoListProps) {
     }
   }, [dispatch, isOpenModalInsert])
 
-  const handleOnClickModalDeleteTodoItem = useCallback( (params: OnClickDeleteTodoItemParams) => {
+  const handleOnClickModalDeleteTodoItem = useCallback((params: OnClickDeleteTodoItemParams) => {
     dispatch(actions.removeOneItemByTodoAreaIDAndTodoItemID({ ...params }))
   }, [dispatch])
 
@@ -92,13 +92,13 @@ export default function TodoList({todoItems, todoAreaID}: TodoListProps) {
       <Button onClick={e => handleButtonInsert()}>
         Insert {capitalizeFirstLetter(todoAreaID)}
       </Button>
-      { 
-        todoItems.map( (todoData, index) => {
+      {
+        todoItems.map((todoData, index) => {
           return (
-            <React.Fragment key={uuid()}>
-              <ModalFormTodo 
+            <Fragment key={uuid()}>
+              <ModalFormTodo
                 key={uuid()}
-                isOpen={isOpenModalUpdate} 
+                isOpen={isOpenModalUpdate}
                 onClickOutSide={onClickOutSideModalUpdate}
                 onClickButtonFinish={handleOnClickButtonFinish}
                 onClickModalCloseButton={handleOnClickModalCloseButton}
@@ -112,12 +112,12 @@ export default function TodoList({todoItems, todoAreaID}: TodoListProps) {
                 onClick={handleOnClickTodoItemComponent}
                 todoData={todoData}
               />
-            </React.Fragment>
+            </Fragment>
           )
-        }) 
+        })
       }
-      <ModalFormTodo 
-        isOpen={isOpenModalInsert} 
+      <ModalFormTodo
+        isOpen={isOpenModalInsert}
         onClickOutSide={onClickOutSideModalInsert}
         onClickButtonFinish={handleOnClickButtonFinish}
         onClickModalCloseButton={handleOnClickModalCloseButton}

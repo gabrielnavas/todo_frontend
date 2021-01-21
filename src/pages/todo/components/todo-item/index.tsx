@@ -1,12 +1,12 @@
-import {useDispatch} from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import {
-  Container, 
-  Title, 
+  Container,
+  Title,
   Description
 } from './styles'
 
-import * as actions from '../../../../store/modules/todo-item-move/actions' 
+import * as actions from '../../../../store/modules/todo-item-move/actions'
 import { TodoAreaID } from '../todo-list'
 
 export type TodoData = {
@@ -23,13 +23,13 @@ type TodoItemProps = {
   onClick: OnClickComponent
 }
 
-export default function TodoItem({todoData, onClick}: TodoItemProps) {
+export default function TodoItem ({ todoData, onClick }: TodoItemProps) {
   const dispatch = useDispatch()
 
   return (
     <Container
       draggable
-      onDragStart={e =>  dispatch(actions.setNewTodoItem(todoData))}
+      onDragStart={e => dispatch(actions.setNewTodoItem(todoData))}
       onDragEnd={e => dispatch(actions.setNullTodoItem())}
       onClick={onClick}
     >

@@ -1,12 +1,14 @@
+import { ReactNode } from 'react'
+
 import {
   Container
 } from './styles'
 
 type ButtonGroupProp = {
-  children: React.ReactNode | React.ReactNode[] 
+  children: ReactNode | ReactNode[]
 }
 
-const ButtonGroup = ({children}: ButtonGroupProp) => {
+const ButtonGroup = ({ children }: ButtonGroupProp) => {
   return (
     <Container>{children}</Container>
   )

@@ -1,8 +1,7 @@
-import { useSelector } from "react-redux"
-import { Redirect } from "react-router-dom"
+import { useSelector } from 'react-redux'
+import { Redirect, Route } from 'react-router-dom'
 
-import { ReducersType } from "../store/configs/root-reducer"
-import {Route} from 'react-router-dom'
+import { ReducersType } from '../store/configs/root-reducer'
 
 type PrivateRouteProps = {
   exact: boolean
@@ -11,12 +10,11 @@ type PrivateRouteProps = {
   component: () => JSX.Element
 }
 
-export const PrivateRoute = ({exact, path, redirectPath, component: Component}: PrivateRouteProps) => {
+export const PrivateRoute = ({ exact, path, redirectPath, component: Component }: PrivateRouteProps) => {
+  const isAuthenticated = useSelector<ReducersType>(state => state.auth.isAuthenticated) as boolean
 
-  const isAuthenticated  = useSelector<ReducersType>(state => state.auth.isAuthenticated) as boolean
-
-  if(!isAuthenticated) {
-    return <Redirect exact to={redirectPath} /> 
+  if (!isAuthenticated) {
+    return <Redirect exact to={redirectPath} />
   }
 
   return (
