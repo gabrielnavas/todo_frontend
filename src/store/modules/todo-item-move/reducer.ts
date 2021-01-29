@@ -1,6 +1,6 @@
-import { AnyAction } from 'redux';
-import { TodoData } from '../../../pages/todo/components/todo-item';
-import * as types from '../../configs/actions-reducer-types';
+import { AnyAction } from 'redux'
+import { TodoData } from '../../../pages/todo/components/todo-item'
+import * as types from '../../configs/actions-reducer-types'
 
 export type StateTypeTodoItemMove = TodoData
 
@@ -14,13 +14,13 @@ const reducer = (state: StateTypeTodoItemMove = inititalState, action: AnyAction
     }
 
     case types.TODO_ITEM_MOVE__SET_NULL_TODO_ITEM: {
-      return null;
+      return null
     }
 
     default: {
-      return state;
+      return state
     }
   }
 }
-  
+
 export default reducer

@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { v4 as uuid } from 'uuid'
 
 import { ReducersType } from '../../../../store/configs/root-reducer'
-import * as actions from '../../../../store/modules/todo-lists/actions'
+import * as actionsInserts from '../../../../store/modules/todo-lists/actions/inserts'
+import * as actionsUpdates from '../../../../store/modules/todo-lists/actions/updates'
+import * as actionsDeletes from '../../../../store/modules/todo-lists/actions/deletes'
 import { ModalFormTodo, OnClickButtonParams, OnClickDeleteTodoItemParams } from '../modal-form-todo'
 import TodoItem, { TodoData } from '../todo-item'
 import {
@@ -28,10 +30,10 @@ export default function TodoList ({ todoItems, todoAreaID }: TodoListProps) {
   const [isOpenModalUpdate, setIsOpenModalUpdate] = useState(false)
 
   const handleOnDrop = useCallback(() => {
-    dispatch(actions.removeOneItemByTodoAreaIDAndTodoItemID({
+    dispatch(actionsDeletes.deleteOneItemByTodoAreaIDAndTodoItemID({
       todoAreaID: todoItemMove.todoAreaID, todoItemID: todoItemMove.id
     }))
-    dispatch(actions.updateOneTodoItemByTodoAreaID({
+    dispatch(actionsUpdates.updateOneTodoItemByTodoAreaID({
       todoItemMove, todoAreaIDToInsert: todoAreaID
     }))
   }, [dispatch, todoAreaID, todoItemMove])
@@ -59,7 +61,7 @@ export default function TodoList ({ todoItems, todoAreaID }: TodoListProps) {
 
   const handleOnClickButtonFinish = useCallback((params: OnClickButtonParams) => {
     if (isOpenModalInsert) {
-      dispatch(actions.insertOneTodoItem({
+      dispatch(actionsInserts.insertOneTodoItem({
         todoItem: {
           id: uuid(),
           todoAreaID: params.todoAreaID,
@@ -68,7 +70,7 @@ export default function TodoList ({ todoItems, todoAreaID }: TodoListProps) {
         }
       }))
     } else {
-      dispatch(actions.updateOneTodoItemByID({
+      dispatch(actionsUpdates.updateOneTodoItemByID({
         todoItem: {
           id: params.id,
           todoAreaID: params.todoAreaID,
@@ -82,7 +84,7 @@ export default function TodoList ({ todoItems, todoAreaID }: TodoListProps) {
   }, [dispatch, isOpenModalInsert])
 
   const handleOnClickModalDeleteTodoItem = useCallback((params: OnClickDeleteTodoItemParams) => {
-    dispatch(actions.removeOneItemByTodoAreaIDAndTodoItemID({ ...params }))
+    dispatch(actionsDeletes.deleteOneItemByTodoAreaIDAndTodoItemID({ ...params }))
   }, [dispatch])
 
   return (
