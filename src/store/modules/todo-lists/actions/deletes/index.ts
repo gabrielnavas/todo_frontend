@@ -13,7 +13,7 @@ export type PayloadRemoveOneItemByTodoAreaIDAndTodoItemID = {
 
 export function deleteOneItemByTodoAreaIDAndTodoItemID (payload: PayloadDeleteItemByTodoAreaID) {
   return {
-    type: types.TODOS_LISTS__REMOVE_ONE_TODO_ITEM_BY_TODO_AREA_ID_AND_TODO_ITEM_ID,
+    type: types.todoLists.TODOS_LISTS__REMOVE_ONE_TODO_ITEM_BY_TODO_AREA_ID_AND_TODO_ITEM_ID,
     payload
   }
 }

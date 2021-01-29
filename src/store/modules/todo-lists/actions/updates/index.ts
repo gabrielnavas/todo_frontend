@@ -14,14 +14,14 @@ export type PayloadUpdateOneTodoItemByID = {
 
 export function updateOneTodoItemByID (payload: PayloadUpdateOneTodoItemByID) {
   return {
-    type: types.TODOS_LISTS__UPDATE_TODO_ITEM_BY_ID,
+    type: types.todoLists.TODOS_LISTS__UPDATE_TODO_ITEM_BY_ID,
     payload
   }
 }
 
 export function updateOneTodoItemByTodoAreaID (payload: PayloadUpdateOneTodoItemByTodoAreaID) {
   return {
-    type: types.TODOS_LISTS__UPDATE_TODO_ITEM_BY_TODO_AREA_ID,
+    type: types.todoLists.TODOS_LISTS__UPDATE_TODO_ITEM_BY_TODO_AREA_ID,
     payload
   }
 }

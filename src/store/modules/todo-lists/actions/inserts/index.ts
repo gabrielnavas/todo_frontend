@@ -7,7 +7,7 @@ export type PayloadInsertOneTodo = {
 
 export function insertOneTodoItem (payload: PayloadInsertOneTodo) {
   return {
-    type: types.TODOS_LISTS__INSERT_ONE_TODO_ITEM,
+    type: types.todoLists.TODOS_LISTS__INSERT_ONE_TODO_ITEM,
     payload
   }
 }
