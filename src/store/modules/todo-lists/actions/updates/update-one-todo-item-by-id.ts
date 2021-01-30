@@ -13,7 +13,11 @@ export namespace UpdateOneTodoItemByIDSuccess {
 }
 
 export namespace UpdateOneTodoItemByIDRequest {
-  export const request = () => ({
+  export type Params ={
+    todoItem: TodoItemModel
+    oldTodoItem: TodoItemModel
+  }
+  export const request = (payload: Params) => ({
     type: types.todoLists.updates.TODOS_LISTS__UPDATE_TODO_ITEM_BY_ID__REQUEST
   })
 }

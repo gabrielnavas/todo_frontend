@@ -26,7 +26,7 @@ export function * insertOneTodoItemRequestSaga (action: AnyAction) {
     yield put(InsertOneTodoItemSuccess.success({ todoItem: resp.body }))
   } catch (error) {
     yield put(InsertOneTodoItemFailure.failure({
-      errors: ['Serviço indisponível, tente se logar mais tarde.']
+      errors: ['Serviço indisponível, tente novamente mais tarde.']
     }))
   }
 }

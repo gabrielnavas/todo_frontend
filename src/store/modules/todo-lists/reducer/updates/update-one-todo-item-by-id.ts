@@ -7,7 +7,7 @@ type updateTodoItemByIDParams = {
   oldTodoItem: TodoItemModel
 }
 
-export const updateTodoItemByID = (params: updateTodoItemByIDParams): StateTypeTodoLists => {
+export const updateOneTodoItemByID = (params: updateTodoItemByIDParams): StateTypeTodoLists => {
   if (params.todoItem.todoAreaID !== params.oldTodoItem.todoAreaID) {
     removeTodoItemTodoList({
       oldTodoItem: params.oldTodoItem,

@@ -1,20 +1,13 @@
+import { TodoAreaID, TodoItemModel } from 'domain/models/TodoItem'
 import { INSERT_ONE_TODO_ITEM_URL } from './CONSTANTS'
 import { fetchPostJson } from './helpers/fetch-post-json'
 
 export namespace InsertOneTodoItemService {
-
-  type TodoItem = {
-    id: number,
-    todoAreaID: string
-    title: string
-    description: string
-  }
-
-  type Params = Omit<TodoItem, 'id'>
+  type Params = Omit<TodoItemModel, 'id'>
 
   export type Result = {
     errors: string[]
-    body?: TodoItem
+    body?: TodoItemModel
   }
 
   export const service = async (params: Params): Promise<Result> => {

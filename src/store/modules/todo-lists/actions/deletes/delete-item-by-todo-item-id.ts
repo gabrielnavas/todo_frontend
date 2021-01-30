@@ -2,7 +2,11 @@ import { TodoAreaID, TodoItemID } from 'domain/models/TodoItem'
 import * as types from '../../../../configs/actions-reducer-types'
 
 export namespace DeleteItemByTodoItemIDRequest {
-  export const request = () => ({
+  export type Params = {
+    todoItemID: TodoItemID,
+    todoAreaID: TodoAreaID
+   }
+  export const request = (payload: Params) => ({
     type: types.todoLists.deletes.TODOS_LISTS__DELETE_ONE_TODO_ITEM_BY_TODO_ITEM_ID__REQUEST
   })
 }

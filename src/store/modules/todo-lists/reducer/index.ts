@@ -5,6 +5,7 @@ import {
   DeleteItemByTodoItemIDFailure,
   DeleteItemByTodoItemIDSuccess
 } from '../actions/deletes/delete-item-by-todo-item-id'
+import { FindAllTodoItemsFailure, FindAllTodoItemsSuccess } from '../actions/finds/finds-all'
 import {
   InsertOneTodoItemFailure,
   InsertOneTodoItemSuccess
@@ -16,7 +17,7 @@ import {
 import { deleteOneTodoItemByID } from './deletes/delete-one-todo-item-by-id'
 import { insertOneTodoItem } from './inserts/insert-one-todo-item'
 import { inititalState, StateTypeTodoLists } from './state-initital'
-import { updateTodoItemByID } from './updates/update-todo-item-by-id'
+import { updateOneTodoItemByID } from './updates/update-one-todo-item-by-id'
 
 const reducer = (state: StateTypeTodoLists = inititalState, action: AnyAction) => {
   switch (action.type) {
@@ -47,7 +48,7 @@ const reducer = (state: StateTypeTodoLists = inititalState, action: AnyAction) =
 
     case types.todoLists.updates.TODOS_LISTS__UPDATE_TODO_ITEM_BY_ID__SUCCESS: {
       const { todoItem, oldTodoItem } = action.payload as UpdateOneTodoItemByIDSuccess.Params
-      return updateTodoItemByID({
+      return updateOneTodoItemByID({
         newState: { ...state },
         oldTodoItem: oldTodoItem,
         todoItem: todoItem
@@ -77,6 +78,27 @@ const reducer = (state: StateTypeTodoLists = inititalState, action: AnyAction) =
 
     case types.todoLists.deletes.TODOS_LISTS__DELETE_ONE_TODO_ITEM_BY_TODO_ITEM_ID__FAILURE: {
       const payload = action.payload as DeleteItemByTodoItemIDFailure.Params
+      const { errors } = payload
+      const newState = { ...inititalState, ...errors }
+      return newState
+    }
+
+    case types.todoLists.finds.TODO_LIST__FIND_ALL_TODO_ITEMS__REQUEST: {
+      const newState = { ...state, isLoading: true }
+      return newState
+    }
+
+    case types.todoLists.finds.TODO_LIST__FIND_ALL_TODO_ITEMS__SUCCESS: {
+      const { todoItemsLists } = action.payload as FindAllTodoItemsSuccess.Params
+      const newState = { ...state }
+      newState.doing = [...todoItemsLists.doing]
+      newState.done = [...todoItemsLists.done]
+      newState.todo = [...todoItemsLists.todo]
+      return newState
+    }
+
+    case types.todoLists.finds.TODO_LIST__FIND_ALL_TODO_ITEMS__FAILURE: {
+      const payload = action.payload as FindAllTodoItemsFailure.Params
       const { errors } = payload
       const newState = { ...inititalState, ...errors }
       return newState
