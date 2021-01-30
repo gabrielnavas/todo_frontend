@@ -3,7 +3,7 @@ import * as types from '../../configs/actions-reducer-types'
 type TodoAreaIDPayLoad = string
 
 type SetNewTodoItemPayLoad = {
-  id?: string
+  id?: number
   todoAreaID: TodoAreaIDPayLoad
   title: string
   description: string

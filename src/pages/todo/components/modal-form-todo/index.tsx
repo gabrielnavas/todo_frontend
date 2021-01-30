@@ -11,8 +11,7 @@ import {
   OnClickModalCloseButton
 } from '../../../../components/inputs/modal-close-button'
 
-import { TodoData } from '../todo-item'
-import { TodoAreaID } from '../todo-list'
+import { TodoAreaID, TodoItemModel } from '../../../../domain/models/TodoItem'
 
 import {
   InputTextArea,
@@ -27,7 +26,7 @@ import {
 } from './styles'
 
 export type OnClickButtonParams = {
-  id: string | null,
+  id: number | null,
   title: string
   description: string
   todoAreaID: TodoAreaID
@@ -45,7 +44,7 @@ type ModalFormTodoProps = {
   todoAreaID: TodoAreaID
   isOpen: boolean
   textButtonFinish: TextButtonFinish
-  todoItemUpdate?: TodoData
+  todoItemUpdate?: TodoItemModel
   onClickButtonFinish: OnClickButtonFinish
   onClickDeleteTodoItem?: OnClickDeleteTodoItem
   onClickOutSide: OnClickOutSide
@@ -94,7 +93,7 @@ const ModalFormTodo = ({
 
   const handleDeleteTodoItem = useCallback(
     (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>): void => {
-      onClickDeleteTodoItem({ todoAreaID, todoItemID: todoItemUpdate.id })
+      onClickDeleteTodoItem({ todoAreaID, todoItemID: todoItemUpdate.todoAreaID })
     }, [onClickDeleteTodoItem, todoItemUpdate, todoAreaID])
 
   return (

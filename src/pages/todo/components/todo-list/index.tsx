@@ -3,35 +3,34 @@ import { useDispatch, useSelector } from 'react-redux'
 import { v4 as uuid } from 'uuid'
 
 import { ReducersType } from '../../../../store/configs/root-reducer'
-import * as actionsInserts from '../../../../store/modules/todo-lists/actions/inserts'
-import * as actionsUpdates from '../../../../store/modules/todo-lists/actions/updates'
-import * as actionsDeletes from '../../../../store/modules/todo-lists/actions/deletes'
+import * as actionsInserts from '../../../../store/modules/todo-lists/actions/inserts/insert-one-todo'
+import * as actionsUpdates from '../../../../store/modules/todo-lists/actions/updates/update-one-todo-item-by-id'
+import * as actionsDeletes from '../../../../store/modules/todo-lists/actions/deletes/delete-item-by-todo-item-id'
 import { ModalFormTodo, OnClickButtonParams, OnClickDeleteTodoItemParams } from '../modal-form-todo'
-import TodoItem, { TodoData } from '../todo-item'
+import TodoItem from '../todo-item'
 import {
   Container,
   Button
 
 } from './styles'
 import { capitalizeFirstLetter } from '../../../../helpers/capitalize-first-letter'
-
-export type TodoAreaID = 'todo' | 'doing' | 'done'
+import { TodoItemModel, TodoAreaID } from 'domain/models/TodoItem'
 
 type TodoListProps = {
-  todoItems: TodoData[]
+  todoItems: TodoItemModel []
   todoAreaID: TodoAreaID
 }
 
 export default function TodoList ({ todoItems, todoAreaID }: TodoListProps) {
   const dispatch = useDispatch()
-  const todoItemMove = useSelector<ReducersType, TodoData>(state => state.todoItemMove)
+  const todoItemMove = useSelector<ReducersType, TodoItemModel >(state => state.todoItemMove)
 
   const [isOpenModalInsert, setIsOpenModalInsert] = useState(false)
   const [isOpenModalUpdate, setIsOpenModalUpdate] = useState(false)
 
   const handleOnDrop = useCallback(() => {
     dispatch(actionsDeletes.deleteOneItemByTodoAreaIDAndTodoItemID({
-      todoAreaID: todoItemMove.todoAreaID, todoItemID: todoItemMove.id
+      todoAreaID: todoItemMove.todoAreaID, todoItemID: todoItemMove.todoAreaID
     }))
     dispatch(actionsUpdates.updateOneTodoItemByTodoAreaID({
       todoItemMove, todoAreaIDToInsert: todoAreaID

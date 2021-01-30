@@ -1,13 +1,17 @@
-import { TodoData } from 'pages/todo/components/todo-item'
+import { TodoItemModel } from 'domain/models/TodoItem'
 
 export type StateTypeTodoLists = {
-  todo: TodoData[]
-  doing: TodoData[]
-  done: TodoData[]
+  todo: TodoItemModel[]
+  doing: TodoItemModel[]
+  done: TodoItemModel[]
+  isLoading: boolean
+  errors: string[]
 }
 
 export const inititalState: StateTypeTodoLists = {
   todo: [],
   doing: [],
-  done: []
+  done: [],
+  isLoading: false,
+  errors: []
 }
