@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { v4 as uuid } from 'uuid'
 
 import { ReducersType } from '../../../../store/configs/root-reducer'
-import * as actionsInserts from '../../../../store/modules/todo-lists/actions/inserts/insert-one-todo'
+import { InsertOneTodoItemRequest } from '../../../../store/modules/todo-lists/actions/inserts/insert-one-todo'
 import * as actionsUpdates from '../../../../store/modules/todo-lists/actions/updates/update-one-todo-item-by-id'
 import * as actionsDeletes from '../../../../store/modules/todo-lists/actions/deletes/delete-item-by-todo-item-id'
 import { ModalFormTodo, OnClickButtonParams, OnClickDeleteTodoItemParams } from '../modal-form-todo'
@@ -29,11 +29,11 @@ export default function TodoList ({ todoItems, todoAreaID }: TodoListProps) {
   const [isOpenModalUpdate, setIsOpenModalUpdate] = useState(false)
 
   const handleOnDrop = useCallback(() => {
-    dispatch(actionsDeletes.deleteOneItemByTodoAreaIDAndTodoItemID({
-      todoAreaID: todoItemMove.todoAreaID, todoItemID: todoItemMove.todoAreaID
+    dispatch(actionsDeletes.DeleteItemByTodoItemIDRequest.request({
+      todoAreaID: todoItemMove.todoAreaID, todoItemID: todoItemMove.id
     }))
-    dispatch(actionsUpdates.updateOneTodoItemByTodoAreaID({
-      todoItemMove, todoAreaIDToInsert: todoAreaID
+    dispatch(actionsUpdates.UpdateOneTodoItemByIDRequest.request({
+      oldTodoItem: todoItemMove, todoItem: todoItemMove
     }))
   }, [dispatch, todoAreaID, todoItemMove])
 
@@ -59,31 +59,37 @@ export default function TodoList ({ todoItems, todoAreaID }: TodoListProps) {
   }
 
   const handleOnClickButtonFinish = useCallback((params: OnClickButtonParams) => {
-    if (isOpenModalInsert) {
-      dispatch(actionsInserts.insertOneTodoItem({
-        todoItem: {
-          id: uuid(),
-          todoAreaID: params.todoAreaID,
-          title: params.title,
-          description: params.description
-        }
-      }))
-    } else {
-      dispatch(actionsUpdates.updateOneTodoItemByID({
+    if (params.id) {
+      return dispatch(actionsUpdates.UpdateOneTodoItemByIDRequest.request({
         todoItem: {
           id: params.id,
           todoAreaID: params.todoAreaID,
           title: params.title,
           description: params.description
         },
-        oldTodoItemID: params.oldTodoItemID
+        oldTodoItem: {
+          id: params.id,
+          todoAreaID: params.todoAreaID,
+          title: params.title,
+          description: params.description
+        }
       }))
-      setIsOpenModalUpdate(false)
     }
+    dispatch(InsertOneTodoItemRequest.request({
+      todoItem: {
+        todoAreaID: params.todoAreaID,
+        title: params.title,
+        description: params.description
+      }
+    }))
+    setIsOpenModalUpdate(false)
   }, [dispatch, isOpenModalInsert])
 
   const handleOnClickModalDeleteTodoItem = useCallback((params: OnClickDeleteTodoItemParams) => {
-    dispatch(actionsDeletes.deleteOneItemByTodoAreaIDAndTodoItemID({ ...params }))
+    dispatch(actionsDeletes.DeleteItemByTodoItemIDRequest.request({
+      todoAreaID: params.todoAreaID,
+      todoItemID: params.todoItemID
+    }))
   }, [dispatch])
 
   return (

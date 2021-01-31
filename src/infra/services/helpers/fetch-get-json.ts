@@ -1,4 +1,4 @@
-export const fetchGetJson = async (url: string, params: any, token?: string) => {
+export const fetchGetJson = async (url: string, params?: any, token?: string) => {
   const config = {
     method: 'GET',
     headers: {
@@ -7,7 +7,10 @@ export const fetchGetJson = async (url: string, params: any, token?: string) => 
       'x-access-token': token
     }
   }
-  const urlInstance = new URL(url)
-  Object.keys(params).map(key => urlInstance.searchParams.append(key, params[key]))
+  if (params) {
+    const urlInstance = new URL(url)
+    Object.keys(params).map(key => urlInstance.searchParams.append(key, params[key]))
+    return fetch(urlInstance.toString(), config)
+  }
   return fetch(url, config)
 }

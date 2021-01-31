@@ -5,6 +5,7 @@ import * as types from '../../../../configs/actions-reducer-types'
 
 import {
   FindAllTodoItemsFailure,
+  FindAllTodoItemsRequest,
   FindAllTodoItemsSuccess
 } from '../../actions/finds/finds-all'
 import {
@@ -13,7 +14,10 @@ import {
 
 export function * findAllTodoItemByUserIdRequestSaga (action: AnyAction) {
   try {
-    const resp = (yield call(FindAllTodoItemsByIdService.service as any)) as FindAllTodoItemsByIdService.Result
+    const token = action.payload as FindAllTodoItemsRequest.Params
+    const resp = (
+      yield call(FindAllTodoItemsByIdService.service as any, token)
+    ) as FindAllTodoItemsByIdService.Result
     if (resp.errors.length > 0) {
       yield put(FindAllTodoItemsFailure.failure({ errors: resp.errors }))
       return

@@ -4,7 +4,7 @@ import { fetchGetJson } from './helpers/fetch-get-json'
 
 export namespace FindAllTodoItemsByIdService {
   type Params = {
-    userID: number
+    token: string
   }
 
   export type Result = {
@@ -17,9 +17,7 @@ export namespace FindAllTodoItemsByIdService {
   }
 
   export const service = async (params: Params): Promise<Result> => {
-    const resp = await fetchGetJson(FIND_ALL_TODO_ITEMS_BY_USER_ID, {
-      userId: params.userID
-    })
+    const resp = await fetchGetJson(FIND_ALL_TODO_ITEMS_BY_USER_ID, undefined, params.token)
 
     if (resp.status === 400) {
       return { errors: ['Parametros incorretos.'] }

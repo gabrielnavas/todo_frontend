@@ -8,7 +8,7 @@ import { HeaderPage } from '../../components/surfaces/header-page'
 import { ButtonHeaderLogout } from '../../components/inputs/button-header-logout'
 
 import { ReducersType } from '../../store/configs/root-reducer'
-import { StateTypeTodoLists } from '../../store/modules/todo-lists/reducer'
+import { StateTypeTodoLists } from '../../store/modules/todo-lists/reducer/state-initital'
 
 const TodoPage = () => {
   const {
