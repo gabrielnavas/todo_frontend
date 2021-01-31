@@ -1,8 +1,8 @@
 import { AnyAction } from 'redux'
 import * as types from './action-types'
-import { 
-  PayloadLoginFailure, 
-  PayloadLoginSuccess 
+import {
+  PayloadLoginFailure,
+  PayloadLoginSuccess
 } from './payload-types'
 
 export type StateType = {
@@ -14,7 +14,7 @@ export type StateType = {
   errors: string[]
 }
 
-export const inititalState: StateType =  {
+export const inititalState: StateType = {
   token: null,
   name: null,
   email: null,
@@ -26,25 +26,25 @@ export const inititalState: StateType =  {
 const reducer = (state: StateType = inititalState, action: AnyAction) => {
   switch (action.type) {
     case types.LOGIN_REQUEST: {
-      const newState = {...state}
+      const newState = { ...state }
       newState.isLoading = true
       return newState
     }
 
     case types.LOGIN_SUCCESS: {
-      const {email, name, token} = action.payload as PayloadLoginSuccess
-      const newState = {...state}
+      const { email, name, token } = action.payload as PayloadLoginSuccess
+      const newState = { ...state }
       newState.email = email
       newState.token = token
       newState.name = name
       newState.isLoading = false
       newState.isAuthenticated = true
       newState.errors = []
-      return newState;
+      return newState
     }
 
     case types.LOGIN_FAILURE: {
-      const newState = {...state}
+      const newState = { ...state }
       const payload = action.payload as PayloadLoginFailure
       newState.errors = payload.errors
       newState.isLoading = false
@@ -52,25 +52,25 @@ const reducer = (state: StateType = inititalState, action: AnyAction) => {
     }
 
     case types.SIGNUP_REQUEST: {
-      const newState = {...state}
+      const newState = { ...state }
       newState.isLoading = true
       return newState
     }
 
     case types.SIGNUP_SUCCESS: {
-      const {email, name, token} = action.payload as PayloadLoginSuccess
-      const newState = {...state}
+      const { email, name, token } = action.payload as PayloadLoginSuccess
+      const newState = { ...state }
       newState.email = email
       newState.token = token
       newState.name = name
       newState.isLoading = false
       newState.isAuthenticated = true
       newState.errors = []
-      return newState;
+      return newState
     }
 
     case types.SIGNUP_FAILURE: {
-      const newState = {...state}
+      const newState = { ...state }
       const payload = action.payload as PayloadLoginFailure
       newState.errors = payload.errors
       newState.isLoading = false
@@ -78,14 +78,13 @@ const reducer = (state: StateType = inititalState, action: AnyAction) => {
     }
 
     case types.LOGOFF_REQUEST: {
-      return {...inititalState}
+      return { ...inititalState }
     }
 
     default: {
-      
-      return state;
+      return state
     }
   }
 }
-  
+
 export default reducer

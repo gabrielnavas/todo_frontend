@@ -1,8 +1,10 @@
 import { all } from 'redux-saga/effects'
-import { sagas as authSagas } from '../modules/auth/sagas'
+import { sagas as auth } from '../modules/auth/sagas'
+import { sagas as todoLists } from '../modules/todo-lists/sagas'
 
 export function * rootSaga () {
   return yield all([
-    authSagas
+    auth,
+    todoLists
   ])
 }

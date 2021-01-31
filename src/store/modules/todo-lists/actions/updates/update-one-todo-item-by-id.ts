@@ -1,31 +1,25 @@
 import { TodoItemModel } from 'domain/models/TodoItem'
 import * as types from '../../../../configs/actions-reducer-types'
 
-export namespace UpdateOneTodoItemByIDSuccess {
-  export type Params ={
+export type ParamsSuccess ={
     todoItem: TodoItemModel
     oldTodoItem: TodoItemModel
   }
-  export const success = (payload: Params) => ({
-    type: types.todoLists.updates.TODOS_LISTS__UPDATE_TODO_ITEM_BY_ID__SUCCESS,
-    payload
-  })
-}
+export const success = (payload: ParamsSuccess) => ({
+  type: types.todoLists.updates.TODOS_LISTS__UPDATE_TODO_ITEM_BY_ID__SUCCESS,
+  payload
+})
 
-export namespace UpdateOneTodoItemByIDRequest {
-  export type Params ={
+export type ParamsRequest ={
     todoItem: TodoItemModel
     oldTodoItem: TodoItemModel
   }
-  export const request = (payload: Params) => ({
-    type: types.todoLists.updates.TODOS_LISTS__UPDATE_TODO_ITEM_BY_ID__REQUEST
-  })
-}
+export const request = (payload: ParamsRequest) => ({
+  type: types.todoLists.updates.TODOS_LISTS__UPDATE_TODO_ITEM_BY_ID__REQUEST
+})
 
-export namespace UpdateOneTodoItemByIDFailure {
-  export type Params = { errors: string[] }
-  export const failure = (payload: Params) => ({
-    type: types.todoLists.updates.TODOS_LISTS__UPDATE_TODO_ITEM_BY_ID__FAILURE,
-    payload
-  })
-}
+export type ParamsFailure = { errors: string[] }
+export const failure = (payload: ParamsFailure) => ({
+  type: types.todoLists.updates.TODOS_LISTS__UPDATE_TODO_ITEM_BY_ID__FAILURE,
+  payload
+})

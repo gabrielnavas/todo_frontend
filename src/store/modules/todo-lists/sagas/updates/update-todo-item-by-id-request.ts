@@ -1,42 +1,24 @@
-import {
-  call,
-  put,
-  all,
-  takeLatest
-} from 'redux-saga/effects'
+import { call, put } from 'redux-saga/effects'
 import { AnyAction } from 'redux'
 
-import * as types from '../../../../configs/actions-reducer-types'
-
-import {
-  UpdateOneTodoItemByIDFailure,
-  UpdateOneTodoItemByIDSuccess
-
-} from '../../actions/updates/update-one-todo-item-by-id'
-import { UpdateOneTodoItemService } from 'infra/services/update-one-todo-item-by-id-service'
+import * as actionsUpdateOne from '../../actions/updates/update-one-todo-item-by-id'
+import * as serviceOneTodo from 'infra/services/update-one-todo-item-by-id-service'
 
 export function * updateOneTodoItemByIDRequestSaga (action: AnyAction) {
-  const payload = action.payload as UpdateOneTodoItemByIDSuccess.Params
+  const payload = action.payload as actionsUpdateOne.ParamsRequest
   try {
-    const resp = (yield call(UpdateOneTodoItemService.service, payload.todoItem)) as UpdateOneTodoItemService.Result
+    const resp = (yield call(serviceOneTodo.updateOneTodoItemByIdservice, payload.todoItem)) as serviceOneTodo.Result
     if (resp.errors.length > 0) {
-      yield put(UpdateOneTodoItemByIDFailure.failure({ errors: resp.errors }))
+      yield put(actionsUpdateOne.failure({ errors: resp.errors }))
       return
     }
-    yield put(UpdateOneTodoItemByIDSuccess.success({
+    yield put(actionsUpdateOne.success({
       oldTodoItem: payload.oldTodoItem,
       todoItem: payload.todoItem
     }))
   } catch (error) {
-    yield put(UpdateOneTodoItemByIDFailure.failure({
+    yield put(actionsUpdateOne.failure({
       errors: ['Serviço indisponível, tente novamente mais tarde.']
     }))
   }
 }
-
-export const sagas = all([
-  takeLatest(
-    types.todoLists.inserts.TODOS_LISTS__INSERT_ONE_TODO_ITEM__REQUEST,
-    insertOneTodoItemRequestSaga
-  )
-])

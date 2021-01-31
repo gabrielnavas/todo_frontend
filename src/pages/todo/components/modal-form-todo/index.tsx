@@ -13,6 +13,8 @@ import {
 
 import { TodoAreaID, TodoItemID, TodoItemModel } from '../../../../domain/models/TodoItem'
 
+import * as actionsInsert from '../../../../store/modules/todo-lists/actions/inserts/insert-one-todo-item'
+
 import {
   InputTextArea,
   ButtonHeader,
@@ -24,6 +26,8 @@ import {
   ModalHeader,
   TextButtonFinish
 } from './styles'
+import { useDispatch, useSelector } from 'react-redux'
+import { ReducersType } from 'store/configs/root-reducer'
 
 export type OnClickButtonParams = {
   id?: number,
@@ -63,7 +67,9 @@ const ModalFormTodo = ({
 }: ModalFormTodoProps) => {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [errors, setErrors] = useState([] as string[])
+
+  const dispatch = useDispatch()
+  const { errors } = useSelector((state: ReducersType) => state.todoLists)
 
   useEffect(() => {
     if (todoItemUpdate) {
@@ -75,7 +81,10 @@ const ModalFormTodo = ({
   const handleInsertOrUpdateTodoItem = useCallback(
     (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>): void => {
       const errorsForm = insertNewTodoItemValidatiton({ title, description })
-      if (errorsForm.length > 0) return setErrors(errorsForm) as void
+      if (errorsForm.length > 0) {
+        dispatch(actionsInsert.failure({ errors: errorsForm as string[] }))
+        return
+      }
       onClickButtonFinish({
         id: todoItemUpdate ? todoItemUpdate.id : null,
         title,
