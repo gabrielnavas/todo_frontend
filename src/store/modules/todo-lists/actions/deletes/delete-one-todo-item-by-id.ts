@@ -6,7 +6,8 @@ export type ParamsRequest = {
   todoAreaID: TodoAreaID
 }
 export const request = (payload: ParamsRequest) => ({
-  type: types.todoLists.deletes.TODOS_LISTS__DELETE_ONE_TODO_ITEM_BY_TODO_ITEM_ID__REQUEST
+  type: types.todoLists.deletes.TODOS_LISTS__DELETE_ONE_TODO_ITEM_BY_TODO_ITEM_ID__REQUEST,
+  payload
 })
 
 export type ParamsSuccess = {

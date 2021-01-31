@@ -1,18 +1,21 @@
 import { TodoItemID, TodoItemModel } from 'domain/models/TodoItem'
-import { INSERT_ONE_TODO_ITEM_URL } from './CONSTANTS'
-import { fetchPostJson } from './helpers/fetch-post-json'
+import { DELETE_TODO_ITEM_URL } from './CONSTANTS'
+import { fetchDeleteJson } from './helpers/fetch-delete-json'
 
-export type Params = TodoItemID
+export type Params = {
+  todoItemID: TodoItemID
+  userTokenAccess: string
+}
 
 export type Result = {
     errors: string[]
     body?: TodoItemModel
   }
 
-export const deleteOneTodoItemByIdService = async (todoItemID: Params): Promise<Result> => {
-  const resp = await fetchPostJson(INSERT_ONE_TODO_ITEM_URL, {
-    idTodoItem: todoItemID
-  })
+export const deleteOneTodoItemByIdService = async (params: Params): Promise<Result> => {
+  const paramsBody = { idTodoItem: params.todoItemID }
+  const token = params.userTokenAccess
+  const resp = await fetchDeleteJson(DELETE_TODO_ITEM_URL, paramsBody, token)
 
   if (resp.status === 400) {
     return { errors: ['Parametros incorretos.'] }
@@ -21,5 +24,7 @@ export const deleteOneTodoItemByIdService = async (todoItemID: Params): Promise<
   }
 
   const body = await resp.json()
+  console.log(body)
+  alert('oi')
   return { body, errors: [] }
 }

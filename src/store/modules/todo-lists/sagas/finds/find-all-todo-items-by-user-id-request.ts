@@ -1,12 +1,13 @@
-import { call, put } from 'redux-saga/effects'
+import { call, put, select } from 'redux-saga/effects'
 import { AnyAction } from 'redux'
 
 import * as actionsFindAll from '../../actions/finds/find-all'
 import * as serviceFindAll from 'infra/services/find-all-todo-items-by-id-service'
+import { ReducersType } from 'store/configs/root-reducer'
 
 export function * findAllTodoItemByUserIdRequestSaga (action: AnyAction) {
+  const token = yield select((state:ReducersType) => state.auth.token)
   try {
-    const token = action.payload as actionsFindAll.ParamsRequest
     const resp = (
       yield call(serviceFindAll.findAllTodoItemsByIdService as any, token)
     ) as serviceFindAll.Result

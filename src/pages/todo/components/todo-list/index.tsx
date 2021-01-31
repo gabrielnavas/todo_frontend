@@ -1,6 +1,5 @@
 import { useCallback, useState, Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { v4 as uuid } from 'uuid'
 
 import { ReducersType } from '../../../../store/configs/root-reducer'
 import * as actionsInsert from '../../../../store/modules/todo-lists/actions/inserts/insert-one-todo-item'
@@ -29,11 +28,15 @@ export default function TodoList ({ todoItems, todoAreaID }: TodoListProps) {
   const [isOpenModalUpdate, setIsOpenModalUpdate] = useState(false)
 
   const handleOnDrop = useCallback(() => {
-    dispatch(actionsDeletes.request({
-      todoAreaID: todoItemMove.todoAreaID, todoItemID: todoItemMove.id
-    }))
+    // dispatch(actionsDeletes.request({
+    //   todoAreaID: todoItemMove.todoAreaID, todoItemID: todoItemMove.id
+    // }))
     dispatch(actionsUpdates.request({
-      oldTodoItem: todoItemMove, todoItem: todoItemMove
+      oldTodoItem: todoItemMove,
+      todoItem: {
+        ...todoItemMove,
+        todoAreaID
+      }
     }))
   }, [dispatch, todoAreaID, todoItemMove])
 
@@ -42,21 +45,10 @@ export default function TodoList ({ todoItems, todoAreaID }: TodoListProps) {
     setIsOpenModalUpdate(false)
   }
 
-  const handleButtonInsert = () => {
-    setIsOpenModalInsert(true)
-  }
-
-  const handleOnClickTodoItemComponent = () => {
-    setIsOpenModalUpdate(true)
-  }
-
-  const onClickOutSideModalInsert = (): void => {
-    setIsOpenModalInsert(false)
-  }
-
-  const onClickOutSideModalUpdate = (): void => {
-    setIsOpenModalUpdate(false)
-  }
+  const handleButtonInsert = () => setIsOpenModalInsert(true)
+  const handleOnClickTodoItemComponent = () => setIsOpenModalUpdate(true)
+  const onClickOutSideModalInsert = (): void => setIsOpenModalInsert(false)
+  const onClickOutSideModalUpdate = (): void => setIsOpenModalUpdate(false)
 
   const handleOnClickButtonFinish = useCallback((params: OnClickButtonParams) => {
     if (params.id) {
@@ -99,30 +91,28 @@ export default function TodoList ({ todoItems, todoAreaID }: TodoListProps) {
         Insert {capitalizeFirstLetter(todoAreaID)}
       </Button>
       {
-        todoItems.map((todoData, index) => {
-          return (
-            <Fragment key={uuid()}>
-              <ModalFormTodo
-                key={uuid()}
-                isOpen={isOpenModalUpdate}
-                onClickOutSide={onClickOutSideModalUpdate}
-                onClickButtonFinish={handleOnClickButtonFinish}
-                onClickModalCloseButton={handleOnClickModalCloseButton}
-                onClickDeleteTodoItem={handleOnClickModalDeleteTodoItem}
-                textButtonFinish='Update'
-                todoAreaID={todoAreaID}
-                todoItemUpdate={todoData}
-              />
-              <TodoItem
-                key={uuid()}
-                onClick={handleOnClickTodoItemComponent}
-                todoData={todoData}
-              />
-            </Fragment>
-          )
-        })
+        todoItems && todoItems.map((todoItem) =>
+        <Fragment key={todoItem.id.toString()}>
+          <ModalFormTodo
+            key={todoItem.id.toString()}
+            isOpen={isOpenModalUpdate}
+            onClickOutSide={onClickOutSideModalUpdate}
+            onClickButtonFinish={handleOnClickButtonFinish}
+            onClickModalCloseButton={handleOnClickModalCloseButton}
+            onClickDeleteTodoItem={handleOnClickModalDeleteTodoItem}
+            textButtonFinish='Update'
+            todoAreaID={todoAreaID}
+            todoItemUpdate={todoItem}
+          />
+          <TodoItem
+            onClick={handleOnClickTodoItemComponent}
+            todoData={todoItem}
+          />
+        </Fragment>
+        )
       }
-      <ModalFormTodo
+      {
+       <ModalFormTodo
         isOpen={isOpenModalInsert}
         onClickOutSide={onClickOutSideModalInsert}
         onClickButtonFinish={handleOnClickButtonFinish}
@@ -130,6 +120,8 @@ export default function TodoList ({ todoItems, todoAreaID }: TodoListProps) {
         todoAreaID={todoAreaID}
         textButtonFinish='Insert'
       />
+      }
+
     </Container>
   )
 }

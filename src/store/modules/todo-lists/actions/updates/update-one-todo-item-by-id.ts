@@ -15,7 +15,8 @@ export type ParamsRequest ={
     oldTodoItem: TodoItemModel
   }
 export const request = (payload: ParamsRequest) => ({
-  type: types.todoLists.updates.TODOS_LISTS__UPDATE_TODO_ITEM_BY_ID__REQUEST
+  type: types.todoLists.updates.TODOS_LISTS__UPDATE_TODO_ITEM_BY_ID__REQUEST,
+  payload
 })
 
 export type ParamsFailure = { errors: string[] }

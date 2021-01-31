@@ -11,7 +11,7 @@ import { insertOneTodoItem } from './inserts/insert-one-todo-item'
 import { inititalState, StateTypeTodoLists } from './state-initital'
 import { updateOneTodoItemByID } from './updates/update-one-todo-item-by-id'
 
-const reducer = (state: StateTypeTodoLists = inititalState, action: AnyAction) => {
+const reducer = (state: StateTypeTodoLists = inititalState, action: AnyAction): StateTypeTodoLists => {
   switch (action.type) {
     case types.todoLists.inserts.TODOS_LISTS__INSERT_ONE_TODO_ITEM__REQUEST: {
       const newState = { ...state, isLoading: true }
@@ -40,11 +40,12 @@ const reducer = (state: StateTypeTodoLists = inititalState, action: AnyAction) =
 
     case types.todoLists.updates.TODOS_LISTS__UPDATE_TODO_ITEM_BY_ID__SUCCESS: {
       const { todoItem, oldTodoItem } = action.payload as actionsUpdateOneTodoItemById.ParamsSuccess
-      return updateOneTodoItemByID({
-        newState: { ...state },
+      const newState = updateOneTodoItemByID({
+        state: { ...state },
         oldTodoItem: oldTodoItem,
-        todoItem: todoItem
+        newTodoItem: todoItem
       })
+      return newState
     }
 
     case types.todoLists.updates.TODOS_LISTS__UPDATE_TODO_ITEM_BY_ID__FAILURE: {

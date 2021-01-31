@@ -1,10 +1,8 @@
 import { TodoItemModel } from 'domain/models/TodoItem'
 import * as types from '../../../../configs/actions-reducer-types'
 
-export type ParamsRequest = string
-export const request = (token: ParamsRequest) => ({
-  type: types.todoLists.finds.TODO_LIST__FIND_ALL_TODO_ITEMS__REQUEST,
-  payload: token
+export const request = () => ({
+  type: types.todoLists.finds.TODO_LIST__FIND_ALL_TODO_ITEMS__REQUEST
 })
 
 export type ParamsSuccess = {
