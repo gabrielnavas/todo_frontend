@@ -28,9 +28,6 @@ export default function TodoList ({ todoItems, todoAreaID }: TodoListProps) {
   const [isOpenModalUpdate, setIsOpenModalUpdate] = useState(false)
 
   const handleOnDrop = useCallback(() => {
-    // dispatch(actionsDeletes.request({
-    //   todoAreaID: todoItemMove.todoAreaID, todoItemID: todoItemMove.id
-    // }))
     dispatch(actionsUpdates.request({
       oldTodoItem: todoItemMove,
       todoItem: {
@@ -92,9 +89,9 @@ export default function TodoList ({ todoItems, todoAreaID }: TodoListProps) {
       </Button>
       {
         todoItems && todoItems.map((todoItem) =>
-        <Fragment key={todoItem.id.toString()}>
+        <Fragment key={(todoItem.id + 1).toString()}>
           <ModalFormTodo
-            key={todoItem.id.toString()}
+            key={(todoItem.id + 1).toString()}
             isOpen={isOpenModalUpdate}
             onClickOutSide={onClickOutSideModalUpdate}
             onClickButtonFinish={handleOnClickButtonFinish}

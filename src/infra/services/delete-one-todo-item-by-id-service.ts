@@ -24,7 +24,5 @@ export const deleteOneTodoItemByIdService = async (params: Params): Promise<Resu
   }
 
   const body = await resp.json()
-  console.log(body)
-  alert('oi')
   return { body, errors: [] }
 }

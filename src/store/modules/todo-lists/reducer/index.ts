@@ -29,7 +29,6 @@ const reducer = (state: StateTypeTodoLists = inititalState, action: AnyAction): 
       const payload = action.payload as actionsInsertOneTodoItem.ParamsFailure
       const { errors } = payload
       const newState = { ...inititalState, errors: errors }
-      console.log(newState)
       return newState
     }
 
@@ -83,11 +82,13 @@ const reducer = (state: StateTypeTodoLists = inititalState, action: AnyAction): 
 
     case types.todoLists.finds.TODO_LIST__FIND_ALL_TODO_ITEMS__SUCCESS: {
       const { todoItemsLists } = action.payload as actionsFindAllByToken.ParamsSuccess
-      const newState = { ...state }
-      newState.doing = [...todoItemsLists.doing]
-      newState.done = [...todoItemsLists.done]
-      newState.todo = [...todoItemsLists.todo]
-      return newState
+      const reduceListLinear = todoItemsLists.reduce((newStateParams, list) => {
+        if (list[0].todoAreaID === 'todo') state.todo.push(...list)
+        else if (list[0].todoAreaID === 'doing') state.doing.push(...list)
+        else if (list[0].todoAreaID === 'done') state.done.push(...list)
+        return newStateParams
+      }, { ...state })
+      return reduceListLinear
     }
 
     case types.todoLists.finds.TODO_LIST__FIND_ALL_TODO_ITEMS__FAILURE: {

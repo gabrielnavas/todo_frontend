@@ -41,7 +41,6 @@ export function * signUpRequest (action: AnyAction) {
   const userSignupDatas = action.payload as payloadTypes.PayloadSignUpRequest
   try {
     const resp = (yield call(signupService, userSignupDatas))
-    console.log(resp)
     if (resp.errors.length > 0) {
       yield put(actions.signUpFailure({ errors: resp.errors }))
       return

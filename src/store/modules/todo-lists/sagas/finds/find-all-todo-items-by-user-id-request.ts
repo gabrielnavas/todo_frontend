@@ -7,9 +7,10 @@ import { ReducersType } from 'store/configs/root-reducer'
 
 export function * findAllTodoItemByUserIdRequestSaga (action: AnyAction) {
   const token = yield select((state:ReducersType) => state.auth.token)
+  console.log('saga foi chamado')
   try {
     const resp = (
-      yield call(serviceFindAll.findAllTodoItemsByIdService as any, token)
+      yield call(serviceFindAll.findAllTodoItemsByIdService as any, { token })
     ) as serviceFindAll.Result
     if (resp.errors.length > 0) {
       yield put(actionsFindAll.failure({ errors: resp.errors }))

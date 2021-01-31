@@ -6,13 +6,11 @@ type Params = {
   token: string
 }
 
+type Body =TodoItemModel[][]
+
 export type Result = {
     errors: string[]
-    body?: {
-        todo: TodoItemModel[]
-        doing: TodoItemModel[]
-        done: TodoItemModel[]
-    }
+    body?:Body
   }
 
 export const findAllTodoItemsByIdService = async (params: Params): Promise<Result> => {
@@ -25,5 +23,12 @@ export const findAllTodoItemsByIdService = async (params: Params): Promise<Resul
   }
 
   const body = await resp.json()
-  return { body, errors: [] }
+  const bodyMap = body.map((list: any) => list.map((todo: any) => ({
+    id: todo.id,
+    todoAreaID: todo.idNameTodoArea,
+    title: todo.title,
+    description: todo.description
+  }))) as Body
+  console.log(bodyMap)
+  return { body: bodyMap, errors: [] }
 }

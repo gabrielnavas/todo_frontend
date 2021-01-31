@@ -4,6 +4,7 @@ export const fetchGetJson = async (url: string, params?: any, token?: string) =>
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      'cache-control': 'no-cache',
       'x-access-token': token
     }
   }

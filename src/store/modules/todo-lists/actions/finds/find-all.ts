@@ -6,11 +6,7 @@ export const request = () => ({
 })
 
 export type ParamsSuccess = {
-  todoItemsLists: {
-    todo: TodoItemModel[]
-    doing: TodoItemModel[]
-    done: TodoItemModel[]
-  }
+  todoItemsLists: TodoItemModel[][]
 }
 export const success = (payload: ParamsSuccess) => ({
   type: types.todoLists.finds.TODO_LIST__FIND_ALL_TODO_ITEMS__SUCCESS,

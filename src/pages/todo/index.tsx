@@ -1,4 +1,5 @@
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
 
 import { Container, TodosAreas } from './styles'
 
@@ -10,10 +11,17 @@ import { ButtonHeaderLogout } from '../../components/inputs/button-header-logout
 import { ReducersType } from '../../store/configs/root-reducer'
 import { StateTypeTodoLists } from '../../store/modules/todo-lists/reducer/state-initital'
 
+import * as actionFindAllByIdUser from '../../store/modules/todo-lists/actions/finds/find-all'
+
 const TodoPage = () => {
+  const dispatch = useDispatch()
   const {
     done, todo, doing
   } = useSelector<ReducersType>(state => state.todoLists) as StateTypeTodoLists
+
+  useEffect(() => {
+    dispatch(actionFindAllByIdUser.request())
+  }, [])
 
   return (
     <>
