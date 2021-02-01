@@ -12,7 +12,9 @@ export type Result = {
   }
 
 export const deleteOneTodoItemByIdService = async (params: Params): Promise<Result> => {
-  const paramsBody = { idTodoItem: params.todoItemID }
+  const paramsBody = {
+    idTodoItem: params.todoItemID
+  }
   const token = params.userTokenAccess
   const resp = await fetchDeleteJson(DELETE_TODO_ITEM_URL, paramsBody, token)
 
