@@ -52,9 +52,9 @@ export default function TodoList ({ todoItems, todoAreaID }: TodoListProps) {
       }
       <ModalFormTodo
         isOpen={isOpenModalInsert}
+        setIsOpen={setIsOpenModalInsert}
         todoAreaID={todoAreaID}
         onClickOutSide={() => setIsOpenModalInsert(false)}
-        onClickModalCloseButton={() => setIsOpenModalInsert(false)}
       />
     </Container>
   )

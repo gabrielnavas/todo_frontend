@@ -1,4 +1,4 @@
-import { TodoItemID, TodoItemModel } from 'domain/models/TodoItem'
+import { TodoItemID } from 'domain/models/TodoItem'
 import { DELETE_TODO_ITEM_URL } from './CONSTANTS'
 import { fetchDeleteJson } from './helpers/fetch-delete-json'
 
@@ -9,7 +9,6 @@ export type Params = {
 
 export type Result = {
     errors: string[]
-    body?: TodoItemModel
   }
 
 export const deleteOneTodoItemByIdService = async (params: Params): Promise<Result> => {
@@ -23,6 +22,5 @@ export const deleteOneTodoItemByIdService = async (params: Params): Promise<Resu
     return { errors: ['Você está sem as devidas permissões'] }
   }
 
-  const body = await resp.json()
-  return { body, errors: [] }
+  return { errors: [] }
 }

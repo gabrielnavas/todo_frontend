@@ -62,7 +62,7 @@ const reducer = (state: StateTypeTodoLists = inititalState, action: AnyAction): 
     case types.todoLists.deletes.TODOS_LISTS__DELETE_ONE_TODO_ITEM_BY_TODO_ITEM_ID__SUCCESS: {
       const { todoItemID, todoAreaID } = action.payload as actionsDeleteOneTodoItemById.ParamsSuccess
       return deleteOneTodoItemByID({
-        newState: { ...state },
+        state: { ...state },
         todoAreaID,
         todoItemID
       })

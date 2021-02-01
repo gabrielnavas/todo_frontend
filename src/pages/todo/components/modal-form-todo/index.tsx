@@ -7,10 +7,7 @@ import { Modal } from '../../../../components/utils/modal'
 import { InputText } from '../../../../components/inputs/input-text'
 import { Form } from '../form'
 import { ButtonGroup } from '../button-group'
-import {
-  ModalCloseButton,
-  OnClickModalCloseButton
-} from '../../../../components/inputs/modal-close-button'
+import { ModalCloseButton } from '../../../../components/inputs/modal-close-button'
 
 import { TodoAreaID, TodoItemModel } from '../../../../domain/models/TodoItem'
 
@@ -27,16 +24,18 @@ import {
 
 import { ReducersType } from 'store/configs/root-reducer'
 
-import * as actionsInsert from '../../../../store/modules/todo-lists/actions/inserts/insert-one-todo-item'
-import * as actionsUpdates from '../../../../store/modules/todo-lists/actions/updates/update-one-todo-item-by-id'
-import * as actionsDeletes from '../../../../store/modules/todo-lists/actions/deletes/delete-one-todo-item-by-id'
-import { insertNewTodoItemValidatiton } from '../../../../validations/insert-new-todo-item-validation'
+import * as actionsInsert from 'store/modules/todo-lists/actions/inserts/insert-one-todo-item'
+import * as actionsUpdates from 'store/modules/todo-lists/actions/updates/update-one-todo-item-by-id'
+import * as actionsDeletes from 'store/modules/todo-lists/actions/deletes/delete-one-todo-item-by-id'
+import { insertOneTodoItemValidatiton } from 'validations/insert-one-todo-item-validation'
+import { updateOneTodoItemValidatiton } from 'validations/update-one-todo-item-validation'
+import { deleteOneTodoItemValidatiton } from 'validations/delete-one-todo-item-validation'
 
 type ModalFormTodoProps = {
   todoAreaID: TodoAreaID
   isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
   onClickOutSide: () => void
-  onClickModalCloseButton: OnClickModalCloseButton
   todoItemToUpdateOrDelete?: TodoItemModel
 }
 
@@ -52,11 +51,20 @@ const ModalFormTodo = (props: ModalFormTodoProps) => {
     if (props.todoItemToUpdateOrDelete) {
       setDescription(props.todoItemToUpdateOrDelete.description)
       setTitle(props.todoItemToUpdateOrDelete.title)
-      console.log(props.todoItemToUpdateOrDelete)
     }
   }, [props.todoItemToUpdateOrDelete])
 
   const handleOnClickUpdateButton = useCallback(() => {
+    const errors = updateOneTodoItemValidatiton({
+      id: props.todoItemToUpdateOrDelete.id,
+      title,
+      description,
+      todoAreaID: props.todoAreaID
+    })
+    if (errors.length > 0) {
+      setErrorsForm(errors)
+      return
+    }
     const todoItemUpdated = {
       id: props.todoItemToUpdateOrDelete.id,
       todoAreaID: props.todoItemToUpdateOrDelete.todoAreaID,
@@ -67,18 +75,35 @@ const ModalFormTodo = (props: ModalFormTodoProps) => {
       oldTodoItem: todoItemUpdated,
       todoItem: todoItemUpdated
     }))
-  }, [title, description])
+    setErrorsForm([])
+    setTitle('')
+    setDescription('')
+    props.setIsOpen(false)
+  }, [title, description, errorsForm])
 
   const handleOnClickDeleteButton = useCallback(() => {
+    const errors = deleteOneTodoItemValidatiton({
+      todoAreaID: props.todoAreaID,
+      todoItemID: props.todoItemToUpdateOrDelete.id
+    })
+    if (errors.length > 0) {
+      setErrorsForm(errors)
+      return
+    }
     const params = {
       todoAreaID: props.todoAreaID,
       todoItemID: props.todoItemToUpdateOrDelete.id
     } as actionsDeletes.ParamsRequest
     dispatch(actionsDeletes.request(params))
-  }, [title, description])
+    props.setIsOpen(false)
+  }, [errorsForm])
 
   const handleOnClickInsertButton = useCallback(() => {
-    const errors = insertNewTodoItemValidatiton({ title, description })
+    const errors = insertOneTodoItemValidatiton({
+      title,
+      description,
+      todoAreaID: props.todoAreaID
+    })
     if (errors.length > 0) {
       setErrorsForm(errors)
       return
@@ -89,7 +114,11 @@ const ModalFormTodo = (props: ModalFormTodoProps) => {
       todoAreaID: props.todoAreaID
     } as actionsInsert.ParamsRequest
     dispatch(actionsInsert.request(params))
-  }, [title, description])
+  }, [title, description, errorsForm])
+
+  const handleOnClickCloseButton = useCallback(() => {
+    props.setIsOpen(false)
+  }, [])
 
   const renderButtonsUpdateAndDelete = () =>
     <>
@@ -123,7 +152,7 @@ const ModalFormTodo = (props: ModalFormTodoProps) => {
                   ? renderButtonsUpdateAndDelete()
                   : renderButtonInsert()
               }
-              <ModalCloseButton onClick={props.onClickModalCloseButton}/>
+              <ModalCloseButton onClick={handleOnClickCloseButton}/>
           </ButtonGroup>
         </ModalHeader>
         <ModalMain>

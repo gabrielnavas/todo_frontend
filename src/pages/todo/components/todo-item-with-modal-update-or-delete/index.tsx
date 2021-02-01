@@ -18,8 +18,8 @@ export const TodoItemWithModalUpdateOrDelete = (props: Props) => {
     <>
       <ModalFormTodo
         isOpen={isOpenModal}
+        setIsOpen={setIsOpenModal}
         onClickOutSide={() => setIsOpenModal(false)}
-        onClickModalCloseButton={() => setIsOpenModal(false)}
         todoAreaID={props.todoItem.todoAreaID}
         todoItemToUpdateOrDelete={props.todoItem}
       />

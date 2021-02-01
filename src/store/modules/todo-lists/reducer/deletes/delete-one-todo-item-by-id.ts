@@ -1,32 +1,18 @@
-import { TodoItemModel, TodoAreaID } from 'domain/models/TodoItem'
+import { TodoAreaID } from 'domain/models/TodoItem'
 import { StateTypeTodoLists } from '../state-initital'
 
 type DeleteONeTodoItemsByIDParams = {
-  newState: StateTypeTodoLists
+  state: StateTypeTodoLists
   todoAreaID: TodoAreaID
   todoItemID: number
 }
 
 export const deleteOneTodoItemByID = (params: DeleteONeTodoItemsByIDParams): StateTypeTodoLists => {
-  const { todoItemID, todoAreaID } = params
-  const newTodoList = findAndRemoveByTodoItemID({
-    todoList: params.newState[todoAreaID],
-    todoItemID
-  })
-
-  return {
-    ...params.newState,
-    [todoAreaID]: newTodoList
+  const { todoItemID, todoAreaID, state } = params
+  const listFilted = state[todoAreaID].filter(todoItem => todoItem.id !== todoItemID)
+  const newState = {
+    ...state,
+    [todoAreaID]: listFilted
   }
-}
-
-type RemoveByTodoItemIDParams = {
-  todoList: TodoItemModel[]
-  todoItemID: number
-}
-
-const findAndRemoveByTodoItemID = (params: RemoveByTodoItemIDParams): TodoItemModel[] => {
-  const index = params.todoList.findIndex(todo => todo.id === params.todoItemID)
-  if (index >= 0) params.todoList.splice(index, 1)
-  return [...params.todoList]
+  return newState
 }
