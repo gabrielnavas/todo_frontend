@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState, MouseEvent } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
 import { capitalizeFirstLetter } from '../../../../helpers/capitalize-first-letter'
-import { insertNewTodoItemValidatiton } from '../../../../validations/insert-new-todo-item-validation'
 
 import { Modal } from '../../../../components/utils/modal'
 import { InputText } from '../../../../components/inputs/input-text'
@@ -11,9 +12,7 @@ import {
   OnClickModalCloseButton
 } from '../../../../components/inputs/modal-close-button'
 
-import { TodoAreaID, TodoItemID, TodoItemModel } from '../../../../domain/models/TodoItem'
-
-import * as actionsInsert from '../../../../store/modules/todo-lists/actions/inserts/insert-one-todo-item'
+import { TodoAreaID, TodoItemModel } from '../../../../domain/models/TodoItem'
 
 import {
   InputTextArea,
@@ -23,108 +22,108 @@ import {
   ModalContainer,
   ModalMain,
   ModalTitle,
-  ModalHeader,
-  TextButtonFinish
+  ModalHeader
 } from './styles'
-import { useDispatch, useSelector } from 'react-redux'
+
 import { ReducersType } from 'store/configs/root-reducer'
 
-export type OnClickButtonParams = {
-  id?: number,
-  title: string
-  description: string
-  todoAreaID: TodoAreaID
-  oldTodoItemID: TodoAreaID | null
-}
-export type OnClickDeleteTodoItemParams = {
-  todoItemID: TodoItemID,
-  todoAreaID: TodoAreaID
-}
-export type OnClickDeleteTodoItem = (params: OnClickDeleteTodoItemParams) => void
-export type OnClickButtonFinish = (params: OnClickButtonParams) => void
-export type OnClickOutSide = () => void
+import * as actionsInsert from '../../../../store/modules/todo-lists/actions/inserts/insert-one-todo-item'
+import * as actionsUpdates from '../../../../store/modules/todo-lists/actions/updates/update-one-todo-item-by-id'
+import * as actionsDeletes from '../../../../store/modules/todo-lists/actions/deletes/delete-one-todo-item-by-id'
+import { insertNewTodoItemValidatiton } from '../../../../validations/insert-new-todo-item-validation'
 
 type ModalFormTodoProps = {
   todoAreaID: TodoAreaID
   isOpen: boolean
-  textButtonFinish: TextButtonFinish
-  todoItemUpdate?: TodoItemModel
-  onClickButtonFinish: OnClickButtonFinish
-  onClickDeleteTodoItem?: OnClickDeleteTodoItem
-  onClickOutSide: OnClickOutSide
+  onClickOutSide: () => void
   onClickModalCloseButton: OnClickModalCloseButton
+  todoItemToUpdateOrDelete?: TodoItemModel
 }
 
-const ModalFormTodo = ({
-  todoAreaID,
-  textButtonFinish,
-  isOpen,
-  todoItemUpdate,
-  onClickOutSide,
-  onClickButtonFinish,
-  onClickDeleteTodoItem,
-  onClickModalCloseButton
-}: ModalFormTodoProps) => {
+const ModalFormTodo = (props: ModalFormTodoProps) => {
+  const dispatch = useDispatch()
+  const { errors: errorsRequest } = useSelector((state: ReducersType) => state.todoLists)
+
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-
-  const dispatch = useDispatch()
-  const { errors } = useSelector((state: ReducersType) => state.todoLists)
+  const [errorsForm, setErrorsForm] = useState<string[]>([])
 
   useEffect(() => {
-    if (todoItemUpdate) {
-      setDescription(todoItemUpdate.description)
-      setTitle(todoItemUpdate.title)
+    if (props.todoItemToUpdateOrDelete) {
+      setDescription(props.todoItemToUpdateOrDelete.description)
+      setTitle(props.todoItemToUpdateOrDelete.title)
+      console.log(props.todoItemToUpdateOrDelete)
     }
-  }, [todoItemUpdate])
+  }, [props.todoItemToUpdateOrDelete])
 
-  const handleInsertOrUpdateTodoItem = useCallback(
-    (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>): void => {
-      const errorsForm = insertNewTodoItemValidatiton({ title, description })
-      if (errorsForm.length > 0) {
-        dispatch(actionsInsert.failure({ errors: errorsForm as string[] }))
-        return
-      }
-      onClickButtonFinish({
-        id: todoItemUpdate ? todoItemUpdate.id : null,
-        title,
-        description,
-        todoAreaID,
-        oldTodoItemID: todoItemUpdate ? todoAreaID : null
-      })
-      setDescription('')
-      setTitle('')
-    }, [todoItemUpdate, description, title, onClickButtonFinish, todoAreaID])
+  const handleOnClickUpdateButton = useCallback(() => {
+    const todoItemUpdated = {
+      id: props.todoItemToUpdateOrDelete.id,
+      todoAreaID: props.todoItemToUpdateOrDelete.todoAreaID,
+      description,
+      title
+    } as TodoItemModel
+    dispatch(actionsUpdates.request({
+      oldTodoItem: todoItemUpdated,
+      todoItem: todoItemUpdated
+    }))
+  }, [title, description])
 
-  const handleDeleteTodoItem = useCallback(
-    (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>): void => {
-      onClickDeleteTodoItem({ todoAreaID, todoItemID: todoItemUpdate.id })
-    }, [onClickDeleteTodoItem, todoItemUpdate, todoAreaID])
+  const handleOnClickDeleteButton = useCallback(() => {
+    const params = {
+      todoAreaID: props.todoAreaID,
+      todoItemID: props.todoItemToUpdateOrDelete.id
+    } as actionsDeletes.ParamsRequest
+    dispatch(actionsDeletes.request(params))
+  }, [title, description])
+
+  const handleOnClickInsertButton = useCallback(() => {
+    const errors = insertNewTodoItemValidatiton({ title, description })
+    if (errors.length > 0) {
+      setErrorsForm(errors)
+      return
+    }
+    const params = {
+      title,
+      description,
+      todoAreaID: props.todoAreaID
+    } as actionsInsert.ParamsRequest
+    dispatch(actionsInsert.request(params))
+  }, [title, description])
+
+  const renderButtonsUpdateAndDelete = () =>
+    <>
+      <ButtonHeader onClick={e => handleOnClickUpdateButton()}>
+        Update
+      </ButtonHeader>
+      <ButtonHeader onClick={e => handleOnClickDeleteButton()}>
+        Delete
+      </ButtonHeader>
+    </>
+
+  const renderButtonInsert = () =>
+    <ButtonHeader onClick={e => handleOnClickInsertButton()}>
+      Insert
+    </ButtonHeader>
 
   return (
     <Modal
-      isOpen={isOpen}
-      onClickOutSide={onClickOutSide}>
+      isOpen={props.isOpen}
+      onClickOutSide={props.onClickOutSide}>
       <ModalContainer>
         <ModalHeader>
           <ModalTitle>
             <span>
-              { capitalizeFirstLetter(todoAreaID) }
+              { capitalizeFirstLetter(props.todoAreaID) }
             </span>
           </ModalTitle>
           <ButtonGroup>
-              <ButtonHeader
-                onClick={e => handleInsertOrUpdateTodoItem(e)}>
-              { textButtonFinish }
-              </ButtonHeader>
               {
-                todoItemUpdate &&
-                  <ButtonHeader
-                    onClick={e => handleDeleteTodoItem(e)}>
-                    Delete
-                  </ButtonHeader>
+                props.todoItemToUpdateOrDelete
+                  ? renderButtonsUpdateAndDelete()
+                  : renderButtonInsert()
               }
-              <ModalCloseButton onClick={onClickModalCloseButton}/>
+              <ModalCloseButton onClick={props.onClickModalCloseButton}/>
           </ButtonGroup>
         </ModalHeader>
         <ModalMain>
@@ -141,7 +140,12 @@ const ModalFormTodo = ({
             />
             <ErrorsContainer>
             {
-              errors.length > 0 && errors.map((error, index) => <Error key={index}>{error}</Error>)
+              errorsRequest.length > 0 &&
+              errorsRequest.map((error, index) => <Error key={index}>{error}</Error>)
+            }
+            {
+              errorsForm.length > 0 && errorsForm.length > 0 &&
+                 errorsForm.map((error, index) => <Error key={index}>{error}</Error>)
             }
             </ErrorsContainer>
           </Form>

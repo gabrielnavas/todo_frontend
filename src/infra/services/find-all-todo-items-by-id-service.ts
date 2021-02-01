@@ -29,6 +29,5 @@ export const findAllTodoItemsByIdService = async (params: Params): Promise<Resul
     title: todo.title,
     description: todo.description
   }))) as Body
-  console.log(bodyMap)
   return { body: bodyMap, errors: [] }
 }

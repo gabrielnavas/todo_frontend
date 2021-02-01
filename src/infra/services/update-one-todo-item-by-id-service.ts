@@ -27,9 +27,8 @@ export const updateOneTodoItemByIdservice = async (params: Params): Promise<Resu
   if (resp.status === 400) {
     return { errors: ['Verifique seus parametros.'] }
   } else if (resp.status === 401) {
-    return { errors: ['Você está sem permissões'] }
+    return { errors: ['Você está sem as devidas permissões'] }
   }
-
   const body = await resp.json()
   return { body, errors: [] }
 }

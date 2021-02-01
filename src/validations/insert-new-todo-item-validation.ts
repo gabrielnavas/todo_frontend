@@ -1,10 +1,11 @@
-type Errors = string[]
-type InsertNewTodoItemValidatitonParams = {
+type Params = {
   title: string
   description: string
 }
 
-export const insertNewTodoItemValidatiton = ({ title, description }: InsertNewTodoItemValidatitonParams): Errors => {
+type Result = string[]
+
+export const insertNewTodoItemValidatiton = ({ title, description }: Params): Result => {
   const errors = [] as string[]
   if (!title.trim()) errors.push('Título não pode ser vazio!')
   if (title.trim().length < 3) errors.push('Título está muito pequeno!')
