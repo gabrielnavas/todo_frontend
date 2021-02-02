@@ -25,7 +25,6 @@ export const insertOneTodoItemService = async (params: Params): Promise<Result> 
   } else if (resp.status === 401) {
     return { errors: ['Não autorizado realizar o insert.'] }
   }
-
   const body = await resp.json()
   const newBody = {
     title: body.title,

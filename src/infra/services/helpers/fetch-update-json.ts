@@ -1,12 +1,12 @@
-export const fetchUpdateJson = async (url: string, data: any, token?: string) => {
+export const fetchUpdateJson = async (url: string, body?: any, token?: string) => {
   const config = {
-    method: 'POST',
+    method: 'PUT',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       'x-access-token': token
     },
-    body: JSON.stringify(data)
+    body: body ? JSON.stringify(body) : undefined
   }
   return fetch(url, config)
 }

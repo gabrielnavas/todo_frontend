@@ -14,14 +14,12 @@ export type Result = {
   }
 
 export const findAllTodoItemsByIdService = async (params: Params): Promise<Result> => {
-  const resp = await fetchGetJson(FIND_ALL_TODO_ITEMS_BY_USER_ID, undefined, params.token)
-
+  const resp = await fetchGetJson(FIND_ALL_TODO_ITEMS_BY_USER_ID, params.token)
   if (resp.status === 400) {
     return { errors: ['Parametros incorretos.'] }
   } else if (resp.status === 401) {
     return { errors: ['Você está sem as devidas permissões'] }
   }
-
   const body = await resp.json()
   const bodyMap = body.map((list: any) => list.map((todo: any) => ({
     id: todo.id,

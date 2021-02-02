@@ -1,5 +1,3 @@
-//  UpdateOneTodoItemService
-
 import { TodoItemModel } from 'domain/models/TodoItem'
 import { UPDATE_TODO_ITEM_URL } from './CONSTANTS'
 import { fetchUpdateJson } from './helpers/fetch-update-json'
@@ -16,14 +14,13 @@ export type Result = {
 
 export const updateOneTodoItemByIdservice = async (params: Params): Promise<Result> => {
   const token = params.userTokenAccess
-  const bodyParams = {
-    idTodoItem: params.todoItem.id,
+  const bodyToFetch = {
     idNameTodoArea: params.todoItem.todoAreaID,
     title: params.todoItem.title,
     description: params.todoItem.description
   }
-  const resp = await fetchUpdateJson(UPDATE_TODO_ITEM_URL, bodyParams, token)
-
+  const url = UPDATE_TODO_ITEM_URL.replace('idTodoItem', params.todoItem.id.toString())
+  const resp = await fetchUpdateJson(url, bodyToFetch, token)
   if (resp.status === 400) {
     return { errors: ['Verifique seus parametros.'] }
   } else if (resp.status === 401) {

@@ -1,4 +1,4 @@
-export const fetchPostJson = async (url: string, data: any, token?: string) => {
+export const fetchPostJson = async (url: string, body?: any, token?: string) => {
   const config = {
     method: 'POST',
     headers: {
@@ -6,7 +6,7 @@ export const fetchPostJson = async (url: string, data: any, token?: string) => {
       'Content-Type': 'application/json',
       'x-access-token': token
     },
-    body: JSON.stringify(data)
+    body: body ? JSON.stringify(body) : undefined
   }
   return fetch(url, config)
 }

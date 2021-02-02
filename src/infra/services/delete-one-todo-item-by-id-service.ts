@@ -12,17 +12,14 @@ export type Result = {
   }
 
 export const deleteOneTodoItemByIdService = async (params: Params): Promise<Result> => {
-  const paramsBody = {
-    idTodoItem: params.todoItemID
-  }
   const token = params.userTokenAccess
-  const resp = await fetchDeleteJson(DELETE_TODO_ITEM_URL, paramsBody, token)
-
+  const url = DELETE_TODO_ITEM_URL.replace('idTodoItem', params.todoItemID.toString())
+  console.log(url)
+  const resp = await fetchDeleteJson(url, token)
   if (resp.status === 400) {
     return { errors: ['Parametros incorretos.'] }
   } else if (resp.status === 401) {
     return { errors: ['Você está sem as devidas permissões'] }
   }
-
   return { errors: [] }
 }
