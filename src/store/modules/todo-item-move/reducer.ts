@@ -4,9 +4,9 @@ import * as types from '../../configs/actions-reducer-types'
 
 export type StateTypeTodoItemMove = TodoItemModel
 
-const inititalState: StateTypeTodoItemMove = null
+export const inititalState = () => null as StateTypeTodoItemMove
 
-const reducer = (state: StateTypeTodoItemMove = inititalState, action: AnyAction) => {
+const reducer = (state: StateTypeTodoItemMove = inititalState(), action: AnyAction) => {
   switch (action.type) {
     case types.todoItemMove.TODO_ITEM_MOVE__SET_NEW_TODO_ITEM: {
       const newtodoItemMove = action.payload as StateTypeTodoItemMove

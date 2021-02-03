@@ -8,10 +8,10 @@ export type StateTypeTodoLists = {
   errors: string[]
 }
 
-export const inititalState: StateTypeTodoLists = {
+export const inititalState = () => ({
   todo: [],
   doing: [],
   done: [],
   isLoading: false,
   errors: []
-}
+}) as StateTypeTodoLists

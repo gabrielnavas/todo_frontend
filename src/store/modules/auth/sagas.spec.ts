@@ -4,7 +4,7 @@ import { loginFailure, loginRequest as loginRequestAction, loginSuccess } from '
 import { loginService } from '../../../infra/services/login-service'
 import { call, put } from 'redux-saga/effects'
 
-describe('When testing a very simple generator (not even a Saga)', () => {
+describe('loginRequestSaga', () => {
   describe('Scenario 1: success request', () => {
     const loginRequestActionParams = {
       email: 'any_email',

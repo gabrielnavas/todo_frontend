@@ -110,4 +110,10 @@ describe('auth reducer', () => {
       ...inititalState
     })
   })
+
+  test('should call reducer without type and returns a some state', () => {
+    const type = 'any_other_type_action'
+    const newState = reducer(inititalState, { type })
+    expect(newState).toEqual(inititalState)
+  })
 })

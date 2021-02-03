@@ -7,7 +7,7 @@ import * as deleteService from '../../../../../infra/services/delete-one-todo-it
 import { call, put, select } from 'redux-saga/effects'
 import { ReducersType } from 'store/configs/root-reducer'
 
-describe('When testing a very simple generator (not even a Saga)', () => {
+describe('deleteOneTodoItemByIdRequestSaga', () => {
   describe('Scenario 1: success request', () => {
     const it = sagaHelper(sagas(deleteActions.request({
       todoAreaID: 'doing',
