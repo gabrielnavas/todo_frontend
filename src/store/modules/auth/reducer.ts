@@ -1,11 +1,12 @@
+import { UserModel } from 'domain/models/User'
 import { AnyAction } from 'redux'
-import * as types from './action-types'
+import * as types from '../../configs/actions-reducer-types'
 import {
   PayloadLoginFailure,
   PayloadLoginSuccess
 } from './payload-types'
 
-export type StateType = {
+export type StateType = Omit<UserModel, 'password'> & {
   token: string
   name: string
   email: string
@@ -25,13 +26,39 @@ export const inititalState: StateType = {
 
 const reducer = (state: StateType = inititalState, action: AnyAction) => {
   switch (action.type) {
-    case types.LOGIN_REQUEST: {
+    case types.authentication.LOGIN_REQUEST: {
       const newState = { ...state }
       newState.isLoading = true
       return newState
     }
 
-    case types.LOGIN_SUCCESS: {
+    case types.authentication.LOGIN_SUCCESS: {
+      const payload = action.payload as PayloadLoginSuccess
+      const newState = {
+        ...state,
+        ...payload,
+        isLoading: false,
+        isAuthenticated: true,
+        errors: [] as string[]
+      }
+      return newState
+    }
+
+    case types.authentication.LOGIN_FAILURE: {
+      const payload = action.payload as PayloadLoginFailure
+      const newState = { ...state }
+      newState.errors = payload.errors
+      newState.isLoading = false
+      return newState
+    }
+
+    case types.authentication.SIGNUP_REQUEST: {
+      const newState = { ...state }
+      newState.isLoading = true
+      return newState
+    }
+
+    case types.authentication.SIGNUP_SUCCESS: {
       const { email, name, token } = action.payload as PayloadLoginSuccess
       const newState = { ...state }
       newState.email = email
@@ -43,7 +70,7 @@ const reducer = (state: StateType = inititalState, action: AnyAction) => {
       return newState
     }
 
-    case types.LOGIN_FAILURE: {
+    case types.authentication.SIGNUP_FAILURE: {
       const newState = { ...state }
       const payload = action.payload as PayloadLoginFailure
       newState.errors = payload.errors
@@ -51,33 +78,7 @@ const reducer = (state: StateType = inititalState, action: AnyAction) => {
       return newState
     }
 
-    case types.SIGNUP_REQUEST: {
-      const newState = { ...state }
-      newState.isLoading = true
-      return newState
-    }
-
-    case types.SIGNUP_SUCCESS: {
-      const { email, name, token } = action.payload as PayloadLoginSuccess
-      const newState = { ...state }
-      newState.email = email
-      newState.token = token
-      newState.name = name
-      newState.isLoading = false
-      newState.isAuthenticated = true
-      newState.errors = []
-      return newState
-    }
-
-    case types.SIGNUP_FAILURE: {
-      const newState = { ...state }
-      const payload = action.payload as PayloadLoginFailure
-      newState.errors = payload.errors
-      newState.isLoading = false
-      return newState
-    }
-
-    case types.LOGOFF_REQUEST: {
+    case types.authentication.LOGOFF_REQUEST: {
       return { ...inititalState }
     }
 

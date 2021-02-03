@@ -1,13 +1,13 @@
 import { TodoItemModel } from 'domain/models/TodoItem'
 import { StateTypeTodoLists } from '../state-initital'
 
-type updateTodoItemByIDParams = {
+export type UpdateTodoItemByIDParams = {
   state: StateTypeTodoLists
   newTodoItem: TodoItemModel
   oldTodoItem: TodoItemModel
 }
 
-export const updateOneTodoItemByID = (params: updateTodoItemByIDParams): StateTypeTodoLists => {
+export const updateOneTodoItemByID = (params: UpdateTodoItemByIDParams): StateTypeTodoLists => {
   if (params.newTodoItem.todoAreaID !== params.oldTodoItem.todoAreaID) {
     return differentTodoAreaList(params)
   }
@@ -15,7 +15,7 @@ export const updateOneTodoItemByID = (params: updateTodoItemByIDParams): StateTy
   return equalsTodoAreaList(params.state, params.newTodoItem)
 }
 
-const differentTodoAreaList = (params: updateTodoItemByIDParams) => {
+const differentTodoAreaList = (params: UpdateTodoItemByIDParams) => {
   const { oldTodoItem, state, newTodoItem } = params
   const listOldFiltred = state[oldTodoItem.todoAreaID]
     .filter(todo => todo.id !== oldTodoItem.id)

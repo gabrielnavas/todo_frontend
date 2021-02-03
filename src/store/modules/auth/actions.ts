@@ -1,41 +1,40 @@
-import * as types from './action-types';
+import * as types from '../../configs/actions-reducer-types'
 import * as payloadTypes from './payload-types'
 
 export const loginRequest = (payload: payloadTypes.PayloadLoginRequest) => {
   return {
-    type: types.LOGIN_REQUEST,
+    type: types.authentication.LOGIN_REQUEST,
     payload
   }
 }
 
 export const loginSuccess = (payload: payloadTypes.PayloadLoginSuccess) => {
   return {
-    type: types.LOGIN_SUCCESS,
+    type: types.authentication.LOGIN_SUCCESS,
     payload
   }
 }
 
 export const loginFailure = (payload: payloadTypes.PayloadLoginFailure) => ({
-  type: types.LOGIN_FAILURE,
+  type: types.authentication.LOGIN_FAILURE,
   payload
 })
 
 export const signUpRequest = (payload: payloadTypes.PayloadSignUpRequest) => ({
-  type: types.SIGNUP_REQUEST,
+  type: types.authentication.SIGNUP_REQUEST,
   payload
 })
 
 export const signUpSuccess = (payload: payloadTypes.PayloadSignUpSuccess) => ({
-  type: types.SIGNUP_SUCCESS,
+  type: types.authentication.SIGNUP_SUCCESS,
   payload
 })
 
-
 export const signUpFailure = (payload: payloadTypes.PayloadSignUpFailure) => ({
-  type: types.SIGNUP_FAILURE,
+  type: types.authentication.SIGNUP_FAILURE,
   payload
 })
 
 export const logOffRequest = () => ({
-  type: types.LOGOFF_REQUEST,
+  type: types.authentication.LOGOFF_REQUEST
 })

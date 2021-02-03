@@ -8,7 +8,7 @@ import { AnyAction } from 'redux'
 
 import * as actions from './actions'
 import * as payloadTypes from './payload-types'
-import * as types from './action-types'
+import * as types from '../../configs/actions-reducer-types'
 
 import { routerHistory } from '../../../adapters/router/routerHistory'
 
@@ -60,6 +60,6 @@ export function * signUpRequest (action: AnyAction) {
 }
 
 export const sagas = all([
-  takeLatest(types.LOGIN_REQUEST, loginRequest),
-  takeLatest(types.SIGNUP_REQUEST, signUpRequest)
+  takeLatest(types.authentication.LOGIN_REQUEST, loginRequest),
+  takeLatest(types.authentication.SIGNUP_REQUEST, signUpRequest)
 ])

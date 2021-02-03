@@ -1,7 +1,7 @@
 import { TodoItemModel } from 'domain/models/TodoItem'
 import { StateTypeTodoLists } from '../state-initital'
 
-type InsertOneTodoItemParams = {
+export type InsertOneTodoItemParams = {
   newState: StateTypeTodoLists
   newTodoItem: TodoItemModel
 }

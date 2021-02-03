@@ -21,8 +21,6 @@ export function * deleteOneTodoItemByIdRequestSaga (action: AnyAction) {
     }
     yield put(actionsDeleteOneTodoItemById.success({ todoAreaID, todoItemID }))
   } catch (error) {
-    console.log('deu erro', error)
-
     yield put(actionsDeleteOneTodoItemById.failure({
       errors: ['Serviço indisponível, tente novamente mais tarde.']
     }))

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, MouseEvent } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { ErrorsAuthentication } from '../../components/feedback/errors-authentication'
 import { ButtonAuthentication } from '../../components/inputs/button-authentication'
 import { ButtonGroupAuthentication } from '../../components/inputs/button-group-authentication'
@@ -33,19 +33,21 @@ export const SignUpPage = () => {
     dispatch(actions.logOffRequest())
   }, [dispatch])
 
-  const handleOnClickButtonLoginPage = useCallback(
-    (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>): void => {
-      e.preventDefault()
-      routerHistory.push(LOGIN_PAGE_ROUTE)
-    }, [])
+  const handleOnClickButtonLoginPage = useCallback((e: any): void => {
+    e.preventDefault()
+    routerHistory.push(LOGIN_PAGE_ROUTE)
+  }, [])
 
-  const handleOnClickButtonCreateAccount = useCallback(
-    (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>): void => {
-      e.preventDefault()
-      const errors = signUpValidation({ name, email, password, passwordConfirmation })
-      if (errors.length > 0) return dispatch(actions.signUpFailure({ errors })) as any
-      dispatch(actions.signUpRequest({ name, email, password, passwordConfirmation }))
-    }, [email, name, password, passwordConfirmation, dispatch])
+  const handleOnClickButtonCreateAccount = useCallback((e: any): void => {
+    e.preventDefault()
+    const errors = signUpValidation({ name, email, password, passwordConfirmation })
+    if (errors.length > 0) {
+      return dispatch(actions.signUpFailure({ errors })) as any
+    }
+    dispatch(
+      actions.signUpRequest({ name, email, password, passwordConfirmation })
+    )
+  }, [email, name, password, passwordConfirmation, dispatch])
 
   return (
     <Container>

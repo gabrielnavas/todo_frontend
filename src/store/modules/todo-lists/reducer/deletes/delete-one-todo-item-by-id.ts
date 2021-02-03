@@ -1,7 +1,7 @@
 import { TodoAreaID } from 'domain/models/TodoItem'
 import { StateTypeTodoLists } from '../state-initital'
 
-type DeleteONeTodoItemsByIDParams = {
+export type DeleteONeTodoItemsByIDParams = {
   state: StateTypeTodoLists
   todoAreaID: TodoAreaID
   todoItemID: number
