@@ -88,9 +88,10 @@ const reducer = (state: StateTypeTodoLists = inititalState(), action: AnyAction)
       const { todoItemsLists } = action.payload as actionsFindAllByToken.ParamsSuccess
       const newState = todoItemsLists.reduce((newStateParams, list) => {
         if (list.length > 0) {
-          newStateParams[list[0].todoAreaID].push(...list)
+          const todoAreaID = list[0].todoAreaID
+          newStateParams[todoAreaID].push(...list)
         }
-        return { ...newStateParams }
+        return newStateParams
       }, { ...state })
       return newState
     }
