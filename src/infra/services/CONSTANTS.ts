@@ -1,8 +1,7 @@
-const BACKEND_URL =
-  (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test')
-    ? 'http://localhost:3030'
-    : process.env.ROOT_URL
+import env from '../../configs/env'
 
+const BACKEND_URL = env.rootPathBackendServer
+console.log('BACKEND_URL ============>', BACKEND_URL)
 const API = `${BACKEND_URL}/api`
 
 export const SIGNUP_URL = `${API}/signup`
