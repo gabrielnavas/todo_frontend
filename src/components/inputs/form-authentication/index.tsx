@@ -1,12 +1,16 @@
 import {
-  Container,
+  ReactNode
+} from 'react'
+
+import {
+  Container
 } from './styles'
 
 type FormAuthenticationProps = {
-  children: React.ReactNode[] | React.ReactNode 
+  children: ReactNode[] | ReactNode
 }
 
-export const FormAuthentication = ({children}: FormAuthenticationProps) => {
+export const FormAuthentication = ({ children }: FormAuthenticationProps) => {
   return (
     <Container>{children}</Container>
   )

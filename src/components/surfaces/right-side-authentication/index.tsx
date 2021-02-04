@@ -1,14 +1,18 @@
 import {
+  ReactNode
+} from 'react'
+
+import {
   Container,
   TitleRightSide
 } from './styles'
 
 type RightSideAuthenticationProps = {
-  children: React.ReactNode[] | React.ReactNode
+  children: ReactNode[] | ReactNode
   titleHeader: string
 }
 
-export const RightSideAuthentication = ({children, titleHeader}: RightSideAuthenticationProps) => {
+export const RightSideAuthentication = ({ children, titleHeader }: RightSideAuthenticationProps) => {
   return (
     <Container>
        <TitleRightSide>{titleHeader}</TitleRightSide>

@@ -1,15 +1,15 @@
 import {
-  Container,
+  Container
 } from './styles'
-
 
 type IsLoadingProps = {
   isLoading: boolean
 }
 
-export const IsLoading = ({isLoading}: IsLoadingProps) => {
+export const IsLoading = ({ isLoading }: IsLoadingProps) => {
   return (
-    isLoading ? 
-      <Container>Loading</Container> : null
+    isLoading
+      ? <Container>Loading</Container>
+      : null
   )
 }

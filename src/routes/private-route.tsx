@@ -7,7 +7,7 @@ type PrivateRouteProps = {
   exact: boolean
   path: string
   redirectPath: string
-  component: () => JSX.Element
+  component: () => any
 }
 
 export const PrivateRoute = ({ exact, path, redirectPath, component: Component }: PrivateRouteProps) => {

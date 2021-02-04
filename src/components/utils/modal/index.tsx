@@ -1,18 +1,22 @@
-import { 
+import {
+  ReactNode
+} from 'react'
+
+import {
   Container,
-   Main 
+  Main
 } from './styles'
 
 type ModalProps = {
-  children?: React.ReactNode[] | React.ReactNode
+  children?: ReactNode[] | ReactNode
   isOpen: boolean
   onClickOutSide: () => void
 }
 
-const Modal = ({children, isOpen, onClickOutSide}: ModalProps) => {
-  if(isOpen) {
-    return (  
-      <Container 
+const Modal = ({ children, isOpen, onClickOutSide }: ModalProps) => {
+  if (isOpen) {
+    return (
+      <Container
         isOpen={isOpen}
         onClick={onClickOutSide}>
         <Main onClick={e => e.stopPropagation()}>
@@ -20,7 +24,7 @@ const Modal = ({children, isOpen, onClickOutSide}: ModalProps) => {
         </Main>
       </Container>
     )
-  } 
+  }
   return null
 }
 

@@ -11,10 +11,7 @@ const sagaMiddleware = createSagaMiddleware()
 
 const store = createStore(
   persistedReducers(rootReducer),
-  // applyMiddleware(sagaMiddleware),
-  // composeWith
-  // process.env.NODE_ENV === 'development' && getDevtoolsExtensionConfig()
-  (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()
+  process.env.development && (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()
     ? composeWithDevTools(applyMiddleware(sagaMiddleware))
     : compose(applyMiddleware(sagaMiddleware))
 )

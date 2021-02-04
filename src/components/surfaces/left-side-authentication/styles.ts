@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import {logoAuthenticationPage} from '../../data-display/logo-authentication-page'
+import styled from 'styled-components'
+import { logoAuthenticationPage } from '../../data-display/logo-authentication-page'
 
 export const Container = styled.div`
 display: flex;
@@ -11,7 +11,6 @@ width: 50%;
 background: var(--gray);
 border-right: 2px dashed var(--gray);
 `
-
 
 export const Icon = styled(logoAuthenticationPage)`
   width: 500px;
