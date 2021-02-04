@@ -2,7 +2,7 @@ import env from '../../configs/env'
 
 const BACKEND_URL = env.rootPathBackendServer
 
-const API = `${BACKEND_URL}api`
+const API = `${BACKEND_URL}/api`
 
 export const SIGNUP_URL = `${API}/signup`
 export const LOGIN_URL = `${API}/login`

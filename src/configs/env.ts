@@ -5,6 +5,6 @@ dotenv.config()
 export default {
 
   rootPathBackendServer: (process.env.NODE_ENV === 'development')
-    ? 'http://localhost:3030/'
-    : process.env.BACKEND_URL
+    ? 'http://localhost:3030'
+    : 'https://navastodobackend.herokuapp.com'
 }
