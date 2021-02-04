@@ -1,2 +1,8 @@
 export { RiLoginBoxFill as IconLogin } from 'react-icons/ri'
+export { FaUserCheck as GoToSignUpPageIcon } from 'react-icons/fa'
 export { FaUserCheck as GoToLoginPageIcon } from 'react-icons/fa'
+export { BiUserPlus as CreateNewUser } from 'react-icons/bi'
+export { AiOutlineMail as EmailIcon } from 'react-icons/ai'
+export { IoPersonSharp as PersoNameIcon } from 'react-icons/io5'
+export { RiLockPasswordLine as PasswordIcon } from 'react-icons/ri'
+export { RiLockPasswordFill as PasswordConfirmationIcon } from 'react-icons/ri'

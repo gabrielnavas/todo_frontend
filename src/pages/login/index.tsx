@@ -5,7 +5,9 @@ import {
   Container,
   ButtonContent,
   IconLoginButton,
-  GoToLoginPageIconButton
+  GoToSignUpPageIcon,
+  EmailIconInput,
+  PasswordIconInput
 } from './styles'
 
 import { ButtonAuthentication } from '../../components/inputs/button-authentication'
@@ -50,12 +52,14 @@ export const LoginPage = () => {
       <RightSideAuthentication titleHeader='Login in your Todo App'>
         <FormAuthentication>
           <InputText
+            Icon={<EmailIconInput />}
             placeholder='your email...'
             type='email'
             value={email}
             onChange={e => setEmail(e.target.value)}
           />
           <InputText
+            Icon={<PasswordIconInput />}
             placeholder='your password...'
             type='password'
             value={password}
@@ -66,8 +70,10 @@ export const LoginPage = () => {
               disabled={isLoading}
               onClick={e => routerHistory.push(SIGNUP_PAGE_ROUTE)}>
               <ButtonContent>
-                <GoToLoginPageIconButton />
-                SignUp
+                <GoToSignUpPageIcon />
+                <span>
+                  SignUp
+                </span>
               </ButtonContent>
             </ButtonAuthentication>
             <ButtonAuthentication
@@ -75,7 +81,9 @@ export const LoginPage = () => {
               onClick={e => handleOnClickButtonLogin(e)}>
               <ButtonContent>
                 <IconLoginButton />
-                Login
+                <span>
+                  Login
+                </span>
               </ButtonContent>
             </ButtonAuthentication>
           </ButtonGroupAuthentication>

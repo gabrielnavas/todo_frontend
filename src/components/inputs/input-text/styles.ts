@@ -1,11 +1,13 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
-export const Container = styled.input`
+export const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 80%;
   height: 40px;
   background: var(--gray);
-  outline: none;
-  font-size: 17px;
+
   padding: 3px 5px;
   margin: 3px 0;
 
@@ -23,4 +25,17 @@ export const Container = styled.input`
     border-top: .8px dashed var(--blue-dark-alt);
     border-bottom: .8px dashed var(--blue-dark-alt);
   }
+`
+
+export const Input = styled.input`
+  width: 100%;
+  background: var(--gray);
+  outline: none;
+  font-size: 17px;
+`
+
+export const Icon = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `

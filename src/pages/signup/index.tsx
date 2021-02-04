@@ -13,7 +13,14 @@ import { routerHistory } from '../../adapters/router/routerHistory'
 import * as actions from '../../store/modules/auth/actions'
 
 import {
-  Container
+  Container,
+  ButtonContent,
+  CreateNewUserButton,
+  GoToLoginPageIconButton,
+  EmailIconInput,
+  NameIconInput,
+  PasswordIconInput,
+  PasswordConfirmationIconInput
 } from './styles'
 import { signUpValidation } from '../../validations/signup-validation'
 import { useDispatch, useSelector } from 'react-redux'
@@ -55,24 +62,28 @@ export const SignUpPage = () => {
       <RightSideAuthentication titleHeader='Create your account'>
         <FormAuthentication>
           <InputText
+            Icon={<NameIconInput />}
             type='text'
             onChange={e => setName(e.target.value)}
             placeholder='Your name'
             value={name}
-          />
+            />
           <InputText
+            Icon={<EmailIconInput />}
             type='email'
             onChange={e => setEmail(e.target.value)}
             placeholder='Your email'
             value={email}
           />
           <InputText
+           Icon={<PasswordIconInput />}
             type='password'
             onChange={e => setPassword(e.target.value)}
             placeholder='Your password'
             value={password}
           />
           <InputText
+           Icon={<PasswordConfirmationIconInput />}
             type='password'
             onChange={e => setPasswordConfirmation(e.target.value)}
             placeholder='Your password confirmation'
@@ -80,10 +91,20 @@ export const SignUpPage = () => {
           />
           <ButtonGroupAuthentication>
             <ButtonAuthentication onClick={e => handleOnClickButtonLoginPage(e)}>
-              Login page
+              <ButtonContent>
+                <GoToLoginPageIconButton />
+                <span>
+                  Login
+                </span>
+              </ButtonContent>
             </ButtonAuthentication>
             <ButtonAuthentication onClick={e => handleOnClickButtonCreateAccount(e)}>
-              Create
+            <ButtonContent>
+              <CreateNewUserButton />
+                <span>
+                  Create
+                </span>
+              </ButtonContent>
             </ButtonAuthentication>
           </ButtonGroupAuthentication>
           <IsLoadingComponent isLoading={isLoading} />
