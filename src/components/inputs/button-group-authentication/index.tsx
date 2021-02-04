@@ -1,12 +1,16 @@
 import {
-  Container,
+  ReactNode
+} from 'react'
+
+import {
+  Container
 } from './styles'
 
 type ButtonGroupAuthenticationProps = {
-  children: React.ReactNode[] | React.ReactNode
+  children: ReactNode[] | ReactNode
 }
 
-export const ButtonGroupAuthentication = ({children}: ButtonGroupAuthenticationProps) => {
+export const ButtonGroupAuthentication = ({ children }: ButtonGroupAuthenticationProps) => {
   return (
     <Container>
       {children}

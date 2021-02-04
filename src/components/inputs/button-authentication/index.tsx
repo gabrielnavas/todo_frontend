@@ -1,19 +1,21 @@
+import { MouseEvent, ReactNode } from 'react'
+
 import {
   Container
 } from './styles'
 
 type ButtonAuthenticationProps = {
-  children: string
+  children: ReactNode | ReactNode[] | string
   disabled?: boolean
-  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+  onClick?: (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => void
 }
 
-export const ButtonAuthentication = ({children, disabled, onClick}: ButtonAuthenticationProps) => {
+export const ButtonAuthentication = (props: ButtonAuthenticationProps) => {
   return (
-    <Container 
-      disabled={disabled}
-      onClick={onClick ? onClick : null}>
-      {children}
+    <Container
+      disabled={props.disabled}
+      onClick={props.onClick}>
+      {props.children}
     </Container>
   )
 }

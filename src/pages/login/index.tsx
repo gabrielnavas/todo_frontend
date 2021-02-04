@@ -1,7 +1,13 @@
 import { useCallback, useEffect, useState, MouseEvent } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { Container } from './styles'
+import {
+  Container,
+  ButtonContent,
+  IconLoginButton,
+  GoToLoginPageIconButton
+} from './styles'
+
 import { ButtonAuthentication } from '../../components/inputs/button-authentication'
 import { ButtonGroupAuthentication } from '../../components/inputs/button-group-authentication'
 import { InputText } from '../../components/inputs/input-text'
@@ -59,12 +65,18 @@ export const LoginPage = () => {
             <ButtonAuthentication
               disabled={isLoading}
               onClick={e => routerHistory.push(SIGNUP_PAGE_ROUTE)}>
-              SignUp Page
+              <ButtonContent>
+                <GoToLoginPageIconButton />
+                SignUp
+              </ButtonContent>
             </ButtonAuthentication>
             <ButtonAuthentication
               disabled={isLoading}
               onClick={e => handleOnClickButtonLogin(e)}>
-              Login
+              <ButtonContent>
+                <IconLoginButton />
+                Login
+              </ButtonContent>
             </ButtonAuthentication>
           </ButtonGroupAuthentication>
           <ErrorsAuthentication errors={errors} />

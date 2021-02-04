@@ -1,6 +1,12 @@
 import { Switch, Route, Router } from 'react-router-dom'
 
-import { LOGIN_PAGE_ROUTE, SIGNUP_PAGE_ROUTE, TODO_PAGE_ROUTE } from './CONSTANTS'
+import {
+  LOGIN_PAGE_ROUTE,
+  ROOT_PAGE_ROUTE,
+  SIGNUP_PAGE_ROUTE,
+  TODO_PAGE_ROUTE
+
+} from './CONSTANTS'
 import { NotFoundPage } from '../pages/not-found'
 import { SignUpPage } from '../pages/signup'
 import { TodoPage } from '../pages/todo'
@@ -18,7 +24,7 @@ export const RouterConfig = () => {
                     component={SignUpPage} />
                 <Route
                     exact
-                    path={LOGIN_PAGE_ROUTE}
+                    path={[LOGIN_PAGE_ROUTE, ROOT_PAGE_ROUTE]}
                     component={LoginPage} />
                 <PrivateRoute
                     exact
