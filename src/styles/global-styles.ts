@@ -37,7 +37,7 @@ export default createGlobalStyle`
     --blue-opacity:#33A1F255
     --blue-dark: #0e63a1;
     --blue-dark-alt:#083a5e;
-    --blue-dark-hover: #011017;
+    --blue-dark-hover: #024463;
     --blue-light-hover: #1375bd;
   }
 `

@@ -1,5 +1,5 @@
 import {
-  Container,
+  Container
 } from './styles'
 
 import * as actions from '../../../store/modules/auth/actions'
@@ -9,8 +9,7 @@ type ButtonHeaderLogoutProps = {
   children: string
 }
 
-const ButtonHeaderLogout = ({children}: ButtonHeaderLogoutProps) => {
-
+const ButtonHeaderLogout = ({ children }: ButtonHeaderLogoutProps) => {
   const dispatch = useDispatch()
 
   return (

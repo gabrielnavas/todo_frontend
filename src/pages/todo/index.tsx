@@ -1,7 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 
-import { Container, TodosAreas } from './styles'
+import {
+  Container,
+  TodosAreas,
+  TitleHeader,
+  TitleContainer
+} from './styles'
 
 import TodoArea from './components/todo-area'
 import TodoList from './components/todo-list'
@@ -27,7 +32,9 @@ const TodoPage = () => {
     <>
       <Container>
         <HeaderPage>
-          <span>Todo App</span>
+          <TitleContainer>
+            <TitleHeader>Todo App</TitleHeader>
+          </TitleContainer>
           <ButtonHeaderLogout>Logout</ButtonHeaderLogout>
         </HeaderPage>
         <TodosAreas>

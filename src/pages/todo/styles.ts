@@ -16,5 +16,22 @@ export const TodosAreas = styled.div`
   justify-content: center;
   align-items: flex-start;
   max-height: 100%;
+  margin-top: 20px;
   width: 1200px;
+`
+
+export const TitleContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 90%;
+  height: 100%;
+`
+
+export const TitleHeader = styled.span`
+  width: 100%;
+  font-size: 40px;
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: var(--blue);
 `

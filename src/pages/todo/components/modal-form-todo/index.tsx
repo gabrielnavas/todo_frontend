@@ -19,7 +19,11 @@ import {
   ModalContainer,
   ModalMain,
   ModalTitle,
-  ModalHeader
+  ModalHeader,
+  TitleTodoItemIconText,
+  DeleteTodoItemButtonIcon,
+  UpdateTodoItemButtonIcon,
+  InsertTodoItemButtonIcon
 } from './styles'
 
 import { ReducersType } from 'store/configs/root-reducer'
@@ -122,16 +126,25 @@ const ModalFormTodo = (props: ModalFormTodoProps) => {
 
   const renderButtonsUpdateAndDelete = () =>
     <>
-      <ButtonHeader onClick={e => handleOnClickUpdateButton()}>
+      <ButtonHeader
+        typeButton='Update'
+        onClick={e => handleOnClickUpdateButton()}>
+        <UpdateTodoItemButtonIcon />
         Update
-      </ButtonHeader>
-      <ButtonHeader onClick={e => handleOnClickDeleteButton()}>
+        </ButtonHeader>
+      <ButtonHeader
+        onClick={e => handleOnClickDeleteButton()}
+        typeButton='Delete'>
+        <DeleteTodoItemButtonIcon />
         Delete
       </ButtonHeader>
     </>
 
   const renderButtonInsert = () =>
-    <ButtonHeader onClick={e => handleOnClickInsertButton()}>
+    <ButtonHeader
+      typeButton='Insert'
+      onClick={e => handleOnClickInsertButton()}>
+      <InsertTodoItemButtonIcon />
       Insert
     </ButtonHeader>
 
@@ -158,6 +171,7 @@ const ModalFormTodo = (props: ModalFormTodoProps) => {
         <ModalMain>
           <Form>
             <InputText
+              Icon={<TitleTodoItemIconText />}
               value={title}
               placeholder='Título até 30 caracteres...'
               onChange={e => setTitle(e.target.value)}

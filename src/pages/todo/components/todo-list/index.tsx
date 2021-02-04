@@ -1,10 +1,15 @@
 import { useCallback, useState, Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import {
+  Container,
+  Button,
+  InsertNewTodoItemIconButton
+} from './styles'
+
 import { ReducersType } from '../../../../store/configs/root-reducer'
 import * as actionsUpdates from '../../../../store/modules/todo-lists/actions/updates/update-one-todo-item-by-id'
 import { ModalFormTodo } from '../modal-form-todo'
-import { Container, Button } from './styles'
 import { capitalizeFirstLetter } from '../../../../helpers/capitalize-first-letter'
 import { TodoItemModel, TodoAreaID } from 'domain/models/TodoItem'
 import { TodoItemWithModalUpdateOrDelete } from '../todo-item-with-modal-update-or-delete'
@@ -38,6 +43,7 @@ export default function TodoList ({ todoItems, todoAreaID }: TodoListProps) {
       onDragOver={e => e.preventDefault()}
       onDrop={e => handleOnDrop()}>
       <Button onClick={e => setIsOpenModalInsert(true)}>
+        <InsertNewTodoItemIconButton />
         Insert {capitalizeFirstLetter(todoAreaID)}
       </Button>
       {
