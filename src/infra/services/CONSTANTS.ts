@@ -1,5 +1,10 @@
-const BACKEND_URL = 'http://localhost:3030'
+const BACKEND_URL =
+  (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test')
+    ? 'http://localhost:3030'
+    : process.env.ROOT_URL
+
 const API = `${BACKEND_URL}/api`
+
 export const SIGNUP_URL = `${API}/signup`
 export const LOGIN_URL = `${API}/login`
 export const INSERT_ONE_TODO_ITEM_URL = `${API}/todo`
