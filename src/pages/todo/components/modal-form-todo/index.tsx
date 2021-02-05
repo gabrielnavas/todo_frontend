@@ -21,9 +21,11 @@ import {
   ModalTitle,
   ModalHeader,
   TitleTodoItemIconText,
+  InsertTodoItemButtonIcon,
   DeleteTodoItemButtonIcon,
   UpdateTodoItemButtonIcon,
-  InsertTodoItemButtonIcon
+  QuestionOnDeleteIconButton,
+  ExclamationNoDeleteIconButton
 } from './styles'
 
 import { ReducersType } from 'store/configs/root-reducer'
@@ -50,6 +52,8 @@ const ModalFormTodo = (props: ModalFormTodoProps) => {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [errorsForm, setErrorsForm] = useState<string[]>([])
+
+  const [isOnClickedDelete, setIsOnClickedDelete] = useState(false)
 
   useEffect(() => {
     if (props.todoItemToUpdateOrDelete) {
@@ -118,26 +122,51 @@ const ModalFormTodo = (props: ModalFormTodoProps) => {
       todoAreaID: props.todoAreaID
     } as actionsInsert.ParamsRequest
     dispatch(actionsInsert.request(params))
+    setTitle('')
+    setDescription('')
   }, [title, description, errorsForm])
 
   const handleOnClickCloseButton = useCallback(() => {
     props.setIsOpen(false)
   }, [])
 
+  const renderButtonConfirmationDelete = () => {
+    isOnClickedDelete && (
+        <ButtonHeader
+          onClick={e => setIsOnClickedDelete(false)}
+          typeButton='Insert'>
+          <ExclamationNoDeleteIconButton />
+          No!
+        </ButtonHeader>
+    )
+  }
+
+  const renderButtonDelete = () =>
+  <>
+    { renderButtonConfirmationDelete() }
+    <ButtonHeader
+      onClick={e => {
+        !isOnClickedDelete
+          ? setIsOnClickedDelete(true)
+          : handleOnClickDeleteButton()
+      } }
+      typeButton='Delete'>
+      { isOnClickedDelete ? < QuestionOnDeleteIconButton/> : < DeleteTodoItemButtonIcon/>}
+      { isOnClickedDelete ? 'Are you sure?' : ' Delete' }
+    </ButtonHeader>
+  </>
   const renderButtonsUpdateAndDelete = () =>
     <>
-      <ButtonHeader
-        typeButton='Update'
-        onClick={e => handleOnClickUpdateButton()}>
-        <UpdateTodoItemButtonIcon />
-        Update
+    {
+      !isOnClickedDelete &&
+        <ButtonHeader
+          typeButton='Update'
+          onClick={e => handleOnClickUpdateButton()}>
+          <UpdateTodoItemButtonIcon />
+          Update
         </ButtonHeader>
-      <ButtonHeader
-        onClick={e => handleOnClickDeleteButton()}
-        typeButton='Delete'>
-        <DeleteTodoItemButtonIcon />
-        Delete
-      </ButtonHeader>
+    }
+      { renderButtonDelete() }
     </>
 
   const renderButtonInsert = () =>

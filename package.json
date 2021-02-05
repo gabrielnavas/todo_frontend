@@ -25,7 +25,7 @@
   },
   "scripts": {
     "start": "node server/index.js",
-    "dev": "NODE_ENV=development && react-scripts start",
+    "dev": "rm -rf build && NODE_ENV=development && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:jest_options": "npm run test -- --passWithNoTests --no-cache --runInBand --config jest.config.js",

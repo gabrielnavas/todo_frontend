@@ -1,5 +1,12 @@
 import styled, { css } from 'styled-components'
-import { DeleteTodoItemIcon, InsertTodoItemIcon, TitleTodoItemIcon, UpdateTodoItemIcon } from 'styles/icons'
+import {
+  DeleteTodoItemIcon,
+  ExclamationNoDeleteIcon,
+  InsertTodoItemIcon,
+  QuestionOnDeleteIcon,
+  TitleTodoItemIcon,
+  UpdateTodoItemIcon
+} from 'styles/icons'
 import { scrollDefault } from '../../../../styles/scroll-styles'
 
 export const InputTextArea = styled.textarea`
@@ -36,7 +43,8 @@ export const ButtonHeader = styled.button.attrs(({ typeButton }: ButtonHeaderPro
   justify-content: center;
   align-items: center;
   height: 50px;
-  width: 115px;
+  min-width: 100px; 
+  padding: 0 5px;
   background: var(${({ backgroundColor }) => backgroundColor});
   cursor: pointer;
   outline: none;
@@ -135,6 +143,14 @@ export const UpdateTodoItemButtonIcon = styled(UpdateTodoItemIcon)`
 `
 
 export const InsertTodoItemButtonIcon = styled(InsertTodoItemIcon)`
+  ${cssIconsCRU};
+  fill: var(--white);
+`
+export const QuestionOnDeleteIconButton = styled(QuestionOnDeleteIcon)`
+  ${cssIconsCRU};
+  fill: var(--white);
+`
+export const ExclamationNoDeleteIconButton = styled(ExclamationNoDeleteIcon)`
   ${cssIconsCRU};
   fill: var(--white);
 `

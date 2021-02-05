@@ -1,4 +1,5 @@
 export const fetchPostJson = async (url: string, body?: any, token?: string) => {
+  console.log(url)
   const config = {
     method: 'POST',
     headers: {

@@ -15,16 +15,16 @@ export type StateType = Omit<UserModel, 'password'> & {
   errors: string[]
 }
 
-export const inititalState: StateType = {
+export const inititalState = () => ({
   token: null,
   name: null,
   email: null,
   isLoading: false,
   isAuthenticated: false,
-  errors: []
-}
+  errors: [] as string[]
+}) as StateType
 
-const reducer = (state: StateType = inititalState, action: AnyAction) => {
+const reducer = (state: StateType = inititalState(), action: AnyAction): StateType => {
   switch (action.type) {
     case types.authentication.LOGIN_REQUEST: {
       const newState = { ...state }
@@ -33,13 +33,13 @@ const reducer = (state: StateType = inititalState, action: AnyAction) => {
     }
 
     case types.authentication.LOGIN_SUCCESS: {
-      const payload = action.payload as PayloadLoginSuccess
+      const { name, email, token } = action.payload as PayloadLoginSuccess
       const newState = {
-        ...state,
-        ...payload,
-        isLoading: false,
-        isAuthenticated: true,
-        errors: [] as string[]
+        ...inititalState(),
+        name,
+        email,
+        token,
+        isAuthenticated: true
       }
       return newState
     }
@@ -60,14 +60,13 @@ const reducer = (state: StateType = inititalState, action: AnyAction) => {
 
     case types.authentication.SIGNUP_SUCCESS: {
       const { email, name, token } = action.payload as PayloadLoginSuccess
-      const newState = { ...state }
-      newState.email = email
-      newState.token = token
-      newState.name = name
-      newState.isLoading = false
-      newState.isAuthenticated = true
-      newState.errors = []
-      return newState
+      return {
+        ...inititalState(),
+        email,
+        token,
+        name,
+        isAuthenticated: true
+      }
     }
 
     case types.authentication.SIGNUP_FAILURE: {
@@ -79,7 +78,7 @@ const reducer = (state: StateType = inititalState, action: AnyAction) => {
     }
 
     case types.authentication.LOGOFF_REQUEST: {
-      return { ...inititalState }
+      return { ...inititalState() }
     }
 
     default: {
