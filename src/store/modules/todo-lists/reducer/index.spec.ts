@@ -1,20 +1,32 @@
 import reducer from '.'
+
 import {
   inititalState as inititalStateReducer,
   StateTypeTodoLists
 } from './state-initital'
+
 import * as actionsTypes from '../../../configs/actions-reducer-types'
 import * as actionsInsertOneTodoItem from '../actions/inserts/insert-one-todo-item'
-import { TodoAreaID } from 'domain/models/TodoItem'
+
 import { insertOneTodoItem } from './inserts/insert-one-todo-item'
 import { updateOneTodoItemByID } from './updates/update-one-todo-item-by-id'
 import { deleteOneTodoItemByID } from './deletes/delete-one-todo-item-by-id'
+
+import { TodoAreaID } from 'domain/models/TodoItem'
 
 describe('todo-list/reducer', () => {
   let inititalState: StateTypeTodoLists
 
   beforeEach(() => {
     inititalState = inititalStateReducer()
+  })
+
+  test('should call reducer with type TODOS_LISTS__CLEAR_ALL__REQUEST reset all todo items', () => {
+    const type = actionsTypes.todoLists.deletes.TODOS_LISTS__CLEAR_ALL__REQUEST
+    const newState = reducer(inititalState, { type })
+    expect(newState).toEqual({
+      ...inititalState
+    })
   })
 
   test('should call reducer with type TODOS_LISTS__INSERT_ONE_TODO_ITEM__REQUEST and returns correct new state', () => {

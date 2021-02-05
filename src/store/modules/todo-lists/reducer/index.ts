@@ -13,6 +13,10 @@ import { updateOneTodoItemByID } from './updates/update-one-todo-item-by-id'
 
 const reducer = (state: StateTypeTodoLists = inititalState(), action: AnyAction): StateTypeTodoLists => {
   switch (action.type) {
+    case types.todoLists.deletes.TODOS_LISTS__CLEAR_ALL__REQUEST: {
+      return inititalState()
+    }
+
     case types.todoLists.inserts.TODOS_LISTS__INSERT_ONE_TODO_ITEM__REQUEST: {
       const newState = { ...state, isLoading: true }
       return newState

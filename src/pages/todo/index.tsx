@@ -17,6 +17,7 @@ import { ReducersType } from '../../store/configs/root-reducer'
 import { StateTypeTodoLists } from '../../store/modules/todo-lists/reducer/state-initital'
 
 import * as actionFindAllByIdUser from '../../store/modules/todo-lists/actions/finds/find-all'
+import * as actionClearAllTodoItems from '../../store/modules/todo-lists/actions/deletes/clear-all'
 
 const TodoPage = () => {
   const dispatch = useDispatch()
@@ -25,6 +26,7 @@ const TodoPage = () => {
   } = useSelector<ReducersType>(state => state.todoLists) as StateTypeTodoLists
 
   useEffect(() => {
+    dispatch(actionClearAllTodoItems.request())
     dispatch(actionFindAllByIdUser.request())
   }, [])
 

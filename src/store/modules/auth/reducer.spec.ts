@@ -5,7 +5,7 @@ describe('auth reducer', () => {
   let inititalState: StateType
 
   beforeEach(() => {
-    inititalState = { ...inititalStateReducer }
+    inititalState = { ...inititalStateReducer() }
   })
 
   test('should call reducer with type LOGIN_REQUEST and returns correct new state', () => {
