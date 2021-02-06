@@ -90,7 +90,9 @@ export const SignUpPage = () => {
             value={passwordConfirmation}
           />
           <ButtonGroupAuthentication>
-            <ButtonAuthentication onClick={e => handleOnClickButtonLoginPage(e)}>
+            <ButtonAuthentication
+              disabled={isLoading}
+              onClick={e => handleOnClickButtonLoginPage(e)}>
               <ButtonContent>
                 <GoToLoginPageIconButton />
                 <span>
@@ -98,7 +100,9 @@ export const SignUpPage = () => {
                 </span>
               </ButtonContent>
             </ButtonAuthentication>
-            <ButtonAuthentication onClick={e => handleOnClickButtonCreateAccount(e)}>
+            <ButtonAuthentication
+              disabled={isLoading}
+              onClick={e => handleOnClickButtonCreateAccount(e)}>
             <ButtonContent>
               <CreateNewUserButton />
                 <span>
