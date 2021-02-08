@@ -14,7 +14,6 @@ export const authentication = {
 export const todoItemMove = {
   TODO_ITEM_MOVE__SET_NEW_TODO_ITEM: 'TODO_ITEM_MOVE__SET_NEW_TODO_ITEM',
   TODO_ITEM_MOVE__SET_NULL_TODO_ITEM: 'TODO_ITEM_MOVE__SET_NULL_TODO_ITEM'
-
 }
 
 export const todoLists = {

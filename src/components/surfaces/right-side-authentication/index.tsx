@@ -9,13 +9,15 @@ import {
 
 type RightSideAuthenticationProps = {
   children: ReactNode[] | ReactNode
-  titleHeader: string
+  titleHeader?: string
 }
 
 export const RightSideAuthentication = ({ children, titleHeader }: RightSideAuthenticationProps) => {
   return (
     <Container>
-       <TitleRightSide>{titleHeader}</TitleRightSide>
+      {
+        titleHeader && <TitleRightSide>{titleHeader}</TitleRightSide>
+      }
       {children}
     </Container>
   )
