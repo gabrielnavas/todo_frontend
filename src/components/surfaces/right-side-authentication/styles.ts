@@ -7,11 +7,11 @@ export const Container = styled.div`
   justify-content: center;
   height: 100%;
   width: 50%;
+  text-align: center;
 `
 
 export const TitleRightSide = styled.span`
-  margin: 65px 0;
-
+  margin: 100px 0;
   font-size: 45px;
   width: 80%;
   font-weight: 400px;

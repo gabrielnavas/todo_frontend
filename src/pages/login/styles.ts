@@ -49,3 +49,9 @@ export const PasswordIconInput = styled(PasswordIcon)`
 export const EmailIconInput = styled(EmailIcon)`
   ${iconInput}
 `
+
+export const ForgotPasswordLink = styled.a`
+  width: 80%;
+  margin: 5px 0;
+  color: var(--white);
+`

@@ -7,7 +7,8 @@ import {
   IconLoginButton,
   GoToSignUpPageIcon,
   EmailIconInput,
-  PasswordIconInput
+  PasswordIconInput,
+  ForgotPasswordLink
 } from './styles'
 
 import { ButtonAuthentication } from '../../components/inputs/button-authentication'
@@ -24,7 +25,7 @@ import { routerHistory } from '../../adapters/router/routerHistory'
 import * as actions from '../../store/modules/auth/actions'
 import { ReducersType } from '../../store/configs/root-reducer'
 import { StateType as StateTypeAuth } from '../../store/modules/auth/reducer'
-import { SIGNUP_PAGE_ROUTE } from '../../routes/CONSTANTS'
+import { RECUPERATION_ACCOUNT_PAGE_ROUTE, SIGNUP_PAGE_ROUTE } from '../../routes/CONSTANTS'
 import { loginValidation } from '../../validations/login-validation'
 
 export const LoginPage = () => {
@@ -65,6 +66,9 @@ export const LoginPage = () => {
             value={password}
             onChange={e => setPassword(e.target.value)}
           />
+          <ForgotPasswordLink href={RECUPERATION_ACCOUNT_PAGE_ROUTE}>
+            I forgot the password
+          </ForgotPasswordLink>
           <ButtonGroupAuthentication>
             <ButtonAuthentication
               disabled={isLoading}

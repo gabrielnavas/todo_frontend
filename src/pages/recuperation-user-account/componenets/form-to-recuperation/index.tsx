@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, MouseEvent } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import {
@@ -36,24 +36,42 @@ export const FormToRecuperation = ({ setRecuperationFinish }: Props) => {
     dispatch(actionsAuthentication.logOffRequest())
   }, [dispatch])
 
-  const handleOnClickButtonLogin = useCallback(
-    async (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>): Promise<void> => {
-      e.preventDefault()
-      setIsLoading(true)
-      const errors = recuperateAccountValidation({ email })
-      if (errors.length > 0) {
+  const service = useCallback(async (emailParam: string): Promise<boolean> => {
+    try {
+      const errorsService = await recuperateUserAccountService({ email: emailParam })
+      if (errorsService.errors.length > 0) {
         setIsLoading(false)
-        return setErrors(errors)
+        setErrors(errorsService.errors)
+        return false
       }
-      try {
-        await recuperateUserAccountService({ email })
-        setRecuperationFinish(true)
-      } catch {
-        setErrors(['Ocorreu um erro, tenta novamente mais tarde.'])
-      } finally {
-        setIsLoading(false)
-      }
-    }, [email, dispatch])
+      setRecuperationFinish(true)
+    } catch (error) {
+      console.log(error)
+      setErrors(['Ocorreu um erro, tente novamente mais tarde.'])
+    } finally {
+      setIsLoading(false)
+    }
+    return true
+  }, [email, errors, isLoading])
+
+  const validations = useCallback((emailParam: string) => {
+    const errorsValidation = recuperateAccountValidation({ email: emailParam })
+    if (errorsValidation.length > 0) {
+      setIsLoading(false)
+      setErrors(errorsValidation)
+      return false
+    }
+    return true
+  }, [email, errors, isLoading])
+
+  const handleOnClickButtonLogin = useCallback(async (e: any): Promise<void> => {
+    e.preventDefault()
+    setIsLoading(true)
+    if (!validations(email)) return
+    if (service(email)) {
+      setEmail('')
+    }
+  }, [email, errors, isLoading])
 
   return (
       <FormAuthentication>

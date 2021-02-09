@@ -18,9 +18,6 @@ export type ResponseLoginService = {
 
 export const loginService = async (params: Params): Promise<ResponseLoginService> => {
   const resp = await fetchPostJson(LOGIN_URL, params)
-  // if(resp.status === 500) {
-  //   return { errors: ['Serviço indisponível, tente novamente mais tarde. 500'] }
-  // }
   if (resp.status === 400) {
     return { errors: ['Email ou senha incorretos.'] }
   }
